@@ -1,0 +1,452 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BED61A608DF20091EA2E /* AppDelegate.swift */; };
+		E1F4BEDE1A608DF20091EA2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEDC1A608DF20091EA2E /* Main.storyboard */; };
+		E1F4BEE01A608DF20091EA2E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEDF1A608DF20091EA2E /* Images.xcassets */; };
+		E1F4BEE31A608DF20091EA2E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */; };
+		E1F4BEEF1A608DF20091EA2E /* _015_FRC_ScoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEEE1A608DF20091EA2E /* _015_FRC_ScoutTests.swift */; };
+		E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */; };
+		E1F4BEFC1A608FE90091EA2E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFB1A608FE90091EA2E /* Data.swift */; };
+		E1F4BEFE1A6090090091EA2E /* more.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFD1A6090090091EA2E /* more.swift */; };
+		E1F4BF001A6090630091EA2E /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFF1A6090630091EA2E /* Scoring.swift */; };
+		E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BF011A60907A0091EA2E /* PitScouting.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E1F4BEE91A608DF20091EA2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1F4BEC91A608DF10091EA2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1F4BED01A608DF10091EA2E;
+			remoteInfo = "2015 FRC Scout";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2015 FRC Scout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1F4BED51A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1F4BED61A608DF20091EA2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E1F4BEDD1A608DF20091EA2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E1F4BEDF1A608DF20091EA2E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E1F4BEE21A608DF20091EA2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		E1F4BEE81A608DF20091EA2E /* 2015 FRC ScoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "2015 FRC ScoutTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1F4BEED1A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1F4BEEE1A608DF20091EA2E /* _015_FRC_ScoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _015_FRC_ScoutTests.swift; sourceTree = "<group>"; };
+		E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Data.swift; path = ../Data.swift; sourceTree = "<group>"; };
+		E1F4BEFD1A6090090091EA2E /* more.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = more.swift; path = ../more.swift; sourceTree = "<group>"; };
+		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; };
+		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitScouting.swift; path = ../PitScouting.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E1F4BECE1A608DF10091EA2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1F4BEE51A608DF20091EA2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E1F4BEC81A608DF10091EA2E = {
+			isa = PBXGroup;
+			children = (
+				E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */,
+				E1F4BEEB1A608DF20091EA2E /* 2015 FRC ScoutTests */,
+				E1F4BED21A608DF20091EA2E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E1F4BED21A608DF20091EA2E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */,
+				E1F4BEE81A608DF20091EA2E /* 2015 FRC ScoutTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
+			isa = PBXGroup;
+			children = (
+				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
+				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
+				E1F4BEFD1A6090090091EA2E /* more.swift */,
+				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
+				E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */,
+				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
+				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
+				E1F4BEDF1A608DF20091EA2E /* Images.xcassets */,
+				E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */,
+				E1F4BED41A608DF20091EA2E /* Supporting Files */,
+			);
+			path = "2015 FRC Scout";
+			sourceTree = "<group>";
+		};
+		E1F4BED41A608DF20091EA2E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E1F4BED51A608DF20091EA2E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E1F4BEEB1A608DF20091EA2E /* 2015 FRC ScoutTests */ = {
+			isa = PBXGroup;
+			children = (
+				E1F4BEEE1A608DF20091EA2E /* _015_FRC_ScoutTests.swift */,
+				E1F4BEEC1A608DF20091EA2E /* Supporting Files */,
+			);
+			path = "2015 FRC ScoutTests";
+			sourceTree = "<group>";
+		};
+		E1F4BEEC1A608DF20091EA2E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E1F4BEED1A608DF20091EA2E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E1F4BED01A608DF10091EA2E /* 2015 FRC Scout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1F4BEF21A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC Scout" */;
+			buildPhases = (
+				E1F4BECD1A608DF10091EA2E /* Sources */,
+				E1F4BECE1A608DF10091EA2E /* Frameworks */,
+				E1F4BECF1A608DF10091EA2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "2015 FRC Scout";
+			productName = "2015 FRC Scout";
+			productReference = E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E1F4BEE71A608DF20091EA2E /* 2015 FRC ScoutTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC ScoutTests" */;
+			buildPhases = (
+				E1F4BEE41A608DF20091EA2E /* Sources */,
+				E1F4BEE51A608DF20091EA2E /* Frameworks */,
+				E1F4BEE61A608DF20091EA2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E1F4BEEA1A608DF20091EA2E /* PBXTargetDependency */,
+			);
+			name = "2015 FRC ScoutTests";
+			productName = "2015 FRC ScoutTests";
+			productReference = E1F4BEE81A608DF20091EA2E /* 2015 FRC ScoutTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E1F4BEC91A608DF10091EA2E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "David Swed";
+				TargetAttributes = {
+					E1F4BED01A608DF10091EA2E = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					E1F4BEE71A608DF20091EA2E = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = E1F4BED01A608DF10091EA2E;
+					};
+				};
+			};
+			buildConfigurationList = E1F4BECC1A608DF10091EA2E /* Build configuration list for PBXProject "2015 FRC Scout" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E1F4BEC81A608DF10091EA2E;
+			productRefGroup = E1F4BED21A608DF20091EA2E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E1F4BED01A608DF10091EA2E /* 2015 FRC Scout */,
+				E1F4BEE71A608DF20091EA2E /* 2015 FRC ScoutTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E1F4BECF1A608DF10091EA2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1F4BEDE1A608DF20091EA2E /* Main.storyboard in Resources */,
+				E1F4BEE31A608DF20091EA2E /* LaunchScreen.xib in Resources */,
+				E1F4BEE01A608DF20091EA2E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1F4BEE61A608DF20091EA2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E1F4BECD1A608DF10091EA2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1F4BEFE1A6090090091EA2E /* more.swift in Sources */,
+				E1F4BEFC1A608FE90091EA2E /* Data.swift in Sources */,
+				E1F4BF001A6090630091EA2E /* Scoring.swift in Sources */,
+				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
+				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
+				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1F4BEE41A608DF20091EA2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1F4BEEF1A608DF20091EA2E /* _015_FRC_ScoutTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E1F4BEEA1A608DF20091EA2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1F4BED01A608DF10091EA2E /* 2015 FRC Scout */;
+			targetProxy = E1F4BEE91A608DF20091EA2E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E1F4BEDC1A608DF20091EA2E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1F4BEDD1A608DF20091EA2E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1F4BEE21A608DF20091EA2E /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E1F4BEF01A608DF20091EA2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		E1F4BEF11A608DF20091EA2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E1F4BEF31A608DF20091EA2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E1F4BEF41A608DF20091EA2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E1F4BEF61A608DF20091EA2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "2015 FRC ScoutTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/2015 FRC Scout.app/2015 FRC Scout";
+			};
+			name = Debug;
+		};
+		E1F4BEF71A608DF20091EA2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "2015 FRC ScoutTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/2015 FRC Scout.app/2015 FRC Scout";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E1F4BECC1A608DF10091EA2E /* Build configuration list for PBXProject "2015 FRC Scout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1F4BEF01A608DF20091EA2E /* Debug */,
+				E1F4BEF11A608DF20091EA2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1F4BEF21A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC Scout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1F4BEF31A608DF20091EA2E /* Debug */,
+				E1F4BEF41A608DF20091EA2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC ScoutTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1F4BEF61A608DF20091EA2E /* Debug */,
+				E1F4BEF71A608DF20091EA2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */,
+			);
+			currentVersion = E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = ../Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = E1F4BEC91A608DF10091EA2E /* Project object */;
+}
