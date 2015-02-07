@@ -39,7 +39,7 @@ class Scoring: UIViewController {
     @IBOutlet weak var coopTotesLbl: UILabel!
     @IBOutlet weak var coopTotesScoreLbl: UILabel!
     @IBOutlet weak var coopTotesAddBtn: UIButton!
-    @IBOutlet weak var coopTotesSubBtn: UIButton!
+    @IBOutlet weak var coopTotesUndoBtn: UIButton!
     @IBOutlet weak var stackKilledBtn: UIButton!
     @IBOutlet weak var toteStackLbl: UILabel!
     @IBOutlet weak var tote1: UIButton!
@@ -52,7 +52,7 @@ class Scoring: UIViewController {
     @IBOutlet weak var toteBtmInsertBtn: UIButton!
     @IBOutlet weak var containerInsertBtn: UIButton!
     @IBOutlet weak var toteStackAddBtn: UIButton!
-    @IBOutlet weak var toteStackSubBtn: UIButton!
+    @IBOutlet weak var toteStackUndoBtn: UIButton!
     @IBOutlet weak var toteStackScoreLbl: UILabel!
     @IBOutlet weak var coopTote4: UIButton!
     @IBOutlet weak var coopTote3: UIButton!
@@ -60,6 +60,7 @@ class Scoring: UIViewController {
     @IBOutlet weak var coopTote1: UIButton!
     @IBOutlet weak var coopToteInsertBtn: UIButton!
     @IBOutlet weak var coopToteBtmInsertBtn: UIButton!
+    @IBOutlet weak var penaltyBtn: UIButton!
     
     //array of the buttons in the tote stack UI. Initialized in ViewDidLoad()
     var toteBtns = [UIButton]()
@@ -99,6 +100,7 @@ class Scoring: UIViewController {
     var currentToteStack = ToteStack()
     var currentCoopStack = CoopStack()
     var numCoopTotes = 0
+    var numPenalties = 0
     
     //Variable stores if Autonomous mode is showing. false if in teleop mode
     var autoShowing = true
@@ -152,8 +154,8 @@ class Scoring: UIViewController {
         coopTotesScoreLbl.hidden = false
         coopTotesAddBtn.enabled = true
         coopTotesAddBtn.hidden = false
-        coopTotesSubBtn.enabled = true
-        coopTotesSubBtn.hidden = false
+        coopTotesUndoBtn.enabled = true
+        coopTotesUndoBtn.hidden = false
         coopTote1.enabled = true
         coopTote1.hidden = false
         coopTote2.enabled = true
@@ -172,8 +174,8 @@ class Scoring: UIViewController {
         toteStackScoreLbl.hidden = false
         toteStackAddBtn.enabled = true
         toteStackAddBtn.hidden = false
-        toteStackSubBtn.enabled = true
-        toteStackSubBtn.hidden = false
+        toteStackUndoBtn.enabled = true
+        toteStackUndoBtn.hidden = false
         tote1.enabled = true
         tote1.hidden = false
         tote2.enabled = true
@@ -194,6 +196,8 @@ class Scoring: UIViewController {
         containerInsertBtn.hidden = true
         stackKilledBtn.enabled = true
         stackKilledBtn.hidden = false
+        penaltyBtn.enabled = true
+        penaltyBtn.hidden = false
         modeLbl.text = "Teleoperated Scoring Mode"
         autoShowing = false
     }
@@ -245,8 +249,8 @@ class Scoring: UIViewController {
         coopTotesScoreLbl.hidden = true
         coopTotesAddBtn.enabled = false
         coopTotesAddBtn.hidden = true
-        coopTotesSubBtn.enabled = false
-        coopTotesSubBtn.hidden = true
+        coopTotesUndoBtn.enabled = false
+        coopTotesUndoBtn.hidden = true
         coopTote1.enabled = false
         coopTote1.hidden = true
         coopTote2.enabled = false
@@ -265,8 +269,8 @@ class Scoring: UIViewController {
         toteStackScoreLbl.hidden = true
         toteStackAddBtn.enabled = false
         toteStackAddBtn.hidden = true
-        toteStackSubBtn.enabled = false
-        toteStackSubBtn.hidden = true
+        toteStackUndoBtn.enabled = false
+        toteStackUndoBtn.hidden = true
         tote1.enabled = false
         tote1.hidden = true
         tote2.enabled = false
@@ -287,6 +291,8 @@ class Scoring: UIViewController {
         containerInsertBtn.hidden = true
         stackKilledBtn.enabled = false
         stackKilledBtn.hidden = true
+        penaltyBtn.enabled = false
+        penaltyBtn.hidden = true
         modeLbl.text = "Autonomous Scoring Mode"
         autoShowing = true
     }
@@ -434,9 +440,12 @@ class Scoring: UIViewController {
     }
     
     //removes the last scored tote stack
-    @IBAction func toteStackSubBtnPress(sender: AnyObject) {
-        //check to make sure there is a toteStack scored
-        if(toteStacks.count > 0){
+    @IBAction func toteStackUndoBtnPress(sender: AnyObject) {
+        //If there is a current stack, reset it
+        if(currentToteStack.totes.count > 0){
+            resetToteStack()
+        }
+        else if(toteStacks.count > 0){ //else remove last stack
             toteStacks.removeLast()
             toteStackScoreLbl.text = "\(toteStacks.count)"
         }
@@ -461,21 +470,22 @@ class Scoring: UIViewController {
     }
     
     //remove last scored coop stack
-    @IBAction func coopStackSubBtnPress(sender: AnyObject) {
-        //subtract from number of used coop totes
-        var newToteInStack = false
-        for tote in coopStacks[coopStacks.count-1].totes {
-            if (tote == true) {
-                newToteInStack = true
-                numCoopTotes--
+    @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
+        
+        
+        if(coopStacks.count > 0 && currentCoopStack.totes.count==0){   //check that is a stack to remove
+            //subtract from number of used coop totes
+            var newToteInStack = false
+            for tote in coopStacks[coopStacks.count-1].totes {
+                if (tote == true) {
+                    newToteInStack = true
+                    numCoopTotes--
+                }
             }
-        }
-        resetCoopStack()
-        //check that is a stack to remove
-        if(coopStacks.count > 0){
             coopStacks.removeLast()
             coopTotesScoreLbl.text = "\(coopStacks.count)"
         }
+        resetCoopStack()
     }
     
     //a tote in the tote stack has been touched. That tote and all of the
@@ -647,6 +657,16 @@ class Scoring: UIViewController {
         
     }
     
+    //adds to number of stacks knocked over
+    @IBAction func knockStackBtnPress(sender: AnyObject) {
+        numStacksKnockedOver++
+    }
+    
+    //adds to number of penalties in match
+    @IBAction func penaltyBtnPress(sender: AnyObject) {
+        numPenalties++
+    }
+    
     //adds coop tote to top of currentCoopStack
     @IBAction func coopInsertBtnPress(sender: AnyObject) {
         insertCoopTote(false)
@@ -711,6 +731,7 @@ class Scoring: UIViewController {
         }
         currentCoopStack = CoopStack()
         coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[0]
+        println(numCoopTotes)
         if(numCoopTotes < 3){
             coopToteInsertBtn.hidden = false
             coopToteInsertBtn.enabled = true
@@ -723,6 +744,7 @@ class Scoring: UIViewController {
     @IBAction func coopBtmInsertBtnPress(sender: AnyObject) {
         insertCoopTote(true)
     }
+    
     
     //switchs between auto and tele scorring mode
     func twoFingerPanDetected(recognizer: UIPanGestureRecognizer) {
