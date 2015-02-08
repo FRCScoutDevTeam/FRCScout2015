@@ -772,6 +772,7 @@ class Scoring: UIViewController {
         insertCoopTote(true)
     }
     
+    
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
