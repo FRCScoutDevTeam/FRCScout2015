@@ -165,8 +165,82 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+<<<<<<< HEAD
+                                <connections>
+                                    <action selector="saveMatchButtonPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="EEb-so-eBu"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noodles in Containers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bTS-5N-oof">
+                                <rect key="frame" x="487" y="695" width="170" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yAz-m8-OQm">
+                                <rect key="frame" x="559" y="735" width="27" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eZZ-uT-1hW">
+                                <rect key="frame" x="614" y="730" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="noodleContainerAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="LBK-uR-hcy"/>
+                                </connections>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wiw-2J-uF2">
+                                <rect key="frame" x="479" y="730" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Sub">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="noodleContainerSubBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="YZP-wb-0Gi"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ruO-Dp-iXr">
+                                <rect key="frame" x="567" y="640" width="10" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZOp-Kh-Ifg">
+                                <rect key="frame" x="614" y="636" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="coopStackAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="DHd-7e-AeH"/>
+                                </connections>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zSV-bb-qKs">
+                                <rect key="frame" x="479" y="635" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Undo">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="coopStackUndoBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="ctI-My-YDu"/>
+=======
                                 <connections>
                                     <action selector="autoDriveBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="ycc-ii-0Vl"/>
+>>>>>>> origin/master
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Totes In stack" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sKn-rc-C52" userLabel="TotesInStackLbl">
@@ -176,7 +250,42 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+<<<<<<< HEAD
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Ff-H0-6uS">
+                                <rect key="frame" x="171" y="822" width="10" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e7Y-lA-zgd">
+                                <rect key="frame" x="212" y="817" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toteStackAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="cWO-OL-xS8"/>
+                                </connections>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fhL-Dq-yw5">
+                                <rect key="frame" x="77" y="816" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Undo">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toteStackUndoBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Gus-jl-bLw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zy1-4C-NM2">
+=======
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zy1-4C-NM2" userLabel="Tote1Btn">
+>>>>>>> origin/master
                                 <rect key="frame" x="121" y="720" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.43556602270422839" green="0.42030089373741975" blue="0.47431344696969702" alpha="1" colorSpace="calibratedRGB"/>
@@ -421,6 +530,26 @@
                                     <action selector="coopStackAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="DHd-7e-AeH"/>
                                 </connections>
                             </button>
+<<<<<<< HEAD
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bIP-WS-yWX">
+                                <rect key="frame" x="105" y="878" width="142" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Knocked Stack Over">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="knockStackBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="AEY-DH-APW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FYW-1E-xEw">
+                                <rect key="frame" x="151" y="928" width="51" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Penalty">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+=======
                             <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zSV-bb-qKs" userLabel="TotesOnStepSubtract">
                                 <rect key="frame" x="479" y="635" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -516,8 +645,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Finish Match">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+>>>>>>> origin/master
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="penaltyBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="2pQ-RQ-mso"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -548,15 +681,16 @@
                         <outlet property="coopTotesAddBtn" destination="ZOp-Kh-Ifg" id="Qsh-4l-Aoh"/>
                         <outlet property="coopTotesLbl" destination="5P4-zI-P2r" id="qdG-QC-PRT"/>
                         <outlet property="coopTotesScoreLbl" destination="ruO-Dp-iXr" id="cfu-vZ-zFb"/>
-                        <outlet property="coopTotesSubBtn" destination="zSV-bb-qKs" id="d9s-aE-3fv"/>
+                        <outlet property="coopTotesUndoBtn" destination="zSV-bb-qKs" id="v2E-ef-a77"/>
                         <outlet property="landfillNoodleAddBtn" destination="RCY-HK-fQN" id="EIY-jJ-UOg"/>
                         <outlet property="landfillNoodleLbl" destination="3VK-YQ-zyy" id="7Bz-4E-QsZ"/>
                         <outlet property="landfillNoodleScoreLbl" destination="hco-4e-qt4" id="pg8-8G-yx0"/>
                         <outlet property="landfillNoodleSubBtn" destination="DNr-8w-Q4T" id="SmL-9G-q0n"/>
                         <outlet property="matchNumberLbl" destination="7Ko-4i-4ns" id="u1F-54-n8L"/>
                         <outlet property="modeLbl" destination="HHm-Yd-2eT" id="tWD-n5-RdN"/>
+                        <outlet property="penaltyBtn" destination="FYW-1E-xEw" id="19h-FN-lKx"/>
                         <outlet property="scoutPosLbl" destination="FVo-fo-8hd" id="dmB-Nq-is7"/>
-                        <outlet property="stackKilledBtn" destination="Pn0-Ec-fBI" id="nX5-sp-ZMy"/>
+                        <outlet property="stackKilledBtn" destination="bIP-WS-yWX" id="iAu-zS-c1T"/>
                         <outlet property="swipeGesture" destination="qDc-pV-yu1" id="a0F-vL-RNO"/>
                         <outlet property="teamNumberLbl" destination="hZO-YL-DS0" id="lFa-qO-ksR"/>
                         <outlet property="tote1" destination="zy1-4C-NM2" id="Ce3-57-vAb"/>
@@ -570,7 +704,7 @@
                         <outlet property="toteStackAddBtn" destination="e7Y-lA-zgd" id="DFb-Lz-56J"/>
                         <outlet property="toteStackLbl" destination="sKn-rc-C52" id="aPd-7B-djK"/>
                         <outlet property="toteStackScoreLbl" destination="6Ff-H0-6uS" id="HC9-yu-0K6"/>
-                        <outlet property="toteStackSubBtn" destination="fhL-Dq-yw5" id="UEj-bt-ont"/>
+                        <outlet property="toteStackUndoBtn" destination="fhL-Dq-yw5" id="ph1-2L-VUl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -585,13 +719,59 @@
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+<<<<<<< HEAD
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap To Capture Image" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fBN-yK-P1p">
+                                <rect key="frame" x="31" y="7" width="144" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9QC-0B-Eae">
+                                <rect key="frame" x="57" y="46" width="93" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.80699573863636365" green="0.77426488020653939" blue="0.79997840528762898" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Plus">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input Team Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1rb-vn-22j">
+                                <rect key="frame" x="308" y="46" width="152" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Team Number" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="202-Fx-tN2">
+                                <rect key="frame" x="329" y="75" width="111" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input Team Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WRa-0Q-GYE">
+                                <rect key="frame" x="569" y="46" width="135" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Team Name" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="SZU-T8-VGd">
+                                <rect key="frame" x="569" y="75" width="135" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+=======
+>>>>>>> origin/master
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Pit Scouting" image="PitScouting" id="cPa-gy-q4n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="960" y="614.40000000000009"/>
+            <point key="canvasLocation" x="960" y="614"/>
         </scene>
         <!--Data-->
         <scene sceneID="NyH-zE-jYb">
