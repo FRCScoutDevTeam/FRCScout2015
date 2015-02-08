@@ -351,7 +351,7 @@ class Scoring: UIViewController {
             btn.enabled = true
             btn.hidden = false
         }
-        currentToteStack = ToteStack()
+        currentToteStack = ToteStackStruct()
         toteInsertBtn.frame.origin.y = toteInsertBtnLocations[0]
         containerInsertBtn.hidden = true
         containerInsertBtn.enabled = false
@@ -369,7 +369,7 @@ class Scoring: UIViewController {
             btn.enabled = true
             btn.hidden = false
         }
-        currentCoopStack = CoopStack()
+        currentCoopStack = CoopStackStruct()
         coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[0]
         if(numCoopTotes < 3){
             coopToteInsertBtn.hidden = false
@@ -664,27 +664,6 @@ class Scoring: UIViewController {
         
     }
     
-<<<<<<< HEAD
-    //resets the UI for the tote stack
-    func resetToteStack(){
-        for btn in toteBtns {
-            btn.alpha = 0.5
-            btn.backgroundColor = UIColor.darkGrayColor()
-            btn.enabled = true
-            btn.hidden = false
-        }
-        currentToteStack = ToteStackStruct()
-        toteInsertBtn.frame.origin.y = toteInsertBtnLocations[0]
-        containerInsertBtn.hidden = true
-        containerInsertBtn.enabled = false
-        toteBtmInsertBtn.enabled = false
-        toteBtmInsertBtn.hidden = true
-        containerInsertBtn.frame.origin.y = containerInsertBtnLocations[0]
-        containerInsertBtn.frame.origin.x = containerInsertBtnSide
-    }
-    
-=======
->>>>>>> origin/master
     //a coop totes in the stack UI has been touched. That coop tote
     //and those below it will be marked as having been there before
     @IBAction func coopTouch(sender: UIButton) {
@@ -788,33 +767,11 @@ class Scoring: UIViewController {
         }
     }
     
-<<<<<<< HEAD
-    //resets the coop stack
-    func resetCoopStack(){
-        for btn in coopBtns {
-            btn.alpha = 0.5
-            btn.backgroundColor = UIColor.yellowColor()
-            btn.enabled = true
-            btn.hidden = false
-        }
-        currentCoopStack = CoopStackStruct()
-        coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[0]
-        if(numCoopTotes < 3){
-            coopToteInsertBtn.hidden = false
-            coopToteInsertBtn.enabled = true
-        }
-        coopToteBtmInsertBtn.hidden = true
-        coopToteBtmInsertBtn.enabled = false
-    }
-    
-=======
->>>>>>> origin/master
     //inserts a coop tote into the bottom of the stack
     @IBAction func coopBtmInsertBtnPress(sender: AnyObject) {
         insertCoopTote(true)
     }
     
-<<<<<<< HEAD
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -887,37 +844,4 @@ class Scoring: UIViewController {
         }
     }*/
     
-    //switchs between auto and tele scorring mode
-    func twoFingerPanDetected(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translationInView(self.view)
-        if (  recognizer.state == UIGestureRecognizerState.Ended){
-            if( autoShowing && translation.y > 50){
-                showTeleop()
-            } else if(translation.y < -50) {
-                showAuto()
-            }
-        }
-    }
-    
-    
-    override func viewDidLoad() {
-        toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
-        coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
-        super.viewDidLoad()
-        resetScoringScreen()
-        showAuto()
-        self.view.userInteractionEnabled = true
-        self.view.multipleTouchEnabled = true
-        swipeGesture.addTarget(self, action: "twoFingerPanDetected:")
-        swipeGesture.minimumNumberOfTouches = 2
-        self.view.addGestureRecognizer(swipeGesture)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-
-=======
->>>>>>> origin/master
 }
