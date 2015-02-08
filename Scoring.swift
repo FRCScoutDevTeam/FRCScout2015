@@ -762,7 +762,7 @@ class Scoring: UIViewController {
         newMatch.penalty = numPenalties
         newMatch.stacksKnockedOver = numStacksKnockedOver
         newMatch.noodlesInLandfill = numNoodlesPushedInLandfill
-        //newMatch.uniqueID
+        newMatch.uniqueID =  Int(NSDate().timeIntervalSince1970)
         //Match number
         //Match type
         //Totes
@@ -795,7 +795,6 @@ class Scoring: UIViewController {
         
         
         context.save(nil)
-        loadSaved()
     }
     
     /*func loadSaved() {
