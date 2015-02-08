@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class Scoring: UIViewController {
 
@@ -77,12 +78,12 @@ class Scoring: UIViewController {
     //x postion of the container insert button when it's in the center of the tote stack
     var containerInsertBtnCenter: CGFloat = 141
     //Score Variables
-    struct ToteStack {
+    struct ToteStackStruct {
         var totes = [Bool]()
         var containerLvl = 0
     }
     
-    struct CoopStack {
+    struct CoopStackStruct {
         var totes = [Bool]()
     }
     
@@ -91,14 +92,14 @@ class Scoring: UIViewController {
     var numNoodlesInContainer = 0
     var numNoodlesPushedInLandfill = 0
     var numStacksKnockedOver = 0
-    var toteStacks = [ToteStack]()
-    var coopStacks = [CoopStack]()
+    var toteStacks = [ToteStackStruct]()
+    var coopStacks = [CoopStackStruct]()
     var numAutoTotes = 0
     var numAutoContainers = 0
     var autoDrive = false
     var autoStack = false
-    var currentToteStack = ToteStack()
-    var currentCoopStack = CoopStack()
+    var currentToteStack = ToteStackStruct()
+    var currentCoopStack = CoopStackStruct()
     var numCoopTotes = 0
     var numPenalties = 0
     
@@ -305,8 +306,8 @@ class Scoring: UIViewController {
         numNoodlesInContainer = 0
         numNoodlesPushedInLandfill = 0
         numStacksKnockedOver = 0
-        toteStacks = [ToteStack]()
-        coopStacks = [CoopStack]()
+        toteStacks = [ToteStackStruct]()
+        coopStacks = [CoopStackStruct]()
         numAutoTotes = 0
         numAutoContainers = 0
         autoDrive = false
@@ -608,7 +609,7 @@ class Scoring: UIViewController {
             btn.enabled = true
             btn.hidden = false
         }
-        currentToteStack = ToteStack()
+        currentToteStack = ToteStackStruct()
         toteInsertBtn.frame.origin.y = toteInsertBtnLocations[0]
         containerInsertBtn.hidden = true
         containerInsertBtn.enabled = false
@@ -729,9 +730,8 @@ class Scoring: UIViewController {
             btn.enabled = true
             btn.hidden = false
         }
-        currentCoopStack = CoopStack()
+        currentCoopStack = CoopStackStruct()
         coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[0]
-        println(numCoopTotes)
         if(numCoopTotes < 3){
             coopToteInsertBtn.hidden = false
             coopToteInsertBtn.enabled = true
@@ -745,6 +745,78 @@ class Scoring: UIViewController {
         insertCoopTote(true)
     }
     
+    //Saves match data
+    @IBAction func saveMatchButtonPress(sender: AnyObject) {
+        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        
+        let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
+        
+        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
+        
+        newMatch.autoContainers = numAutoContainers
+        newMatch.autoTotes = numAutoTotes
+        newMatch.numCoopStacks = numCoopStacks
+        newMatch.numStacks = numStacks
+        newMatch.noodlesInContainer = numNoodlesInContainer
+        newMatch.penalty = numPenalties
+        newMatch.stacksKnockedOver = numStacksKnockedOver
+        newMatch.noodlesInLandfill = numNoodlesPushedInLandfill
+        //newMatch.uniqueID
+        //Match number
+        //Match type
+        //Totes
+        //Recording team
+        newMatch.autoDrive = autoDrive
+        newMatch.autoStack = autoStack
+        for stack in toteStacks {
+            var numTotes = stack.totes.count
+            var newToteStack: ToteStack = NSEntityDescription.insertNewObjectForEntityForName("ToteStack", inManagedObjectContext: context) as ToteStack
+            if(numTotes >= 1) {newToteStack.tote1 = (stack.totes[0]) ? 2:1} else {newToteStack.tote1 = 0}
+            if(numTotes >= 2) {newToteStack.tote2 = (stack.totes[1]) ? 2:1} else {newToteStack.tote2 = 0}
+            if(numTotes >= 3) {newToteStack.tote3 = (stack.totes[2]) ? 2:1} else {newToteStack.tote3 = 0}
+            if(numTotes >= 4) {newToteStack.tote4 = (stack.totes[3]) ? 2:1} else {newToteStack.tote4 = 0}
+            if(numTotes >= 5) {newToteStack.tote5 = (stack.totes[4]) ? 2:1} else {newToteStack.tote5 = 0}
+            if(numTotes >= 6) {newToteStack.tote6 = (stack.totes[5]) ? 2:1} else {newToteStack.tote6 = 0}
+            newToteStack.containerLvl = stack.containerLvl
+            newMatch.addToteStack(newToteStack)
+        }
+        for stack in coopStacks {
+            var numTotes = stack.totes.count
+            var newCoopStack: CoopStack = NSEntityDescription.insertNewObjectForEntityForName("CoopStack", inManagedObjectContext: context) as CoopStack
+            if(numTotes >= 1) {newCoopStack.tote1 = (stack.totes[0]) ? 2:1} else {newCoopStack.tote1 = 0}
+            if(numTotes >= 2) {newCoopStack.tote2 = (stack.totes[1]) ? 2:1} else {newCoopStack.tote2 = 0}
+            if(numTotes >= 3) {newCoopStack.tote3 = (stack.totes[2]) ? 2:1} else {newCoopStack.tote3 = 0}
+            if(numTotes >= 4) {newCoopStack.tote4 = (stack.totes[3]) ? 2:1} else {newCoopStack.tote4 = 0}
+            newMatch.addCoopStack(newCoopStack)
+        }
+        
+        
+        
+        
+        context.save(nil)
+        loadSaved()
+    }
+    
+    /*func loadSaved() {
+        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        
+        let request = NSFetchRequest(entityName: "Match")
+        request.returnsObjectsAsFaults = false
+        
+        var results:NSArray = context.executeFetchRequest(request, error: nil)!
+        
+        for res in results{
+            
+            var newMatch = res as Match
+            for stack in newMatch.coopStacks {
+                
+                var newStack = stack as CoopStack
+                //println("tote1 \(newStack.tote1)")
+            }
+        }
+    }*/
     
     //switchs between auto and tele scorring mode
     func twoFingerPanDetected(recognizer: UIPanGestureRecognizer) {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515501A8732EC00C48D6F /* MatchExtension.swift */; };
+		E1B515531A87336A00C48D6F /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515521A87336A00C48D6F /* CoopStack.swift */; };
+		E1B515551A87336A00C48D6F /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515541A87336A00C48D6F /* ToteStack.swift */; };
+		E1B515571A8733CE00C48D6F /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515561A8733CE00C48D6F /* Match.swift */; };
 		E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BED61A608DF20091EA2E /* AppDelegate.swift */; };
 		E1F4BEDE1A608DF20091EA2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEDC1A608DF20091EA2E /* Main.storyboard */; };
 		E1F4BEE01A608DF20091EA2E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEDF1A608DF20091EA2E /* Images.xcassets */; };
@@ -30,6 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E1B515501A8732EC00C48D6F /* MatchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchExtension.swift; sourceTree = "<group>"; };
+		E1B515521A87336A00C48D6F /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoopStack.swift; sourceTree = "<group>"; };
+		E1B515541A87336A00C48D6F /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToteStack.swift; sourceTree = "<group>"; };
+		E1B515561A8733CE00C48D6F /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2015 FRC Scout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F4BED51A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1F4BED61A608DF20091EA2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,7 +50,7 @@
 		E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Data.swift; path = ../Data.swift; sourceTree = "<group>"; };
 		E1F4BEFD1A6090090091EA2E /* more.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = more.swift; path = ../more.swift; sourceTree = "<group>"; };
-		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; };
+		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitScouting.swift; path = ../PitScouting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +72,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E1B5154D1A8714E000C48D6F /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				E1B515561A8733CE00C48D6F /* Match.swift */,
+				E1B515521A87336A00C48D6F /* CoopStack.swift */,
+				E1B515541A87336A00C48D6F /* ToteStack.swift */,
+				E1B515501A8732EC00C48D6F /* MatchExtension.swift */,
+			);
+			name = ManagedObjects;
+			sourceTree = "<group>";
+		};
 		E1F4BEC81A608DF10091EA2E = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +104,7 @@
 		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
 			isa = PBXGroup;
 			children = (
+				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
 				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
 				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
 				E1F4BEFD1A6090090091EA2E /* more.swift */,
@@ -226,10 +246,14 @@
 			files = (
 				E1F4BEFE1A6090090091EA2E /* more.swift in Sources */,
 				E1F4BEFC1A608FE90091EA2E /* Data.swift in Sources */,
+				E1B515531A87336A00C48D6F /* CoopStack.swift in Sources */,
+				E1B515571A8733CE00C48D6F /* Match.swift in Sources */,
+				E1B515551A87336A00C48D6F /* ToteStack.swift in Sources */,
 				E1F4BF001A6090630091EA2E /* Scoring.swift in Sources */,
 				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
 				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
+				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +447,7 @@
 				E1F4BEF41A608DF20091EA2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC ScoutTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +456,7 @@
 				E1F4BEF71A608DF20091EA2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
