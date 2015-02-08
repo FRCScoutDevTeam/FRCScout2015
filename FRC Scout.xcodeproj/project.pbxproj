@@ -15,10 +15,10 @@
 		E1F4BEDE1A608DF20091EA2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEDC1A608DF20091EA2E /* Main.storyboard */; };
 		E1F4BEE01A608DF20091EA2E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEDF1A608DF20091EA2E /* Images.xcassets */; };
 		E1F4BEE31A608DF20091EA2E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */; };
-		E1F4BEEF1A608DF20091EA2E /* _015_FRC_ScoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEEE1A608DF20091EA2E /* _015_FRC_ScoutTests.swift */; };
+		E1F4BEEF1A608DF20091EA2E /* FRC_ScoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEEE1A608DF20091EA2E /* FRC_ScoutTests.swift */; };
 		E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */; };
 		E1F4BEFC1A608FE90091EA2E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFB1A608FE90091EA2E /* Data.swift */; };
-		E1F4BEFE1A6090090091EA2E /* more.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFD1A6090090091EA2E /* more.swift */; };
+		E1F4BEFE1A6090090091EA2E /* More.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFD1A6090090091EA2E /* More.swift */; };
 		E1F4BF001A6090630091EA2E /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BEFF1A6090630091EA2E /* Scoring.swift */; };
 		E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BF011A60907A0091EA2E /* PitScouting.swift */; };
 /* End PBXBuildFile section */
@@ -34,23 +34,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD:2015 FRC Scout.xcodeproj/project.pbxproj
 		E1B515501A8732EC00C48D6F /* MatchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchExtension.swift; sourceTree = "<group>"; };
 		E1B515521A87336A00C48D6F /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoopStack.swift; sourceTree = "<group>"; };
 		E1B515541A87336A00C48D6F /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToteStack.swift; sourceTree = "<group>"; };
 		E1B515561A8733CE00C48D6F /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2015 FRC Scout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		E1F4BED11A608DF20091EA2E /* FRC Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRC Scout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> origin/master:FRC Scout.xcodeproj/project.pbxproj
 		E1F4BED51A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1F4BED61A608DF20091EA2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F4BEDD1A608DF20091EA2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1F4BEDF1A608DF20091EA2E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E1F4BEE21A608DF20091EA2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		E1F4BEE81A608DF20091EA2E /* 2015 FRC ScoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "2015 FRC ScoutTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1F4BEE81A608DF20091EA2E /* FRC ScoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FRC ScoutTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F4BEED1A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E1F4BEEE1A608DF20091EA2E /* _015_FRC_ScoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _015_FRC_ScoutTests.swift; sourceTree = "<group>"; };
+		E1F4BEEE1A608DF20091EA2E /* FRC_ScoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRC_ScoutTests.swift; sourceTree = "<group>"; };
 		E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Data.swift; path = ../Data.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD:2015 FRC Scout.xcodeproj/project.pbxproj
 		E1F4BEFD1A6090090091EA2E /* more.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = more.swift; path = ../more.swift; sourceTree = "<group>"; };
 		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+=======
+		E1F4BEFD1A6090090091EA2E /* More.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = More.swift; path = ../More.swift; sourceTree = "<group>"; };
+		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; };
+>>>>>>> origin/master:FRC Scout.xcodeproj/project.pbxproj
 		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitScouting.swift; path = ../PitScouting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,8 +104,8 @@
 		E1F4BED21A608DF20091EA2E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */,
-				E1F4BEE81A608DF20091EA2E /* 2015 FRC ScoutTests.xctest */,
+				E1F4BED11A608DF20091EA2E /* FRC Scout.app */,
+				E1F4BEE81A608DF20091EA2E /* FRC ScoutTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,14 +113,17 @@
 		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD:2015 FRC Scout.xcodeproj/project.pbxproj
 				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
 				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
-				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
-				E1F4BEFD1A6090090091EA2E /* more.swift */,
-				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
-				E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */,
-				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
+=======
 				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
+>>>>>>> origin/master:FRC Scout.xcodeproj/project.pbxproj
+				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
+				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
+				E1F4BEFD1A6090090091EA2E /* More.swift */,
+				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
+				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
 				E1F4BEDF1A608DF20091EA2E /* Images.xcassets */,
 				E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */,
 				E1F4BED41A608DF20091EA2E /* Supporting Files */,
@@ -123,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F4BED51A608DF20091EA2E /* Info.plist */,
+				E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -130,7 +143,7 @@
 		E1F4BEEB1A608DF20091EA2E /* 2015 FRC ScoutTests */ = {
 			isa = PBXGroup;
 			children = (
-				E1F4BEEE1A608DF20091EA2E /* _015_FRC_ScoutTests.swift */,
+				E1F4BEEE1A608DF20091EA2E /* FRC_ScoutTests.swift */,
 				E1F4BEEC1A608DF20091EA2E /* Supporting Files */,
 			);
 			path = "2015 FRC ScoutTests";
@@ -147,9 +160,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E1F4BED01A608DF10091EA2E /* 2015 FRC Scout */ = {
+		E1F4BED01A608DF10091EA2E /* FRC Scout */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E1F4BEF21A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC Scout" */;
+			buildConfigurationList = E1F4BEF21A608DF20091EA2E /* Build configuration list for PBXNativeTarget "FRC Scout" */;
 			buildPhases = (
 				E1F4BECD1A608DF10091EA2E /* Sources */,
 				E1F4BECE1A608DF10091EA2E /* Frameworks */,
@@ -159,14 +172,14 @@
 			);
 			dependencies = (
 			);
-			name = "2015 FRC Scout";
+			name = "FRC Scout";
 			productName = "2015 FRC Scout";
-			productReference = E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */;
+			productReference = E1F4BED11A608DF20091EA2E /* FRC Scout.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E1F4BEE71A608DF20091EA2E /* 2015 FRC ScoutTests */ = {
+		E1F4BEE71A608DF20091EA2E /* FRC ScoutTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC ScoutTests" */;
+			buildConfigurationList = E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "FRC ScoutTests" */;
 			buildPhases = (
 				E1F4BEE41A608DF20091EA2E /* Sources */,
 				E1F4BEE51A608DF20091EA2E /* Frameworks */,
@@ -177,9 +190,9 @@
 			dependencies = (
 				E1F4BEEA1A608DF20091EA2E /* PBXTargetDependency */,
 			);
-			name = "2015 FRC ScoutTests";
+			name = "FRC ScoutTests";
 			productName = "2015 FRC ScoutTests";
-			productReference = E1F4BEE81A608DF20091EA2E /* 2015 FRC ScoutTests.xctest */;
+			productReference = E1F4BEE81A608DF20091EA2E /* FRC ScoutTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -193,6 +206,7 @@
 				TargetAttributes = {
 					E1F4BED01A608DF10091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 44423KM89M;
 					};
 					E1F4BEE71A608DF20091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -200,7 +214,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E1F4BECC1A608DF10091EA2E /* Build configuration list for PBXProject "2015 FRC Scout" */;
+			buildConfigurationList = E1F4BECC1A608DF10091EA2E /* Build configuration list for PBXProject "FRC Scout" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -213,8 +227,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E1F4BED01A608DF10091EA2E /* 2015 FRC Scout */,
-				E1F4BEE71A608DF20091EA2E /* 2015 FRC ScoutTests */,
+				E1F4BED01A608DF10091EA2E /* FRC Scout */,
+				E1F4BEE71A608DF20091EA2E /* FRC ScoutTests */,
 			);
 		};
 /* End PBXProject section */
@@ -244,7 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1F4BEFE1A6090090091EA2E /* more.swift in Sources */,
+				E1F4BEFE1A6090090091EA2E /* More.swift in Sources */,
 				E1F4BEFC1A608FE90091EA2E /* Data.swift in Sources */,
 				E1B515531A87336A00C48D6F /* CoopStack.swift in Sources */,
 				E1B515571A8733CE00C48D6F /* Match.swift in Sources */,
@@ -261,7 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1F4BEEF1A608DF20091EA2E /* _015_FRC_ScoutTests.swift in Sources */,
+				E1F4BEEF1A608DF20091EA2E /* FRC_ScoutTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +284,7 @@
 /* Begin PBXTargetDependency section */
 		E1F4BEEA1A608DF20091EA2E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E1F4BED01A608DF10091EA2E /* 2015 FRC Scout */;
+			target = E1F4BED01A608DF10091EA2E /* FRC Scout */;
 			targetProxy = E1F4BEE91A608DF20091EA2E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -380,7 +394,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "FRC Scout";
 			};
 			name = Debug;
 		};
@@ -390,7 +404,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "FRC Scout";
 			};
 			name = Release;
 		};
@@ -408,8 +422,7 @@
 				);
 				INFOPLIST_FILE = "2015 FRC ScoutTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/2015 FRC Scout.app/2015 FRC Scout";
+				PRODUCT_NAME = "FRC ScoutTests";
 			};
 			name = Debug;
 		};
@@ -423,15 +436,14 @@
 				);
 				INFOPLIST_FILE = "2015 FRC ScoutTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/2015 FRC Scout.app/2015 FRC Scout";
+				PRODUCT_NAME = "FRC ScoutTests";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E1F4BECC1A608DF10091EA2E /* Build configuration list for PBXProject "2015 FRC Scout" */ = {
+		E1F4BECC1A608DF10091EA2E /* Build configuration list for PBXProject "FRC Scout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E1F4BEF01A608DF20091EA2E /* Debug */,
@@ -440,7 +452,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E1F4BEF21A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC Scout" */ = {
+		E1F4BEF21A608DF20091EA2E /* Build configuration list for PBXNativeTarget "FRC Scout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E1F4BEF31A608DF20091EA2E /* Debug */,
@@ -449,7 +461,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "2015 FRC ScoutTests" */ = {
+		E1F4BEF51A608DF20091EA2E /* Build configuration list for PBXNativeTarget "FRC ScoutTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E1F4BEF61A608DF20091EA2E /* Debug */,
