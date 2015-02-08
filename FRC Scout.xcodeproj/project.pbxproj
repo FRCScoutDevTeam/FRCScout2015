@@ -86,8 +86,8 @@
 			isa = PBXGroup;
 			children = (
 				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
-				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
 				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
+				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
 				E1F4BEFD1A6090090091EA2E /* More.swift */,
 				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
 				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
@@ -173,6 +173,7 @@
 				TargetAttributes = {
 					E1F4BED01A608DF10091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 44423KM89M;
 					};
 					E1F4BEE71A608DF20091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
