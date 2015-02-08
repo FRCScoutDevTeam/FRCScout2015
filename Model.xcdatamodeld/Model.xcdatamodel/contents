@@ -1,4 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+    <entity name="CoopStack" representedClassName="CoopStack" syncable="YES">
+        <attribute name="tote1" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote2" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote3" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote4" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="match" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="coopStacks" inverseEntity="Match" syncable="YES"/>
+    </entity>
+    <entity name="Match" representedClassName="Match" syncable="YES">
+        <attribute name="autoContainers" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="autoDrive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoStack" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoTotes" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="matchNum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="matchType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noodlesInContainer" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="noodlesInLandfill" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numCoopStacks" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="numStacks" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="penalty" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="recordingTeam" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stacksKnockedOver" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="coopStacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoopStack" inverseName="match" inverseEntity="CoopStack" syncable="YES"/>
+        <relationship name="toteStacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToteStack" inverseName="match" inverseEntity="ToteStack" syncable="YES"/>
+    </entity>
+    <entity name="ToteStack" representedClassName="ToteStack" syncable="YES">
+        <attribute name="containerLvl" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote1" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote2" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote3" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote4" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote5" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tote6" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="match" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="toteStacks" inverseEntity="Match" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CoopStack" positionX="232" positionY="98" width="128" height="133"/>
+        <element name="Match" positionX="-117" positionY="107" width="128" height="298"/>
+        <element name="ToteStack" positionX="81" positionY="-0" width="128" height="178"/>
+    </elements>
 </model>

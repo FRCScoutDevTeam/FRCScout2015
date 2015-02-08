@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E0B3AF60-F474-445B-B6CF-D3D7D1738753</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FRC Scout</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3B927DB2227DF7C7E9A439839C44BA6441F3C9B9</key>
+		<string>ssh://github.com/FRCScoutDevTeam/FRCScout2015.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FRC Scout.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3B927DB2227DF7C7E9A439839C44BA6441F3C9B9</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/FRCScoutDevTeam/FRCScout2015.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3B927DB2227DF7C7E9A439839C44BA6441F3C9B9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3B927DB2227DF7C7E9A439839C44BA6441F3C9B9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FRCScout</string>
+		</dict>
+	</array>
+</dict>
+</plist>

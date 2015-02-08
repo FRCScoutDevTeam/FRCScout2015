@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class Scoring: UIViewController {
 
@@ -39,7 +40,7 @@ class Scoring: UIViewController {
     @IBOutlet weak var coopTotesLbl: UILabel!
     @IBOutlet weak var coopTotesScoreLbl: UILabel!
     @IBOutlet weak var coopTotesAddBtn: UIButton!
-    @IBOutlet weak var coopTotesSubBtn: UIButton!
+    @IBOutlet weak var coopTotesUndoBtn: UIButton!
     @IBOutlet weak var stackKilledBtn: UIButton!
     @IBOutlet weak var toteStackLbl: UILabel!
     @IBOutlet weak var tote1: UIButton!
@@ -52,7 +53,7 @@ class Scoring: UIViewController {
     @IBOutlet weak var toteBtmInsertBtn: UIButton!
     @IBOutlet weak var containerInsertBtn: UIButton!
     @IBOutlet weak var toteStackAddBtn: UIButton!
-    @IBOutlet weak var toteStackSubBtn: UIButton!
+    @IBOutlet weak var toteStackUndoBtn: UIButton!
     @IBOutlet weak var toteStackScoreLbl: UILabel!
     @IBOutlet weak var coopTote4: UIButton!
     @IBOutlet weak var coopTote3: UIButton!
@@ -60,6 +61,7 @@ class Scoring: UIViewController {
     @IBOutlet weak var coopTote1: UIButton!
     @IBOutlet weak var coopToteInsertBtn: UIButton!
     @IBOutlet weak var coopToteBtmInsertBtn: UIButton!
+    @IBOutlet weak var penaltyBtn: UIButton!
     
     //array of the buttons in the tote stack UI. Initialized in ViewDidLoad()
     var toteBtns = [UIButton]()
@@ -78,12 +80,12 @@ class Scoring: UIViewController {
     
     
     //Score Variables
-    struct ToteStack {
+    struct ToteStackStruct {
         var totes = [Bool]()
         var containerLvl = 0
     }
     
-    struct CoopStack {
+    struct CoopStackStruct {
         var totes = [Bool]()
     }
     
@@ -92,15 +94,16 @@ class Scoring: UIViewController {
     var numNoodlesInContainer = 0
     var numNoodlesPushedInLandfill = 0
     var numStacksKnockedOver = 0
-    var toteStacks = [ToteStack]()
-    var coopStacks = [CoopStack]()
+    var toteStacks = [ToteStackStruct]()
+    var coopStacks = [CoopStackStruct]()
     var numAutoTotes = 0
     var numAutoContainers = 0
     var autoDrive = false
     var autoStack = false
-    var currentToteStack = ToteStack()
-    var currentCoopStack = CoopStack()
+    var currentToteStack = ToteStackStruct()
+    var currentCoopStack = CoopStackStruct()
     var numCoopTotes = 0
+    var numPenalties = 0
     
     //Variable stores if Autonomous mode is showing. false if in teleop mode
     var autoShowing = true
@@ -167,8 +170,8 @@ class Scoring: UIViewController {
         coopTotesScoreLbl.hidden = false
         coopTotesAddBtn.enabled = true
         coopTotesAddBtn.hidden = false
-        coopTotesSubBtn.enabled = true
-        coopTotesSubBtn.hidden = false
+        coopTotesUndoBtn.enabled = true
+        coopTotesUndoBtn.hidden = false
         coopTote1.enabled = true
         coopTote1.hidden = false
         coopTote2.enabled = true
@@ -187,8 +190,8 @@ class Scoring: UIViewController {
         toteStackScoreLbl.hidden = false
         toteStackAddBtn.enabled = true
         toteStackAddBtn.hidden = false
-        toteStackSubBtn.enabled = true
-        toteStackSubBtn.hidden = false
+        toteStackUndoBtn.enabled = true
+        toteStackUndoBtn.hidden = false
         tote1.enabled = true
         tote1.hidden = false
         tote2.enabled = true
@@ -209,6 +212,8 @@ class Scoring: UIViewController {
         containerInsertBtn.hidden = true
         stackKilledBtn.enabled = true
         stackKilledBtn.hidden = false
+        penaltyBtn.enabled = true
+        penaltyBtn.hidden = false
         modeLbl.text = "Teleoperated Scoring Mode"
         autoShowing = false
     }
@@ -260,8 +265,8 @@ class Scoring: UIViewController {
         coopTotesScoreLbl.hidden = true
         coopTotesAddBtn.enabled = false
         coopTotesAddBtn.hidden = true
-        coopTotesSubBtn.enabled = false
-        coopTotesSubBtn.hidden = true
+        coopTotesUndoBtn.enabled = false
+        coopTotesUndoBtn.hidden = true
         coopTote1.enabled = false
         coopTote1.hidden = true
         coopTote2.enabled = false
@@ -280,8 +285,8 @@ class Scoring: UIViewController {
         toteStackScoreLbl.hidden = true
         toteStackAddBtn.enabled = false
         toteStackAddBtn.hidden = true
-        toteStackSubBtn.enabled = false
-        toteStackSubBtn.hidden = true
+        toteStackUndoBtn.enabled = false
+        toteStackUndoBtn.hidden = true
         tote1.enabled = false
         tote1.hidden = true
         tote2.enabled = false
@@ -302,6 +307,8 @@ class Scoring: UIViewController {
         containerInsertBtn.hidden = true
         stackKilledBtn.enabled = false
         stackKilledBtn.hidden = true
+        penaltyBtn.enabled = false
+        penaltyBtn.hidden = true
         modeLbl.text = "Autonomous Scoring Mode"
         autoShowing = true
     }
@@ -314,8 +321,8 @@ class Scoring: UIViewController {
         numNoodlesInContainer = 0
         numNoodlesPushedInLandfill = 0
         numStacksKnockedOver = 0
-        toteStacks = [ToteStack]()
-        coopStacks = [CoopStack]()
+        toteStacks = [ToteStackStruct]()
+        coopStacks = [CoopStackStruct]()
         numAutoTotes = 0
         numAutoContainers = 0
         autoDrive = false
@@ -497,9 +504,12 @@ class Scoring: UIViewController {
     }
     
     //removes the last scored tote stack
-    @IBAction func toteStackSubBtnPress(sender: AnyObject) {
-        //check to make sure there is a toteStack scored
-        if(toteStacks.count > 0){
+    @IBAction func toteStackUndoBtnPress(sender: AnyObject) {
+        //If there is a current stack, reset it
+        if(currentToteStack.totes.count > 0){
+            resetToteStack()
+        }
+        else if(toteStacks.count > 0){ //else remove last stack
             toteStacks.removeLast()
             toteStackScoreLbl.text = "\(toteStacks.count)"
         }
@@ -524,21 +534,22 @@ class Scoring: UIViewController {
     }
     
     //remove last scored coop stack
-    @IBAction func coopStackSubBtnPress(sender: AnyObject) {
-        //subtract from number of used coop totes
-        var newToteInStack = false
-        for tote in coopStacks[coopStacks.count-1].totes {
-            if (tote == true) {
-                newToteInStack = true
-                numCoopTotes--
+    @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
+        
+        
+        if(coopStacks.count > 0 && currentCoopStack.totes.count==0){   //check that is a stack to remove
+            //subtract from number of used coop totes
+            var newToteInStack = false
+            for tote in coopStacks[coopStacks.count-1].totes {
+                if (tote == true) {
+                    newToteInStack = true
+                    numCoopTotes--
+                }
             }
-        }
-        resetCoopStack()
-        //check that is a stack to remove
-        if(coopStacks.count > 0){
             coopStacks.removeLast()
             coopTotesScoreLbl.text = "\(coopStacks.count)"
         }
+        resetCoopStack()
     }
     
     //a tote in the tote stack has been touched. That tote and all of the
@@ -653,6 +664,27 @@ class Scoring: UIViewController {
         
     }
     
+<<<<<<< HEAD
+    //resets the UI for the tote stack
+    func resetToteStack(){
+        for btn in toteBtns {
+            btn.alpha = 0.5
+            btn.backgroundColor = UIColor.darkGrayColor()
+            btn.enabled = true
+            btn.hidden = false
+        }
+        currentToteStack = ToteStackStruct()
+        toteInsertBtn.frame.origin.y = toteInsertBtnLocations[0]
+        containerInsertBtn.hidden = true
+        containerInsertBtn.enabled = false
+        toteBtmInsertBtn.enabled = false
+        toteBtmInsertBtn.hidden = true
+        containerInsertBtn.frame.origin.y = containerInsertBtnLocations[0]
+        containerInsertBtn.frame.origin.x = containerInsertBtnSide
+    }
+    
+=======
+>>>>>>> origin/master
     //a coop totes in the stack UI has been touched. That coop tote
     //and those below it will be marked as having been there before
     @IBAction func coopTouch(sender: UIButton) {
@@ -690,6 +722,16 @@ class Scoring: UIViewController {
             resetCoopStack()
         }
         
+    }
+    
+    //adds to number of stacks knocked over
+    @IBAction func knockStackBtnPress(sender: AnyObject) {
+        numStacksKnockedOver++
+    }
+    
+    //adds to number of penalties in match
+    @IBAction func penaltyBtnPress(sender: AnyObject) {
+        numPenalties++
     }
     
     //adds coop tote to top of currentCoopStack
@@ -746,9 +788,136 @@ class Scoring: UIViewController {
         }
     }
     
+<<<<<<< HEAD
+    //resets the coop stack
+    func resetCoopStack(){
+        for btn in coopBtns {
+            btn.alpha = 0.5
+            btn.backgroundColor = UIColor.yellowColor()
+            btn.enabled = true
+            btn.hidden = false
+        }
+        currentCoopStack = CoopStackStruct()
+        coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[0]
+        if(numCoopTotes < 3){
+            coopToteInsertBtn.hidden = false
+            coopToteInsertBtn.enabled = true
+        }
+        coopToteBtmInsertBtn.hidden = true
+        coopToteBtmInsertBtn.enabled = false
+    }
+    
+=======
+>>>>>>> origin/master
     //inserts a coop tote into the bottom of the stack
     @IBAction func coopBtmInsertBtnPress(sender: AnyObject) {
         insertCoopTote(true)
     }
     
+<<<<<<< HEAD
+    //Saves match data
+    @IBAction func saveMatchButtonPress(sender: AnyObject) {
+        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        
+        let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
+        
+        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
+        
+        newMatch.autoContainers = numAutoContainers
+        newMatch.autoTotes = numAutoTotes
+        newMatch.numCoopStacks = numCoopStacks
+        newMatch.numStacks = numStacks
+        newMatch.noodlesInContainer = numNoodlesInContainer
+        newMatch.penalty = numPenalties
+        newMatch.stacksKnockedOver = numStacksKnockedOver
+        newMatch.noodlesInLandfill = numNoodlesPushedInLandfill
+        newMatch.uniqueID =  Int(NSDate().timeIntervalSince1970)
+        //Match number
+        //Match type
+        //Totes
+        //Recording team
+        newMatch.autoDrive = autoDrive
+        newMatch.autoStack = autoStack
+        for stack in toteStacks {
+            var numTotes = stack.totes.count
+            var newToteStack: ToteStack = NSEntityDescription.insertNewObjectForEntityForName("ToteStack", inManagedObjectContext: context) as ToteStack
+            if(numTotes >= 1) {newToteStack.tote1 = (stack.totes[0]) ? 2:1} else {newToteStack.tote1 = 0}
+            if(numTotes >= 2) {newToteStack.tote2 = (stack.totes[1]) ? 2:1} else {newToteStack.tote2 = 0}
+            if(numTotes >= 3) {newToteStack.tote3 = (stack.totes[2]) ? 2:1} else {newToteStack.tote3 = 0}
+            if(numTotes >= 4) {newToteStack.tote4 = (stack.totes[3]) ? 2:1} else {newToteStack.tote4 = 0}
+            if(numTotes >= 5) {newToteStack.tote5 = (stack.totes[4]) ? 2:1} else {newToteStack.tote5 = 0}
+            if(numTotes >= 6) {newToteStack.tote6 = (stack.totes[5]) ? 2:1} else {newToteStack.tote6 = 0}
+            newToteStack.containerLvl = stack.containerLvl
+            newMatch.addToteStack(newToteStack)
+        }
+        for stack in coopStacks {
+            var numTotes = stack.totes.count
+            var newCoopStack: CoopStack = NSEntityDescription.insertNewObjectForEntityForName("CoopStack", inManagedObjectContext: context) as CoopStack
+            if(numTotes >= 1) {newCoopStack.tote1 = (stack.totes[0]) ? 2:1} else {newCoopStack.tote1 = 0}
+            if(numTotes >= 2) {newCoopStack.tote2 = (stack.totes[1]) ? 2:1} else {newCoopStack.tote2 = 0}
+            if(numTotes >= 3) {newCoopStack.tote3 = (stack.totes[2]) ? 2:1} else {newCoopStack.tote3 = 0}
+            if(numTotes >= 4) {newCoopStack.tote4 = (stack.totes[3]) ? 2:1} else {newCoopStack.tote4 = 0}
+            newMatch.addCoopStack(newCoopStack)
+        }
+        
+        
+        
+        
+        context.save(nil)
+    }
+    
+    /*func loadSaved() {
+        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        
+        let request = NSFetchRequest(entityName: "Match")
+        request.returnsObjectsAsFaults = false
+        
+        var results:NSArray = context.executeFetchRequest(request, error: nil)!
+        
+        for res in results{
+            
+            var newMatch = res as Match
+            for stack in newMatch.coopStacks {
+                
+                var newStack = stack as CoopStack
+                //println("tote1 \(newStack.tote1)")
+            }
+        }
+    }*/
+    
+    //switchs between auto and tele scorring mode
+    func twoFingerPanDetected(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translationInView(self.view)
+        if (  recognizer.state == UIGestureRecognizerState.Ended){
+            if( autoShowing && translation.y > 50){
+                showTeleop()
+            } else if(translation.y < -50) {
+                showAuto()
+            }
+        }
+    }
+    
+    
+    override func viewDidLoad() {
+        toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
+        coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
+        super.viewDidLoad()
+        resetScoringScreen()
+        showAuto()
+        self.view.userInteractionEnabled = true
+        self.view.multipleTouchEnabled = true
+        swipeGesture.addTarget(self, action: "twoFingerPanDetected:")
+        swipeGesture.minimumNumberOfTouches = 2
+        self.view.addGestureRecognizer(swipeGesture)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+
+=======
+>>>>>>> origin/master
 }
