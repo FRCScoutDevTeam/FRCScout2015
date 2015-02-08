@@ -34,15 +34,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD:2015 FRC Scout.xcodeproj/project.pbxproj
 		E1B515501A8732EC00C48D6F /* MatchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchExtension.swift; sourceTree = "<group>"; };
 		E1B515521A87336A00C48D6F /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoopStack.swift; sourceTree = "<group>"; };
 		E1B515541A87336A00C48D6F /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToteStack.swift; sourceTree = "<group>"; };
 		E1B515561A8733CE00C48D6F /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
-		E1F4BED11A608DF20091EA2E /* 2015 FRC Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2015 FRC Scout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-=======
 		E1F4BED11A608DF20091EA2E /* FRC Scout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRC Scout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
->>>>>>> origin/master:FRC Scout.xcodeproj/project.pbxproj
 		E1F4BED51A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1F4BED61A608DF20091EA2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F4BEDD1A608DF20091EA2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,13 +49,8 @@
 		E1F4BEEE1A608DF20091EA2E /* FRC_ScoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRC_ScoutTests.swift; sourceTree = "<group>"; };
 		E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Data.swift; path = ../Data.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD:2015 FRC Scout.xcodeproj/project.pbxproj
-		E1F4BEFD1A6090090091EA2E /* more.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = more.swift; path = ../more.swift; sourceTree = "<group>"; };
-		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-=======
 		E1F4BEFD1A6090090091EA2E /* More.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = More.swift; path = ../More.swift; sourceTree = "<group>"; };
 		E1F4BEFF1A6090630091EA2E /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scoring.swift; path = ../Scoring.swift; sourceTree = "<group>"; };
->>>>>>> origin/master:FRC Scout.xcodeproj/project.pbxproj
 		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitScouting.swift; path = ../PitScouting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,14 +104,9 @@
 		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD:2015 FRC Scout.xcodeproj/project.pbxproj
 				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
 				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
-=======
 				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
->>>>>>> origin/master:FRC Scout.xcodeproj/project.pbxproj
-				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
-				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
 				E1F4BEFD1A6090090091EA2E /* More.swift */,
 				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
 				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
