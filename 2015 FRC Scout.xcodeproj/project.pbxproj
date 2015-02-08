@@ -104,16 +104,12 @@
 		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
 			isa = PBXGroup;
 			children = (
-				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
+				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
 				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
 				E1F4BEFF1A6090630091EA2E /* Scoring.swift */,
 				E1F4BEFD1A6090090091EA2E /* more.swift */,
 				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
-				E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */,
-				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
-				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
-				E1F4BEDF1A608DF20091EA2E /* Images.xcassets */,
-				E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */,
+				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
 				E1F4BED41A608DF20091EA2E /* Supporting Files */,
 			);
 			path = "2015 FRC Scout";
@@ -122,6 +118,10 @@
 		E1F4BED41A608DF20091EA2E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */,
+				E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */,
+				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
+				E1F4BEDF1A608DF20091EA2E /* Images.xcassets */,
 				E1F4BED51A608DF20091EA2E /* Info.plist */,
 			);
 			name = "Supporting Files";
