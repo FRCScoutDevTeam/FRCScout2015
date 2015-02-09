@@ -121,8 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */,
-				E1F4BEDF1A608DF20091EA2E /* Images.xcassets */,
+				E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */,
 				E1F4BED61A608DF20091EA2E /* AppDelegate.swift */,
+				E1F4BEDF1A608DF20091EA2E /* Images.xcassets */,
 				E1F4BED51A608DF20091EA2E /* Info.plist */,
 				E1F4BEE11A608DF20091EA2E /* LaunchScreen.xib */,
 			);
