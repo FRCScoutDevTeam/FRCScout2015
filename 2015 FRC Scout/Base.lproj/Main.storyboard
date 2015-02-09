@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Scoring-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController title="Scoring" id="9pv-A4-QxB" customClass="Scoring" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Scoring" id="9pv-A4-QxB" customClass="Scoring" customModule="FRC_Scout" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -599,7 +599,7 @@
         <!--Pit Scouting-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="PitScouting" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8rJ-Kc-sve" customClass="PitScouting" customModule="FRC_Scout" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -626,17 +626,23 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Team Number" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="202-Fx-tN2" userLabel="TeamNumberTxtBox">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Number" textAlignment="center" minimumFontSize="17" id="202-Fx-tN2" userLabel="TeamNumberTxtBox">
                                 <rect key="frame" x="321" y="106" width="126" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="iKf-xH-3TG"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Team Name" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="SZU-T8-VGd" userLabel="TeamNameTxtBox">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Name" textAlignment="center" minimumFontSize="17" id="SZU-T8-VGd" userLabel="TeamNameTxtBox">
                                 <rect key="frame" x="564" y="106" width="157" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="3Cs-pc-37Q"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input Team Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WRa-0Q-GYE" userLabel="TeamNameLbl">
                                 <rect key="frame" x="559" y="72" width="166" height="31"/>
@@ -715,13 +721,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Additional Notes" textAlignment="center" id="m2B-Bh-6NN" userLabel="AdditionalNotesTxtView">
-                                <rect key="frame" x="264" y="770" width="240" height="91"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ax8-ZQ-Xjx" userLabel="SaveBtn">
                                 <rect key="frame" x="353" y="883" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -730,6 +729,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveBtnPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="hYJ-YM-Of2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cMi-cY-y4d" userLabel="6Or8WheelDrop">
                                 <rect key="frame" x="210" y="213" width="125" height="30"/>
@@ -740,6 +742,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="NpQ-sh-ylJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fmA-4t-H1h" userLabel="4WheelDrive">
                                 <rect key="frame" x="343" y="213" width="99" height="30"/>
@@ -750,6 +755,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="0Yo-nE-YbJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BNk-ob-FQ4">
                                 <rect key="frame" x="450" y="213" width="72" height="30"/>
@@ -760,6 +768,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Qye-jL-dcd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d1O-b4-3Pu" userLabel="SwerveCrab">
                                 <rect key="frame" x="530" y="213" width="90" height="30"/>
@@ -770,12 +781,18 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="qp8-Eh-ave"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Other Drive Train" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="hEY-G4-QDq" userLabel="OtherDriveTrainTxtBox">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Other Drive Train" textAlignment="center" minimumFontSize="17" id="hEY-G4-QDq" userLabel="OtherDriveTrainTxtBox">
                                 <rect key="frame" x="628" y="213" width="130" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="rTy-jW-Bks"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uel-NC-cPj" userLabel="StackTotesYes">
                                 <rect key="frame" x="210" y="260" width="53" height="30"/>
@@ -786,6 +803,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="MFM-iZ-hIr"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IZe-rG-xgv" userLabel="StackTotesNo">
                                 <rect key="frame" x="282" y="260" width="53" height="30"/>
@@ -796,6 +816,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Uhg-n0-7VY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vuh-u8-70l" userLabel="BottomStacker">
                                 <rect key="frame" x="210" y="311" width="125" height="30"/>
@@ -806,6 +829,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="mfI-XF-51t"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2uP-Vr-egC" userLabel="TopStacker">
                                 <rect key="frame" x="343" y="311" width="99" height="30"/>
@@ -816,12 +842,18 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="V2A-Iw-hax"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="o5W-48-ZGX" userLabel="HeightOfStackTxtBox">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#" textAlignment="center" minimumFontSize="17" id="o5W-48-ZGX" userLabel="HeightOfStackTxtBox">
                                 <rect key="frame" x="210" y="362" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="AvG-2R-hbz"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Sbq-Ib-iBD" userLabel="StackContainerYes">
                                 <rect key="frame" x="210" y="407" width="53" height="30"/>
@@ -832,6 +864,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="IPv-qj-I3H"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wcN-Va-b36" userLabel="StackContainerNo">
                                 <rect key="frame" x="282" y="407" width="53" height="30"/>
@@ -842,18 +877,27 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="5eA-Tj-pt8"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="LjB-fh-fXm" userLabel="ContainerLvlTxtBox">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#" textAlignment="center" minimumFontSize="17" id="LjB-fh-fXm" userLabel="ContainerLvlTxtBox">
                                 <rect key="frame" x="210" y="462" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="WAW-No-ByO"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="FrD-2x-hJn" userLabel="CarryCapacityTxtBox">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#" textAlignment="center" minimumFontSize="17" id="FrD-2x-hJn" userLabel="CarryCapacityTxtBox">
                                 <rect key="frame" x="210" y="516" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="jNk-Oz-7b4"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="w7T-cA-8nN" userLabel="CarryCapacityWithContainer">
                                 <rect key="frame" x="289" y="516" width="106" height="30"/>
@@ -864,6 +908,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="JtS-g1-nOx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SwN-R9-vqW" userLabel="NoAutoMode">
                                 <rect key="frame" x="210" y="564" width="62" height="30"/>
@@ -874,6 +921,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="zyq-bE-ihw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h3X-YM-q2b" userLabel="MoveToteAuto">
                                 <rect key="frame" x="356" y="564" width="72" height="30"/>
@@ -884,6 +934,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="t1j-VL-jKU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YEW-f2-9Dj" userLabel="MoveContainerAuto">
                                 <rect key="frame" x="436" y="564" width="113" height="30"/>
@@ -894,6 +947,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Z43-f3-aBC"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="siA-UU-ibt" userLabel="StackTotesAuto">
                                 <rect key="frame" x="557" y="564" width="90" height="30"/>
@@ -904,6 +960,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="uRt-zX-ITD"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ob1-De-1lp" userLabel="MobilityAuto">
                                 <rect key="frame" x="280" y="564" width="67" height="30"/>
@@ -914,6 +973,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="xot-SE-O93"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VPC-lw-SjW" userLabel="StepContainersAuto">
                                 <rect key="frame" x="653" y="564" width="105" height="30"/>
@@ -924,9 +986,12 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="7bs-uU-kQ1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DFM-zK-WAb" userLabel="CoopPlacer">
-                                <rect key="frame" x="210" y="615" width="62" height="30"/>
+                                <rect key="frame" x="280" y="615" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -934,9 +999,12 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="65I-7x-oZs"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dhl-Oq-X0U" userLabel="CoopStacker">
-                                <rect key="frame" x="282" y="615" width="62" height="30"/>
+                                <rect key="frame" x="352" y="615" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -944,26 +1012,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QzM-Iy-eWU" userLabel="NoodleIntoContainer">
-                                <rect key="frame" x="210" y="661" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Into Container">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="X3d-J8-Lox" userLabel="NoodleIntoLandfill">
-                                <rect key="frame" x="321" y="661" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Into Landfill">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="0AC-PX-xKX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jQT-x7-oRJ" userLabel="FeederStrategy">
                                 <rect key="frame" x="210" y="709" width="62" height="30"/>
@@ -974,6 +1025,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="JKV-nI-kBl"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zAb-Ll-893" userLabel="TotesPlacerStategy">
                                 <rect key="frame" x="278" y="709" width="80" height="30"/>
@@ -984,6 +1038,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="SO3-XY-umL"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="His-HH-nZU" userLabel="ContainerPlacerStategy">
                                 <rect key="frame" x="366" y="709" width="108" height="30"/>
@@ -994,6 +1051,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="jS5-iB-p5r"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="giW-bO-w1y" userLabel="ToteandContainerStrategy">
                                 <rect key="frame" x="490" y="709" width="123" height="30"/>
@@ -1004,6 +1064,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="YEU-Tu-J76"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto Modes(multiple):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nYf-FD-Hhc" userLabel="AutoModesLbl">
                                 <rect key="frame" x="16" y="564" width="187" height="27"/>
@@ -1012,10 +1075,124 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Kfn-2Q-5ra" userLabel="NoAutoMode">
+                                <rect key="frame" x="210" y="615" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="None">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="ikw-m1-tgO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QAx-cO-p6u" userLabel="NoAutoMode">
+                                <rect key="frame" x="210" y="661" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="None">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="6KW-3L-yHt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QzM-Iy-eWU" userLabel="NoodleIntoContainer">
+                                <rect key="frame" x="280" y="661" width="101" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="Into Container">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="X8f-tX-YPs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="X3d-J8-Lox" userLabel="NoodleIntoLandfill">
+                                <rect key="frame" x="391" y="661" width="101" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="Into Landfill">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="scoutButtonPress:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="az7-vI-7gb"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Additional Notes" textAlignment="center" id="m2B-Bh-6NN" userLabel="AdditionalNotesTxtView">
+                                <rect key="frame" x="209" y="768" width="350" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="ohH-hB-vDH"/>
+                                </connections>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Pit Scouting" image="PitScouting" id="cPa-gy-q4n"/>
+                    <connections>
+                        <outlet property="additionalNotesTxt" destination="m2B-Bh-6NN" id="csg-qb-Ukc"/>
+                        <outlet property="autoModesLbl" destination="nYf-FD-Hhc" id="Qd9-Ae-tJn"/>
+                        <outlet property="autoNoneBtn" destination="SwN-R9-vqW" id="OEw-uk-nI3"/>
+                        <outlet property="bottomStackerButton" destination="Vuh-u8-70l" id="h5m-Cj-yD7"/>
+                        <outlet property="captureImageButton" destination="9QC-0B-Eae" id="KME-SC-YVr"/>
+                        <outlet property="captureImageLbl" destination="fBN-yK-P1p" id="sVW-vq-5n9"/>
+                        <outlet property="carryCapacityLbl" destination="kh7-4c-GQE" id="5AY-Nw-4Pe"/>
+                        <outlet property="carryCapacityTxt" destination="FrD-2x-hJn" id="C0b-fh-bkH"/>
+                        <outlet property="carryContainerBtn" destination="w7T-cA-8nN" id="HsT-LD-Cb3"/>
+                        <outlet property="containerLvlLbl" destination="YE4-5B-pdk" id="ec9-fe-OwJ"/>
+                        <outlet property="containerLvlTxt" destination="LjB-fh-fXm" id="qLA-Se-XuL"/>
+                        <outlet property="containerPlacerBtn" destination="His-HH-nZU" id="t1H-q9-lTR"/>
+                        <outlet property="coopLbl" destination="Qzx-cp-8Ok" id="f2C-fd-uIE"/>
+                        <outlet property="coopNoneBtn" destination="Kfn-2Q-5ra" id="CYc-E4-diT"/>
+                        <outlet property="driveTrainLbl" destination="ONc-6r-IK6" id="49d-zd-cyi"/>
+                        <outlet property="dropCenterBtn" destination="cMi-cY-y4d" id="LI5-CL-V56"/>
+                        <outlet property="feederBtn" destination="jQT-x7-oRJ" id="l3l-u1-V0A"/>
+                        <outlet property="fourWheelDriveBtn" destination="fmA-4t-H1h" id="Wgm-G8-ySO"/>
+                        <outlet property="heightOfStackLbl" destination="jvM-GL-Apx" id="3kj-U3-ukF"/>
+                        <outlet property="heightOfStackTxt" destination="o5W-48-ZGX" id="kIu-mK-kKt"/>
+                        <outlet property="intoContainerBtn" destination="QzM-Iy-eWU" id="7Op-bV-XGs"/>
+                        <outlet property="intoLandFillBtn" destination="X3d-J8-Lox" id="s70-u1-2aF"/>
+                        <outlet property="mecanumBtn" destination="BNk-ob-FQ4" id="wBW-Am-Fsw"/>
+                        <outlet property="mobilityBtn" destination="Ob1-De-1lp" id="AGj-H0-zFv"/>
+                        <outlet property="moveContainerBtn" destination="YEW-f2-9Dj" id="B6C-qQ-2eI"/>
+                        <outlet property="moveToteBtn" destination="h3X-YM-q2b" id="3hf-DS-n5J"/>
+                        <outlet property="noodlesLbl" destination="SqV-ms-1a1" id="ybh-R3-deA"/>
+                        <outlet property="noodlesNoneBtn" destination="QAx-cO-p6u" id="64d-8q-Mn3"/>
+                        <outlet property="otherDriveTrainTxt" destination="hEY-G4-QDq" id="FuZ-8h-Vhm"/>
+                        <outlet property="placerBtn" destination="DFM-zK-WAb" id="GTr-Xj-7P4"/>
+                        <outlet property="saveBtn" destination="ax8-ZQ-Xjx" id="Axn-Sn-BzP"/>
+                        <outlet property="stackContainerLbl" destination="1SX-w6-RoE" id="3Vy-WR-Gws"/>
+                        <outlet property="stackContainerNoBtn" destination="wcN-Va-b36" id="Obz-tD-3NI"/>
+                        <outlet property="stackContainerYesBtn" destination="Sbq-Ib-iBD" id="JM7-c5-ay1"/>
+                        <outlet property="stackTotesBtn" destination="siA-UU-ibt" id="Ga5-et-aRL"/>
+                        <outlet property="stackTotesLbl" destination="vrX-3d-jIM" id="kpK-j2-snW"/>
+                        <outlet property="stackTotesNoBtn" destination="IZe-rG-xgv" id="3LG-07-VNR"/>
+                        <outlet property="stackTotesYesBtn" destination="uel-NC-cPj" id="T2L-MF-6hw"/>
+                        <outlet property="stackerBtn" destination="dhl-Oq-X0U" id="KRl-KG-UCV"/>
+                        <outlet property="stackerTypeLbl" destination="vam-Xj-oTn" id="wIy-C2-vfn"/>
+                        <outlet property="stepContainersBtn" destination="VPC-lw-SjW" id="VTo-E7-uiv"/>
+                        <outlet property="strategyLbl" destination="3xj-29-su1" id="rLA-z5-vSY"/>
+                        <outlet property="swerveCrabBtn" destination="d1O-b4-3Pu" id="rz9-1V-6jd"/>
+                        <outlet property="teamNameLbl" destination="WRa-0Q-GYE" id="pPv-L0-42d"/>
+                        <outlet property="teamNameTxt" destination="SZU-T8-VGd" id="oje-2a-aHf"/>
+                        <outlet property="teamNumberLbl" destination="1rb-vn-22j" id="27a-Xo-zlF"/>
+                        <outlet property="teamNumberTxt" destination="202-Fx-tN2" id="lmT-A0-rfn"/>
+                        <outlet property="topStackerBtn" destination="2uP-Vr-egC" id="7ai-ds-xuG"/>
+                        <outlet property="toteAndContainerBtn" destination="giW-bO-w1y" id="4OR-BW-63L"/>
+                        <outlet property="totePlacerBtn" destination="zAb-Ll-893" id="8JD-h0-UeA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
@@ -1024,7 +1201,7 @@
         <!--Data-->
         <scene sceneID="NyH-zE-jYb">
             <objects>
-                <viewController id="y0U-pi-DW9" customClass="Data" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="y0U-pi-DW9" customClass="Data" customModule="FRC_Scout" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jaX-Ft-T3B">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1039,7 +1216,7 @@
         <!--More-->
         <scene sceneID="myI-RE-BFC">
             <objects>
-                <viewController id="6qW-fn-bB1" customClass="More" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6qW-fn-bB1" customClass="More" customModule="FRC_Scout" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8um-Nh-ZQH">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

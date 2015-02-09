@@ -27,6 +27,29 @@
         <relationship name="coopStacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoopStack" inverseName="match" inverseEntity="CoopStack" syncable="YES"/>
         <relationship name="toteStacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToteStack" inverseName="match" inverseEntity="ToteStack" syncable="YES"/>
     </entity>
+    <entity name="PitTeam" representedClassName="PitTeam" syncable="YES">
+        <attribute name="additionalNotes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="autoContainer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoMobility" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoNone" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoStack" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoStepContainer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="autoTote" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="carryCapacity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="containerLevel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coop" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="driveTrain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="heightOfStack" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noodles" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stackContainer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stackerType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stackTotes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="strategy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="withContainer" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
     <entity name="ToteStack" representedClassName="ToteStack" syncable="YES">
         <attribute name="containerLvl" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="tote1" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -42,5 +65,6 @@
         <element name="CoopStack" positionX="232" positionY="98" width="128" height="133"/>
         <element name="Match" positionX="-117" positionY="107" width="128" height="298"/>
         <element name="ToteStack" positionX="81" positionY="-0" width="128" height="178"/>
+        <element name="PitTeam" positionX="54" positionY="153" width="128" height="358"/>
     </elements>
 </model>
