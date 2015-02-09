@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
+		E16EBB871A888BEF007D6E29 /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB861A888BEF007D6E29 /* PitTeam.swift */; };
 		E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515501A8732EC00C48D6F /* MatchExtension.swift */; };
 		E1B515531A87336A00C48D6F /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515521A87336A00C48D6F /* CoopStack.swift */; };
 		E1B515551A87336A00C48D6F /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515541A87336A00C48D6F /* ToteStack.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
+		E16EBB861A888BEF007D6E29 /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
 		E1B515501A8732EC00C48D6F /* MatchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchExtension.swift; sourceTree = "<group>"; };
 		E1B515521A87336A00C48D6F /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoopStack.swift; sourceTree = "<group>"; };
 		E1B515541A87336A00C48D6F /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToteStack.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 		E1B5154D1A8714E000C48D6F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				E16EBB861A888BEF007D6E29 /* PitTeam.swift */,
 				E1B515561A8733CE00C48D6F /* Match.swift */,
 				E1B515521A87336A00C48D6F /* CoopStack.swift */,
 				E1B515541A87336A00C48D6F /* ToteStack.swift */,
@@ -254,6 +257,7 @@
 				E1F4BF001A6090630091EA2E /* (null) in Sources */,
 				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
 				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
+				E16EBB871A888BEF007D6E29 /* PitTeam.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
 				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,

@@ -306,9 +306,56 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     @IBAction func saveBtnPress(sender: AnyObject) {
         if(checkData()) {
-            //Save data Here!!!!!!!!!!!!!
+            let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            let context:NSManagedObjectContext = appDel.managedObjectContext!
+            
+            let ent = NSEntityDescription.entityForName("PitTeam", inManagedObjectContext: context)
+            
+            var newPitTeam = PitTeam(entity: ent!, insertIntoManagedObjectContext: context) as PitTeam
+            
+            
+            newPitTeam.uniqueID =  Int(NSDate().timeIntervalSince1970)
+            newPitTeam.teamNumber = teamNumber
+            newPitTeam.teamName = teamName
+            newPitTeam.driveTrain = driveTrain
+            newPitTeam.stackTotes = stackTotes
+            newPitTeam.stackerType = stackerType
+            newPitTeam.heightOfStack = heightOfStack
+            newPitTeam.stackContainer = stackContainer
+            newPitTeam.containerLevel = containerLevel
+            newPitTeam.carryCapacity = carryCapacity
+            newPitTeam.withContainer = withContainer
+            newPitTeam.autoNone = autoNone
+            newPitTeam.autoMobility = autoMobility
+            newPitTeam.autoTote = autoTote
+            newPitTeam.autoContainer = autoContainer
+            newPitTeam.autoStack = autoStack
+            newPitTeam.autoStepContainer = autoStepContainer
+            newPitTeam.coop = coop
+            newPitTeam.noodles = noodles
+            newPitTeam.strategy = strategy
+            newPitTeam.additionalNotes = additionalNotes
+            context.save(nil)
+            loadSaved()
         }
         
+    }
+    
+    func loadSaved() {
+        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        
+        let request = NSFetchRequest(entityName: "PitTeam")
+        request.returnsObjectsAsFaults = false
+        
+        var results:NSArray = context.executeFetchRequest(request, error: nil)!
+        
+        for res in results{
+            
+            var newPitTeam = res as PitTeam
+            println(newPitTeam.driveTrain)
+            
+        }
     }
     
     func checkData() -> Bool{
