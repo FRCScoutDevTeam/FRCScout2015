@@ -25,7 +25,8 @@ class Scoring: UIViewController {
     @IBOutlet weak var autoToteSubBtn: UIButton!
     @IBOutlet weak var autoContainerAddBtn: UIButton!
     @IBOutlet weak var autoContainerSubBtn: UIButton!
-    @IBOutlet weak var autoDriveBtn: UIButton!
+    @IBOutlet weak var autoRobotZoneLine: UIButton!
+    @IBOutlet weak var autoRobotZone: UIImageView!
     @IBOutlet weak var autoStackBtn: UIButton!
     
     //Teleop UI Items
@@ -121,6 +122,11 @@ class Scoring: UIViewController {
         swipeGesture.addTarget(self, action: "twoFingerPanDetected:")
         swipeGesture.minimumNumberOfTouches = 2
         self.view.addGestureRecognizer(swipeGesture)
+        
+        var robotDrag = UIPanGestureRecognizer(target: self, action: "robotDrag:")
+        robotDrag.maximumNumberOfTouches = 1
+        robotDrag.minimumNumberOfTouches = 1
+        autoRobotZone.addGestureRecognizer(robotDrag)
     }
     
     //function to display all teleop UI items and hide auto UI
@@ -142,8 +148,8 @@ class Scoring: UIViewController {
         autoContainerAddBtn.hidden = true
         autoContainerSubBtn.enabled = false
         autoContainerSubBtn.hidden = true
-        autoDriveBtn.enabled = false
-        autoDriveBtn.hidden = true
+//        autoDriveBtn.enabled = false
+//        autoDriveBtn.hidden = true
         autoStackBtn.enabled = false
         autoStackBtn.hidden = true
         
@@ -237,8 +243,8 @@ class Scoring: UIViewController {
         autoContainerAddBtn.hidden = false
         autoContainerSubBtn.enabled = true
         autoContainerSubBtn.hidden = false
-        autoDriveBtn.enabled = true
-        autoDriveBtn.hidden = false
+//        autoDriveBtn.enabled = true
+//        autoDriveBtn.hidden = false
         autoStackBtn.enabled = true
         autoStackBtn.hidden = false
         
@@ -329,7 +335,7 @@ class Scoring: UIViewController {
         autoStack = false
         
         //Auto Items
-        autoDriveBtn.alpha = 0.5
+//        autoDriveBtn.alpha = 0.5
         autoStackBtn.alpha = 0.5
         autoToteScoreLbl.text = "0"
         autoContainerScoreLbl.text = "0"
@@ -427,6 +433,46 @@ class Scoring: UIViewController {
         }
     }
     
+    //listens for Robot Drag and handles what to do with it
+    var startY : CGFloat = 0
+    func robotDrag(sender: UIPanGestureRecognizer) {
+        var robotView = sender.view!
+        var recognizerState = sender.state
+        
+        let moveDiff : CGFloat = 75
+        
+        switch recognizerState{
+            case .Began:
+                startY = robotView.center.y
+            case .Changed:
+                var translation = sender.translationInView(self.view)
+                robotView.center = CGPoint(x: robotView.center.x, y: robotView.center.y + translation.y)
+                if robotView.center.y < autoRobotZoneLine.center.y - moveDiff {
+                    robotView.center = CGPoint(x: robotView.center.x, y: autoRobotZoneLine.center.y - moveDiff)
+                } else if robotView.center.y > autoRobotZoneLine.center.y + moveDiff {
+                    robotView.center = CGPoint(x: robotView.center.x, y: autoRobotZoneLine.center.y + moveDiff)
+                }
+                sender.setTranslation(CGPoint(x: 0, y: 0), inView: self.view)
+                
+            case .Ended:
+                if robotView.center.y < autoRobotZoneLine.center.y - 10 {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoRobotZoneLine.center.y - moveDiff)
+                    })
+                } else if robotView.center.y > autoRobotZoneLine.center.y + 10 {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoRobotZoneLine.center.y + moveDiff)
+                    })
+                } else {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.startY)
+                    })
+                }
+            default:
+                return
+        }
+    }
+    
     //scores a stack of three auto containers
     @IBAction func autoStackBtnPress(sender: AnyObject) {
         if (autoStack == false){
@@ -442,15 +488,15 @@ class Scoring: UIViewController {
     }
     
     //scores the auto bonus for ending in auto zone
-    @IBAction func autoDriveBtnPress(sender: AnyObject) {
-        if (autoDrive == false){
-            autoDrive = true
-            autoDriveBtn.alpha = 1.0
-        } else {
-            autoDrive = false
-            autoDriveBtn.alpha = 0.5
-        }
-    }
+//    @IBAction func autoDriveBtnPress(sender: AnyObject) {
+//        if (autoDrive == false){
+//            autoDrive = true
+//            autoDriveBtn.alpha = 1.0
+//        } else {
+//            autoDrive = false
+//            autoDriveBtn.alpha = 0.5
+//        }
+//    }
 
     //adds to number of noodles placed into a container
     @IBAction func noodleContainerAddBtnPress(sender: AnyObject) {
