@@ -824,7 +824,9 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
         
         var teamRequest = NSFetchRequest(entityName: "Team")
-        teamRequest.predicate = NSPredicate(format: "regional.name = %@", regional)
+        var p1: NSPredicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)!
+        var p2: NSPredicate = NSPredicate(format: "regional.name = %@", regional)!
+        teamRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([p1,p2])
         var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
         if (teamResults?.count > 0) {
             teamData = teamResults.first
@@ -833,6 +835,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             var newTeam = NSEntityDescription.insertNewObjectForEntityForName("Team", inManagedObjectContext: context) as Team
             regionalData?.addTeam(newTeam)
             newTeam.regional = regionalData!
+            newTeam.teamNumber = teamNumberLbl.text
             teamData = newTeam
             println("team created")
         }
@@ -892,7 +895,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
         
         teamData?.addMatch(newMatch)
-        
+        teamData = dataCalc.calculateAverages(teamData!)
         
         context.save(nil)
     }

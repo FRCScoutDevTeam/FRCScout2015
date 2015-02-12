@@ -64,8 +64,10 @@
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="regional" inverseEntity="Team" syncable="YES"/>
     </entity>
     <entity name="Team" representedClassName="Team" syncable="YES">
-        <attribute name="autoAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="autoStrength" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="containerAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teleAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="toteAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="masterTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MasterTeam" inverseName="regionalTeams" inverseEntity="MasterTeam" syncable="YES"/>
@@ -87,11 +89,11 @@
     </entity>
     <elements>
         <element name="CoopStack" positionX="232" positionY="98" width="128" height="133"/>
+        <element name="MasterTeam" positionX="-279" positionY="-171" width="128" height="88"/>
         <element name="Match" positionX="-173" positionY="62" width="128" height="313"/>
         <element name="PitTeam" positionX="-90" positionY="-331" width="128" height="373"/>
-        <element name="ToteStack" positionX="72" positionY="-61" width="128" height="178"/>
-        <element name="MasterTeam" positionX="-279" positionY="-171" width="128" height="88"/>
-        <element name="Team" positionX="-351" positionY="-27" width="128" height="178"/>
         <element name="Regional" positionX="-639" positionY="-4" width="128" height="103"/>
+        <element name="Team" positionX="-351" positionY="-27" width="128" height="208"/>
+        <element name="ToteStack" positionX="72" positionY="-61" width="128" height="178"/>
     </elements>
 </model>
