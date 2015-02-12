@@ -25,8 +25,9 @@ class Scoring: UIViewController {
     @IBOutlet weak var autoToteSubBtn: UIButton!
     @IBOutlet weak var autoContainerAddBtn: UIButton!
     @IBOutlet weak var autoContainerSubBtn: UIButton!
-    @IBOutlet weak var autoRobotZoneLine: UIButton!
-    @IBOutlet weak var autoRobotZone: UIImageView!
+    @IBOutlet weak var autoZoneLbl: UILabel!
+    @IBOutlet weak var autoZoneLine: UIView!
+    @IBOutlet weak var autoZoneRobot: UIImageView!
     @IBOutlet weak var autoStackBtn: UIButton!
     
     //Teleop UI Items
@@ -69,9 +70,9 @@ class Scoring: UIViewController {
     //array of the buttons in the coop tote stack UI. Initialized in ViewDidLoad()
     var coopBtns = [UIButton]()
     //positions that the top tote insert button moves to
-    var toteInsertBtnLocations: [CGFloat] = [779,697,609,526,442,358]
+    var toteInsertBtnLocations: [CGFloat] = [662,592,522,452,382,312]
     //positions that the container insert button moves to
-    var containerInsertBtnLocations: [CGFloat] = [0,702,614,531,447,363,281]
+    var containerInsertBtnLocations: [CGFloat] = [0,589,519,449,379,309,239]
     //positions that the coop Tote insert button moves to
     var coopInsertBtnLocations: [CGFloat] = [598,516,429,344]
     //x position of the container insert button when it's to the left of the tote stack
@@ -126,19 +127,15 @@ class Scoring: UIViewController {
         var robotDrag = UIPanGestureRecognizer(target: self, action: "robotDrag:")
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
-        autoRobotZone.addGestureRecognizer(robotDrag)
+        autoZoneRobot.addGestureRecognizer(robotDrag)
     }
     
     //function to display all teleop UI items and hide auto UI
     func showTeleop(){
         //Auto Items
-        autoToteLbl.enabled = false
         autoToteLbl.hidden = true
-        autoToteScoreLbl.enabled = false
         autoToteScoreLbl.hidden = true
-        autoContainerScoreLbl.enabled = false
         autoContainerScoreLbl.hidden = true
-        autoContainerLbl.enabled = false
         autoContainerLbl.hidden = true
         autoToteAddBtn.enabled = false
         autoToteAddBtn.hidden = true
@@ -148,8 +145,10 @@ class Scoring: UIViewController {
         autoContainerAddBtn.hidden = true
         autoContainerSubBtn.enabled = false
         autoContainerSubBtn.hidden = true
-//        autoDriveBtn.enabled = false
-//        autoDriveBtn.hidden = true
+        autoZoneLbl.hidden = true
+        autoZoneLine.hidden = true
+        autoZoneRobot.userInteractionEnabled = false
+        autoZoneRobot.hidden = true
         autoStackBtn.enabled = false
         autoStackBtn.hidden = true
         
@@ -158,21 +157,15 @@ class Scoring: UIViewController {
         containerNoodleAddBtn.hidden = false
         containerNoodleSubBtn.enabled = true
         containerNoodleSubBtn.hidden = false
-        containerNoodleScoreLbl.enabled = true
         containerNoodleScoreLbl.hidden = false
-        containerNoodleLbl.enabled = true
         containerNoodleLbl.hidden = false
-        landfillNoodleLbl.enabled = true
         landfillNoodleLbl.hidden = false
-        landfillNoodleScoreLbl.enabled = true
         landfillNoodleScoreLbl.hidden = false
         landfillNoodleAddBtn.enabled = true
         landfillNoodleAddBtn.hidden = false
         landfillNoodleSubBtn.enabled = true
         landfillNoodleSubBtn.hidden = false
-        coopTotesLbl.enabled = true
         coopTotesLbl.hidden = false
-        coopTotesScoreLbl.enabled = true
         coopTotesScoreLbl.hidden = false
         coopTotesAddBtn.enabled = true
         coopTotesAddBtn.hidden = false
@@ -190,9 +183,7 @@ class Scoring: UIViewController {
         coopToteInsertBtn.hidden = false
         coopToteBtmInsertBtn.enabled = false
         coopToteBtmInsertBtn.hidden = true
-        toteStackLbl.enabled = true
         toteStackLbl.hidden = false
-        toteStackScoreLbl.enabled = true
         toteStackScoreLbl.hidden = false
         toteStackAddBtn.enabled = true
         toteStackAddBtn.hidden = false
@@ -227,13 +218,9 @@ class Scoring: UIViewController {
     //function to display all auto UI items and hide teleop UI
     func showAuto(){
         //Auto Items
-        autoToteLbl.enabled = true
         autoToteLbl.hidden = false
-        autoToteScoreLbl.enabled = true
         autoToteScoreLbl.hidden = false
-        autoContainerScoreLbl.enabled = true
         autoContainerScoreLbl.hidden = false
-        autoContainerLbl.enabled = true
         autoContainerLbl.hidden = false
         autoToteAddBtn.enabled = true
         autoToteAddBtn.hidden = false
@@ -243,8 +230,10 @@ class Scoring: UIViewController {
         autoContainerAddBtn.hidden = false
         autoContainerSubBtn.enabled = true
         autoContainerSubBtn.hidden = false
-//        autoDriveBtn.enabled = true
-//        autoDriveBtn.hidden = false
+        autoZoneLbl.hidden = false
+        autoZoneLine.hidden = false
+        autoZoneRobot.userInteractionEnabled = true
+        autoZoneRobot.hidden = false
         autoStackBtn.enabled = true
         autoStackBtn.hidden = false
         
@@ -253,21 +242,15 @@ class Scoring: UIViewController {
         containerNoodleAddBtn.hidden = true
         containerNoodleSubBtn.enabled = false
         containerNoodleSubBtn.hidden = true
-        containerNoodleScoreLbl.enabled = false
         containerNoodleScoreLbl.hidden = true
-        containerNoodleLbl.enabled = false
         containerNoodleLbl.hidden = true
-        landfillNoodleLbl.enabled = false
         landfillNoodleLbl.hidden = true
-        landfillNoodleScoreLbl.enabled = false
         landfillNoodleScoreLbl.hidden = true
         landfillNoodleAddBtn.enabled = false
         landfillNoodleAddBtn.hidden = true
         landfillNoodleSubBtn.enabled = false
         landfillNoodleSubBtn.hidden = true
-        coopTotesLbl.enabled = false
         coopTotesLbl.hidden = true
-        coopTotesScoreLbl.enabled = false
         coopTotesScoreLbl.hidden = true
         coopTotesAddBtn.enabled = false
         coopTotesAddBtn.hidden = true
@@ -285,9 +268,7 @@ class Scoring: UIViewController {
         coopToteInsertBtn.hidden = true
         coopToteBtmInsertBtn.enabled = false
         coopToteBtmInsertBtn.hidden = true
-        toteStackLbl.enabled = false
         toteStackLbl.hidden = true
-        toteStackScoreLbl.enabled = false
         toteStackScoreLbl.hidden = true
         toteStackAddBtn.enabled = false
         toteStackAddBtn.hidden = true
@@ -336,9 +317,9 @@ class Scoring: UIViewController {
         
         //Auto Items
 //        autoDriveBtn.alpha = 0.5
-        autoStackBtn.alpha = 0.5
         autoToteScoreLbl.text = "0"
         autoContainerScoreLbl.text = "0"
+        autoZoneRobot.center = CGPoint(x: autoZoneRobot.center.x, y: autoZoneLine.center.y + 65)
         
         //Tele Items
         resetToteStack()
@@ -352,8 +333,7 @@ class Scoring: UIViewController {
     //resets the UI for the tote stack
     func resetToteStack(){
         for btn in toteBtns {
-            btn.alpha = 0.5
-            btn.backgroundColor = UIColor.darkGrayColor()
+            btn.setBackgroundImage(UIImage(named: "ToteOutline"), forState: .Normal)
             btn.enabled = true
             btn.hidden = false
         }
@@ -370,8 +350,6 @@ class Scoring: UIViewController {
     //resets the coop stack
     func resetCoopStack(){
         for btn in coopBtns {
-            btn.alpha = 0.5
-            btn.backgroundColor = UIColor.yellowColor()
             btn.enabled = true
             btn.hidden = false
         }
@@ -433,46 +411,6 @@ class Scoring: UIViewController {
         }
     }
     
-    //listens for Robot Drag and handles what to do with it
-    var startY : CGFloat = 0
-    func robotDrag(sender: UIPanGestureRecognizer) {
-        var robotView = sender.view!
-        var recognizerState = sender.state
-        
-        let moveDiff : CGFloat = 75
-        
-        switch recognizerState{
-            case .Began:
-                startY = robotView.center.y
-            case .Changed:
-                var translation = sender.translationInView(self.view)
-                robotView.center = CGPoint(x: robotView.center.x, y: robotView.center.y + translation.y)
-                if robotView.center.y < autoRobotZoneLine.center.y - moveDiff {
-                    robotView.center = CGPoint(x: robotView.center.x, y: autoRobotZoneLine.center.y - moveDiff)
-                } else if robotView.center.y > autoRobotZoneLine.center.y + moveDiff {
-                    robotView.center = CGPoint(x: robotView.center.x, y: autoRobotZoneLine.center.y + moveDiff)
-                }
-                sender.setTranslation(CGPoint(x: 0, y: 0), inView: self.view)
-                
-            case .Ended:
-                if robotView.center.y < autoRobotZoneLine.center.y - 10 {
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoRobotZoneLine.center.y - moveDiff)
-                    })
-                } else if robotView.center.y > autoRobotZoneLine.center.y + 10 {
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoRobotZoneLine.center.y + moveDiff)
-                    })
-                } else {
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        robotView.center = CGPoint(x: robotView.center.x, y: self.startY)
-                    })
-                }
-            default:
-                return
-        }
-    }
-    
     //scores a stack of three auto containers
     @IBAction func autoStackBtnPress(sender: AnyObject) {
         if (autoStack == false){
@@ -480,24 +418,67 @@ class Scoring: UIViewController {
             //set the auto score to zero
             numAutoTotes = 0
             autoToteScoreLbl.text = "0"
-            autoStackBtn.alpha = 1.0
+            autoStackBtn.setBackgroundImage(UIImage(named: "ToteStack"), forState: .Normal)
         } else {
             autoStack = false
-            autoStackBtn.alpha = 0.5
+            autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
         }
     }
     
-    //scores the auto bonus for ending in auto zone
-//    @IBAction func autoDriveBtnPress(sender: AnyObject) {
-//        if (autoDrive == false){
-//            autoDrive = true
-//            autoDriveBtn.alpha = 1.0
-//        } else {
-//            autoDrive = false
-//            autoDriveBtn.alpha = 0.5
-//        }
-//    }
-
+    //listens for Robot Drag and handles what to do with it
+    var startY : CGFloat = 0
+    func robotDrag(sender: UIPanGestureRecognizer) {
+        var robotView = sender.view!
+        var recognizerState = sender.state
+        
+        let moveDiff : CGFloat = 65
+        
+        switch recognizerState{
+            case .Began:
+                startY = robotView.center.y
+            case .Changed:
+                var translation = sender.translationInView(self.view)
+                robotView.center = CGPoint(x: robotView.center.x, y: robotView.center.y + translation.y)
+                if robotView.center.y < autoZoneLine.center.y - moveDiff {
+                    robotView.center = CGPoint(x: robotView.center.x, y: autoZoneLine.center.y - moveDiff)
+                } else if robotView.center.y > autoZoneLine.center.y + moveDiff {
+                    robotView.center = CGPoint(x: robotView.center.x, y: autoZoneLine.center.y + moveDiff)
+                }
+                sender.setTranslation(CGPoint(x: 0, y: 0), inView: self.view)
+                
+            case .Ended:
+                if robotView.center.y < autoZoneLine.center.y - 10 {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoZoneLine.center.y - moveDiff)
+                    })
+                } else if robotView.center.y > autoZoneLine.center.y + 10 {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoZoneLine.center.y + moveDiff)
+                    })
+                } else {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.startY)
+                    })
+                }
+            
+                if robotView.center.y == autoZoneLine.center.y - moveDiff {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.autoZoneLbl.layer.backgroundColor = UIColor(red: 3.0/255, green: 200.0/255, blue: 4.0/255, alpha: 1.0).CGColor
+                        self.autoZoneLbl.layer.borderColor = UIColor.whiteColor().CGColor
+                        self.autoDrive = true
+                    })
+                } else {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.autoZoneLbl.layer.backgroundColor = UIColor.whiteColor().CGColor
+                        self.autoZoneLbl.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+                        self.autoDrive = false
+                    })
+                }
+            default:
+                return
+        }
+    }
+    
     //adds to number of noodles placed into a container
     @IBAction func noodleContainerAddBtnPress(sender: AnyObject) {
         if( numNoodlesInContainer < 10){
@@ -633,11 +614,11 @@ class Scoring: UIViewController {
             for var i = 0; i < currentToteStack.totes.count; ++i{
                 if (currentToteStack.totes[i] == false){
                     toteBtns[i].alpha = 1.0
-                    toteBtns[i].backgroundColor = UIColor.cyanColor()
+                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
                 }
                 else {
                     toteBtns[i].alpha = 1.0
-                    toteBtns[i].backgroundColor = UIColor.darkGrayColor()
+                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
                 }
             }
         }
@@ -690,11 +671,11 @@ class Scoring: UIViewController {
             toteBtns[i].enabled = true
             if (currentToteStack.totes[i] == false){
                 toteBtns[i].alpha = 1.0
-                toteBtns[i].backgroundColor = UIColor.cyanColor()
+                toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
             }
             else {
                 toteBtns[i].alpha = 1.0
-                toteBtns[i].backgroundColor = UIColor.darkGrayColor()
+                toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
             }
         }
     }
