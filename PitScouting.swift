@@ -216,6 +216,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 autoNoneBtn.backgroundColor = UIColor.lightGrayColor()
+                autoNone = false
                 autoMobility = true
             } else {
                 autoMobility = false
@@ -225,6 +226,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 autoNoneBtn.backgroundColor = UIColor.lightGrayColor()
+                autoNone = false
                 autoTote = true
             } else {
                 autoTote = false
@@ -234,6 +236,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 autoNoneBtn.backgroundColor = UIColor.lightGrayColor()
+                autoNone = false
                 autoContainer = true
             } else {
                 autoContainer = false
@@ -243,6 +246,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 autoNoneBtn.backgroundColor = UIColor.lightGrayColor()
+                autoNone = false
                 autoStack = true
             } else {
                 autoStack = false
@@ -252,6 +256,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 autoNoneBtn.backgroundColor = UIColor.lightGrayColor()
+                autoNone = false
                 autoStepContainer = true
             } else {
                 autoStepContainer = false
@@ -336,7 +341,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             newPitTeam.strategy = strategy
             newPitTeam.additionalNotes = additionalNotes
             context.save(nil)
-            loadSaved()
+            resetPitScouting()
         }
         
     }

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
 		E16EBB871A888BEF007D6E29 /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB861A888BEF007D6E29 /* PitTeam.swift */; };
+		E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */; };
+		E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */; };
+		E16EBB8E1A89BED0007D6E29 /* PitTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB8D1A89BED0007D6E29 /* PitTeamCell.swift */; };
 		E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515501A8732EC00C48D6F /* MatchExtension.swift */; };
 		E1B515531A87336A00C48D6F /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515521A87336A00C48D6F /* CoopStack.swift */; };
 		E1B515551A87336A00C48D6F /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B515541A87336A00C48D6F /* ToteStack.swift */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		E16EBB861A888BEF007D6E29 /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
+		E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitScoutingNav.swift; sourceTree = "<group>"; };
+		E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPitTeams.swift; sourceTree = "<group>"; };
+		E16EBB8D1A89BED0007D6E29 /* PitTeamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeamCell.swift; sourceTree = "<group>"; };
 		E1B515501A8732EC00C48D6F /* MatchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchExtension.swift; sourceTree = "<group>"; };
 		E1B515521A87336A00C48D6F /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoopStack.swift; sourceTree = "<group>"; };
 		E1B515541A87336A00C48D6F /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToteStack.swift; sourceTree = "<group>"; };
@@ -75,6 +81,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E16EBB881A8989F7007D6E29 /* PitScouting */ = {
+			isa = PBXGroup;
+			children = (
+				E16EBB8D1A89BED0007D6E29 /* PitTeamCell.swift */,
+				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
+				E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */,
+				E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */,
+			);
+			name = PitScouting;
+			sourceTree = "<group>";
+		};
 		E1B5154D1A8714E000C48D6F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,9 +125,9 @@
 		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
 			isa = PBXGroup;
 			children = (
+				E16EBB881A8989F7007D6E29 /* PitScouting */,
 				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
 				2855A3081A874663004260DE /* Scoring.swift */,
-				E1F4BF011A60907A0091EA2E /* PitScouting.swift */,
 				E1F4BEFD1A6090090091EA2E /* More.swift */,
 				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
 				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
@@ -254,11 +271,14 @@
 				E1B515531A87336A00C48D6F /* CoopStack.swift in Sources */,
 				E1B515571A8733CE00C48D6F /* Match.swift in Sources */,
 				E1B515551A87336A00C48D6F /* ToteStack.swift in Sources */,
+				E16EBB8E1A89BED0007D6E29 /* PitTeamCell.swift in Sources */,
 				E1F4BF001A6090630091EA2E /* (null) in Sources */,
 				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
 				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
+				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				E16EBB871A888BEF007D6E29 /* PitTeam.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
+				E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
 				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,
 			);
