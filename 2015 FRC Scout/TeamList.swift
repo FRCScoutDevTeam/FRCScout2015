@@ -51,6 +51,14 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "OpenSingleTeamView"){
+            let destination = segue.destinationViewController as SingleTeamView
+            let sendingCell = sender as TeamListCell
+            destination.teamNumber = sendingCell.teamNumberLbl.text!
+            destination.regional = sendingCell.regional
+        }
+    }
     
     //Segment controller press to change list
     @IBAction func changeList(sender: AnyObject) {
@@ -74,6 +82,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate {
         cell.teleAvgScoreLbl.text = "\(team.teleAvg)"
         cell.containerScoreLbl.text = "\(team.containerAvg)"
         cell.toteScoreLbl.text = "\(team.toteAvg)"
+        cell.regional = team.regional.name
         return cell
     }
 }

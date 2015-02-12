@@ -470,6 +470,19 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             newPitTeam!.noodles = noodles
             newPitTeam!.strategy = strategy
             newPitTeam!.additionalNotes = additionalNotes
+            
+            var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
+            requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumber)
+            var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
+            if (resultsMasterTeam.count > 0){
+                newPitTeam!.masterTeam = resultsMasterTeam.first! as MasterTeam
+                println("Master Team found")
+            } else {
+                var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
+                newPitTeam!.masterTeam = newMasterTeam
+                newMasterTeam.teamNumber = teamNumber
+                println("Master Team Created")
+            }
             context.save(nil)
             createInputAlert("Pit Scouting Saved")
             resetPitScouting()

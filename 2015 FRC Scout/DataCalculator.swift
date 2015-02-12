@@ -88,4 +88,51 @@ class DataCalculator: NSObject{
         
         return t_Team
     }
+    
+    
+    func singleMatchScores(match: Match) ->(teleScore: Int, autoScore: Int, numTotes: Int,numContainers: Int){
+        var tele = 0
+        tele += match.noodlesInContainer.integerValue*6
+        tele += match.noodlesInLandfill.integerValue
+        
+        var auto = 0
+        auto += match.autoTotes.integerValue * 2
+        auto += match.autoContainers.integerValue * 3
+        if(match.autoStack == true) {
+            auto += 20
+        }
+        if(match.autoDrive == true) {
+            auto += 2
+        }
+        var numTotes: Int = 0
+        var matchContainer = [Int]()
+        for stack in match.toteStacks.allObjects as [ToteStack]{
+            var totesInStack: [NSNumber] = [stack.tote1,stack.tote2,stack.tote3,stack.tote4,stack.tote5,stack.tote6]
+            var heightOfStack = 6
+            for var t = totesInStack.count - 1; t >= 0; t--  {
+                if (totesInStack[t] == 2) {
+                    numTotes++
+                }
+            }
+            if(stack.containerLvl as Int > 0) {
+                matchContainer.append(stack.containerLvl as Int)
+            }
+        }
+        
+        tele += numTotes * 2
+        for x in matchContainer {
+            tele += x * 4
+        }
+        
+        return (tele,auto,numTotes,matchContainer.count)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

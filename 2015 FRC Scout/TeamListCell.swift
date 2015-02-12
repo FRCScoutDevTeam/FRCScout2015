@@ -21,18 +21,14 @@ class TeamListCell: UITableViewCell {
     @IBOutlet weak var toteLbl: UILabel!
     @IBOutlet weak var toteScoreLbl: UILabel!
     
+    var regional = String()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .None
         // Initialization code
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?){
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
