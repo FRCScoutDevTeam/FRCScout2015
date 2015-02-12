@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class Scoring: UIViewController {
+class Scoring: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var scoutPosLbl: UILabel!
     @IBOutlet weak var matchNumberLbl: UITextField!
@@ -104,6 +104,9 @@ class Scoring: UIViewController {
     var currentCoopStack = CoopStackStruct()
     var numCoopTotes = 0
     var numPenalties = 0
+    
+    //Regional
+    var regional = "Week Zero"
     
     //Variable stores if Autonomous mode is showing. false if in teleop mode
     var autoShowing = true
@@ -775,9 +778,51 @@ class Scoring: UIViewController {
     
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
+        println("save press")
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
         
+        var regionalData: Regional?
+        var teamData: Team?
+        var request = NSFetchRequest(entityName: "Regional")
+        request.predicate = NSPredicate(format: "name = %@", regional)
+        var results = context.executeFetchRequest(request, error: nil) as [Regional]!
+        if (results.count > 0){
+            regionalData = results.first! as Regional!
+            println("Regional Found!")
+        } else {
+            regionalData = NSEntityDescription.insertNewObjectForEntityForName("Regional", inManagedObjectContext: context) as? Regional
+            regionalData?.name = regional
+            println("Regional created")
+        }
+        
+        var teamRequest = NSFetchRequest(entityName: "Team")
+        teamRequest.predicate = NSPredicate(format: "regional.name = %@", regional)
+        var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
+        if (teamResults?.count > 0) {
+            teamData = teamResults.first
+            println("team found")
+        } else {
+            var newTeam = NSEntityDescription.insertNewObjectForEntityForName("Team", inManagedObjectContext: context) as Team
+            regionalData?.addTeam(newTeam)
+            newTeam.regional = regionalData!
+            teamData = newTeam
+            println("team created")
+        }
+        
+        var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
+        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)
+        var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
+        if (resultsMasterTeam.count > 0){
+            teamData?.masterTeam = resultsMasterTeam.first! as MasterTeam
+            println("Master Team found")
+        } else {
+            var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
+            teamData?.masterTeam = newMasterTeam
+            newMasterTeam.teamNumber = teamNumberLbl.text
+            newMasterTeam.addTeam(teamData!)
+            println("Master Team Created")
+        }
         let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
         
         var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
@@ -819,10 +864,19 @@ class Scoring: UIViewController {
             newMatch.addCoopStack(newCoopStack)
         }
         
-        
+        teamData?.addMatch(newMatch)
         
         
         context.save(nil)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.view.endEditing(true)
     }
     
     /*func loadSaved() {
