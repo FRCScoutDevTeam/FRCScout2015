@@ -8,6 +8,8 @@
 
 import UIKit
 
+let SWIPECONFIRMKEY = "SwipeConfrimed"
+
 let week1Regionals = [
     "South Florida Regional",
     "Lake Superior Regional",
