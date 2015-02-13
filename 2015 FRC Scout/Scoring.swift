@@ -132,7 +132,9 @@ class Scoring: UIViewController, UITextFieldDelegate {
 
     //toteStack control variables
     var bottomToteStacking = false
+    var topToteStacking = false
     var bottomCoopStacking = false
+    var topCoopStacking = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -333,15 +335,19 @@ class Scoring: UIViewController, UITextFieldDelegate {
             self.containerNoodleSubBtn.enabled = true
             self.landfillNoodleAddBtn.enabled = true
             self.landfillNoodleSubBtn.enabled = true
-            self.coopTotesAddBtn.enabled = true
+            if(self.currentCoopStack.totes.count == 0) { self.coopTotesAddBtn.enabled = false }
             self.coopTotesUndoBtn.enabled = true
             self.coopTote1.enabled = true
             self.coopTote2.enabled = true
             self.coopTote3.enabled = true
             self.coopTote4.enabled = true
-            self.coopToteInsertBtn.enabled = true
-            self.coopToteBtmInsertBtn.enabled = false
-            self.toteStackAddBtn.enabled = true
+            if(!self.bottomCoopStacking) { self.coopToteInsertBtn.enabled = true }
+            if(self.currentCoopStack.totes.count != 0 && !self.topCoopStacking) {
+                self.coopToteBtmInsertBtn.enabled = true
+            } else {
+                self.coopToteBtmInsertBtn.enabled = false
+            }
+            if(self.currentToteStack.totes.count == 0){ self.toteStackAddBtn.enabled = false }
             self.toteStackUndoBtn.enabled = true
             self.tote1.enabled = true
             self.tote2.enabled = true
@@ -349,9 +355,17 @@ class Scoring: UIViewController, UITextFieldDelegate {
             self.tote4.enabled = true
             self.tote5.enabled = true
             self.tote6.enabled = true
-            self.toteInsertBtn.enabled = true
-            self.toteBtmInsertBtn.enabled = false
-            self.containerInsertBtn.enabled = false
+            if(!self.bottomToteStacking) { self.toteInsertBtn.enabled = true }
+            if(self.currentToteStack.totes.count != 0 && !self.topToteStacking) {
+                self.toteBtmInsertBtn.enabled = true
+            } else {
+                self.toteBtmInsertBtn.enabled = false
+            }
+            if(self.currentToteStack.totes.count == 0) {
+                self.containerInsertBtn.enabled = false
+            } else {
+                self.containerInsertBtn.enabled = true
+            }
             self.stackKilledBtn.enabled = true
             self.penaltyAddBtn.enabled = true
             self.penaltySubBtn.enabled = true
@@ -538,6 +552,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
         currentToteStack = ToteStackStruct()
         toteInsertBtn.frame.origin.y = toteInsertBtnLocations[0]
+        toteInsertBtn.hidden = false
+        toteInsertBtn.enabled = true
         containerInsertBtn.hidden = true
         containerInsertBtn.enabled = false
         toteBtmInsertBtn.enabled = false
@@ -548,7 +564,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
         containerInsertBtn.frame.origin.y = containerInsertBtnLocations[0]
         containerInsertBtn.frame.origin.x = containerInsertBtnSide
         bottomToteStacking = false
-        bottomCoopStacking = false
+        topToteStacking = false
+        toteStackAddBtn.enabled = false
     }
 
     //resets the coop stack
@@ -567,6 +584,9 @@ class Scoring: UIViewController, UITextFieldDelegate {
         coopToteBtmInsertBtn.hidden = true
         coopToteBtmInsertBtn.enabled = false
         bottomCoopStacking = false
+        topCoopStacking = false
+        coopTotesAddBtn.enabled = false
+        
     }
 
     //switches between auto and tele scorring mode
@@ -851,6 +871,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             currentToteStack.totes.insert(true, atIndex: 0)
             bottomToteStacking = true
         } else {
+            topToteStacking = true
             currentToteStack.totes.append(true)
         }
         //number of totes in current stack
@@ -897,6 +918,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
             }
         }
+        toteStackAddBtn.enabled = true
     }
 
     //adds a container to top of stack and hides the unused totes above it
@@ -912,6 +934,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 toteBtns[i].enabled = false
             }
         }
+        toteStackAddBtn.enabled = true
     }
 
     //adds to number of stacks knocked over
@@ -1025,6 +1048,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 coopBtns[i].setBackgroundImage(UIImage(named: "ToteYellow"), forState: .Normal)
             }
         }
+        coopTotesAddBtn.enabled = true
     }
 
     //adds to number of penalties in match
