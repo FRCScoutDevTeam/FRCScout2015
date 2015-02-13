@@ -37,6 +37,7 @@
 		E1F9F8D91A8C83B200709C9D /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8D81A8C83B200709C9D /* Team.swift */; };
 		E1F9F8DB1A8CFC1200709C9D /* SingleTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */; };
 		E1F9F8DD1A8D147B00709C9D /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */; };
+		E1F9F8E11A8DE04200709C9D /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8E01A8DE04200709C9D /* PitTeam.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		E1F9F8D81A8C83B200709C9D /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
 		E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
+		E1F9F8E01A8DE04200709C9D /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 		E1B5154D1A8714E000C48D6F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				E1F9F8E01A8DE04200709C9D /* PitTeam.swift */,
 				E1F9F8D81A8C83B200709C9D /* Team.swift */,
 				E1A4D7001A8C3D5400FCF562 /* MasterTeam.swift */,
 				E1A4D6FE1A8C3D5300FCF562 /* Regional.swift */,
@@ -321,6 +324,7 @@
 				E1F4BF001A6090630091EA2E /* (null) in Sources */,
 				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
 				E1F9F8D91A8C83B200709C9D /* Team.swift in Sources */,
+				E1F9F8E11A8DE04200709C9D /* PitTeam.swift in Sources */,
 				E1A4D7011A8C3D5400FCF562 /* MasterTeam.swift in Sources */,
 				E1A4D6FB1A8C333900FCF562 /* TeamListCell.swift in Sources */,
 				E1F9F8DB1A8CFC1200709C9D /* SingleTeamView.swift in Sources */,

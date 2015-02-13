@@ -199,10 +199,10 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         for var i: CGFloat = 0; i < CGFloat(imageCodes.count); ++i {
-            /*var image = UIImage(named: imageCodes[Int(i)])
-            var imageView = UIImageView(frame: CGRect(x: 35 + 40 * i, y: detailViewHeight * 0.75 - 70, width: 25, height: 60))
+            var image = UIImage(named: imageCodes[Int(i)])
+            var imageView = UIImageView(frame: CGRect(x: 35 + 40 * i, y: detailViewHeight * 0.75 - 70, width: 21, height: 60))
             imageView.image = image
-            detailView.addSubview(imageView)*/
+            detailView.addSubview(imageView)
         }
         
         //tele lbl
@@ -300,10 +300,10 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         for var i: CGFloat = 0; i < CGFloat(imageCodes.count); ++i {
-            /*var image = UIImage(named: imageCodes[Int(i)])
-            var imageView = UIImageView(frame: CGRect(x: 30 + 40 * i, y: cell.bounds.height * 0.4, width: 25, height: 60))
+            var image = UIImage(named: imageCodes[Int(i)])
+            var imageView = UIImageView(frame: CGRect(x: 30 + 40 * i, y: cell.bounds.height * 0.4, width: 21, height: 60))
             imageView.image = image
-            cell.addSubview(imageView)*/
+            cell.addSubview(imageView)
         }
         return cell
     }
