@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
+		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
 		E16EBB871A888BEF007D6E29 /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB861A888BEF007D6E29 /* PitTeam.swift */; };
 		E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */; };
 		E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
+		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		E16EBB861A888BEF007D6E29 /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
 		E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitScoutingNav.swift; sourceTree = "<group>"; };
 		E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPitTeams.swift; sourceTree = "<group>"; };
@@ -125,11 +127,12 @@
 		E1F4BED31A608DF20091EA2E /* 2015 FRC Scout */ = {
 			isa = PBXGroup;
 			children = (
-				E16EBB881A8989F7007D6E29 /* PitScouting */,
 				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
+				28A3F23C1A8D5EDD001009C8 /* Globals.swift */,
 				2855A3081A874663004260DE /* Scoring.swift */,
 				E1F4BEFD1A6090090091EA2E /* More.swift */,
 				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
+				E16EBB881A8989F7007D6E29 /* PitScouting */,
 				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
 				E1F4BED41A608DF20091EA2E /* Supporting Files */,
 			);
@@ -278,6 +281,7 @@
 				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				E16EBB871A888BEF007D6E29 /* PitTeam.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
+				28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */,
 				E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
 				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,

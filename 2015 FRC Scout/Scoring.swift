@@ -11,12 +11,21 @@ import CoreData
 
 class Scoring: UIViewController {
 
+    var grayOutView : UIView!
+    var signInView : UIView!
+    
+    let signInLayoutWidth : CGFloat = 120
+    let signInLayoutHeight : CGFloat = 40
+    let signInLayoutXDiff : CGFloat = 30
+    let signInLayoutYDiff : CGFloat = 15
+    
+    //UI header Items
     @IBOutlet weak var scoutPosLbl: UILabel!
     @IBOutlet weak var matchNumberLbl: UITextField!
     @IBOutlet weak var teamNumberLbl: UITextField!
     @IBOutlet weak var modeLbl: UILabel!
     
-    //Auto UI items
+    //Auto UI Items
     @IBOutlet weak var autoToteLbl: UILabel!
     @IBOutlet weak var autoToteScoreLbl: UILabel!
     @IBOutlet weak var autoContainerLbl: UILabel!
@@ -156,6 +165,137 @@ class Scoring: UIViewController {
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
         autoZoneRobot.addGestureRecognizer(robotDrag)
+        
+//        self.showSignInView()
+    }
+    
+    func showSignInView() {
+        grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
+        self.view.addSubview(grayOutView)
+        
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        self.view.addGestureRecognizer(tapDismiss)
+        
+        signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 660))
+        signInView.backgroundColor = .whiteColor()
+        signInView.layer.cornerRadius = 10
+        self.view.addSubview(signInView)
+        self.view.bringSubviewToFront(signInView)
+        
+        let signInTitleLbl = UILabel(frame: CGRect(x: signInView.frame.width/2 - 50, y: 20, width: 100, height: 28))
+        signInTitleLbl.textAlignment = .Center
+        signInTitleLbl.text = "Sign In"
+        signInTitleLbl.font = UIFont.boldSystemFontOfSize(25)
+        signInView.addSubview(signInTitleLbl)
+        
+        let red1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red1Button.frame = CGRect(x: 80, y: signInTitleLbl.frame.origin.y + signInTitleLbl.frame.height + 20, width: signInLayoutWidth, height: signInLayoutHeight)
+        red1Button.layer.cornerRadius = 5
+        red1Button.layer.borderColor = UIColor.redColor().CGColor
+        red1Button.layer.borderWidth = 2
+        red1Button.backgroundColor = .whiteColor()
+        red1Button.setTitle("Red 1", forState: UIControlState.Normal)
+        red1Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red1Button)
+        
+        let red2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red2Button.frame = CGRect(x: red1Button.frame.origin.x + red1Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        red2Button.layer.cornerRadius = 5
+        red2Button.layer.borderColor = UIColor.redColor().CGColor
+        red2Button.layer.borderWidth = 2
+        red2Button.backgroundColor = .whiteColor()
+        red2Button.setTitle("Red 2", forState: UIControlState.Normal)
+        red2Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red2Button)
+        
+        let red3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red3Button.frame = CGRect(x: red2Button.frame.origin.x + red2Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        red3Button.layer.cornerRadius = 5
+        red3Button.layer.borderColor = UIColor.redColor().CGColor
+        red3Button.layer.borderWidth = 2
+        red3Button.backgroundColor = .whiteColor()
+        red3Button.setTitle("Red 3", forState: UIControlState.Normal)
+        red3Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red3Button)
+        
+        let blue1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue1Button.frame = CGRect(x: red1Button.frame.origin.x, y: red1Button.frame.origin.y + red1Button.frame.height + signInLayoutYDiff, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue1Button.layer.cornerRadius = 5
+        blue1Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue1Button.layer.borderWidth = 2
+        blue1Button.backgroundColor = .whiteColor()
+        blue1Button.setTitle("Blue 1", forState: UIControlState.Normal)
+        blue1Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue1Button)
+        
+        let blue2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue2Button.frame = CGRect(x: blue1Button.frame.origin.x + blue1Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue2Button.layer.cornerRadius = 5
+        blue2Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue2Button.layer.borderWidth = 2
+        blue2Button.backgroundColor = .whiteColor()
+        blue2Button.setTitle("Blue 2", forState: UIControlState.Normal)
+        blue2Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue2Button)
+        
+        let blue3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue3Button.frame = CGRect(x: blue2Button.frame.origin.x + blue2Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue3Button.layer.cornerRadius = 5
+        blue3Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue3Button.layer.borderWidth = 2
+        blue3Button.backgroundColor = .whiteColor()
+        blue3Button.setTitle("Blue 3", forState: UIControlState.Normal)
+        blue3Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue3Button)
+        
+        let initialsTF = UITextField(frame: CGRect(x: 80, y: blue1Button.frame.origin.y + blue1Button.frame.height + 50, width: signInLayoutWidth + 10, height: 35))
+        initialsTF.font = UIFont.systemFontOfSize(15)
+        initialsTF.textAlignment = .Center
+        initialsTF.placeholder = "3 Initials"
+        initialsTF.borderStyle = .RoundedRect
+        initialsTF.returnKeyType = .Next
+        signInView.addSubview(initialsTF)
+        let initialsLbl = UILabel(frame: CGRect(x: initialsTF.frame.origin.x, y: initialsTF.frame.origin.y - 16, width: initialsTF.frame.width, height: 15))
+        initialsLbl.font = UIFont.systemFontOfSize(14)
+        initialsLbl.text = "YOUR 3 Initials"
+        initialsLbl.textAlignment = .Center
+        initialsLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(initialsLbl)
+        
+        let teamNumTF = UITextField(frame: CGRect(x: initialsTF.frame.origin.x + initialsTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth, height: 35))
+        teamNumTF.font = UIFont.systemFontOfSize(15)
+        teamNumTF.textAlignment = .Center
+        teamNumTF.placeholder = "Your Team #"
+        teamNumTF.borderStyle = .RoundedRect
+        teamNumTF.keyboardType = .NumberPad
+        teamNumTF.returnKeyType = .Next
+        signInView.addSubview(teamNumTF)
+        let teamNumLbl = UILabel(frame: CGRect(x: teamNumTF.frame.origin.x, y: teamNumTF.frame.origin.y - 16, width: teamNumTF.frame.width, height: 15))
+        teamNumLbl.font = UIFont.systemFontOfSize(14)
+        teamNumLbl.text = "YOUR Team #"
+        teamNumLbl.textAlignment = .Center
+        teamNumLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(teamNumLbl)
+        
+        let matchNumTF = UITextField(frame: CGRect(x: teamNumTF.frame.origin.x + teamNumTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth + 10, height: 35))
+        matchNumTF.font = UIFont.systemFontOfSize(15)
+        matchNumTF.textAlignment = .Center
+        matchNumTF.placeholder = "Current Match #"
+        matchNumTF.borderStyle = .RoundedRect
+        matchNumTF.keyboardType = .NumberPad
+        matchNumTF.returnKeyType = .Done
+        signInView.addSubview(matchNumTF)
+        let matchNumLbl = UILabel(frame: CGRect(x: matchNumTF.frame.origin.x, y: matchNumTF.frame.origin.y - 16, width: matchNumTF.frame.width, height: 15))
+        matchNumLbl.font = UIFont.systemFontOfSize(14)
+        matchNumLbl.text = "Current Match #"
+        matchNumLbl.textAlignment = .Center
+        matchNumLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(matchNumLbl)
+    }
+    
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     //function to display all teleop UI items and hide auto UI
