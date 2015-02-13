@@ -121,6 +121,10 @@ class Scoring: UIViewController, UITextFieldDelegate {
     //recognizes if the user has swiped to change between modes
     var swipeGesture = UIPanGestureRecognizer()
     
+    //toteStack control variables
+    var bottomToteStacking = false
+    var bottomCoopStacking = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -382,6 +386,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         landfillNoodleScoreLbl.text = "0"
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
+        
     }
     
     //resets the UI for the tote stack
@@ -402,6 +407,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
         containerInsertBtn.setTitle("Container", forState: .Normal)
         containerInsertBtn.frame.origin.y = containerInsertBtnLocations[0]
         containerInsertBtn.frame.origin.x = containerInsertBtnSide
+        bottomToteStacking = false
+        bottomCoopStacking = false
     }
     
     //resets the coop stack
@@ -419,6 +426,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
         coopToteBtmInsertBtn.hidden = true
         coopToteBtmInsertBtn.enabled = false
+        bottomCoopStacking = false
     }
     
     //switches between auto and tele scorring mode
@@ -701,6 +709,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         //adds to bottom if true, adds to top if false
         if (fromBottom){
             currentToteStack.totes.insert(true, atIndex: 0)
+            bottomToteStacking = true
         } else {
             currentToteStack.totes.append(true)
         }
@@ -710,8 +719,17 @@ class Scoring: UIViewController, UITextFieldDelegate {
         //hides insert buttons if there's 6 totes
         if (currentToteStack.totes.count<6){
             toteInsertBtn.frame.origin.y = toteInsertBtnLocations[numTotes]
-            toteBtmInsertBtn.enabled = true
-            toteBtmInsertBtn.hidden = false
+            if(bottomToteStacking){
+                toteBtmInsertBtn.enabled = true
+                toteBtmInsertBtn.hidden = false
+                toteInsertBtn.hidden = true
+                toteInsertBtn.enabled = false
+            } else {
+                toteBtmInsertBtn.enabled = false
+                toteBtmInsertBtn.hidden = true
+                toteInsertBtn.hidden = false
+                toteInsertBtn.enabled = true
+            }
         }
         else {
             toteInsertBtn.hidden = true
@@ -815,6 +833,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         //if true then adds a tote to the the bottom, else adds to the bottom
         if(fromBottom){
             currentCoopStack.totes.insert(true, atIndex: 0)
+            bottomCoopStacking = true
         } else {
             currentCoopStack.totes.append(true)
         }
@@ -823,8 +842,17 @@ class Scoring: UIViewController, UITextFieldDelegate {
         
         if (numTotes<4){    //moves top tote insert button and shows bottom insert button
             coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[numTotes]
-            coopToteBtmInsertBtn.hidden = false
-            coopToteBtmInsertBtn.enabled = true
+            if(bottomCoopStacking){
+                coopToteBtmInsertBtn.hidden = false
+                coopToteBtmInsertBtn.enabled = true
+                coopToteInsertBtn.hidden = true
+                coopToteInsertBtn.enabled = false
+            } else {
+                coopToteBtmInsertBtn.hidden = true
+                coopToteBtmInsertBtn.enabled = false
+                coopToteInsertBtn.hidden = false
+                coopToteInsertBtn.enabled = true
+            }
         }
         else {      //if at the top of the stack, hide the insert buttons
             coopToteInsertBtn.hidden = true

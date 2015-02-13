@@ -181,6 +181,30 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         teleBox.layer.cornerRadius = 5
         detailView.addSubview(teleBox)
         
+        //code to display stacks
+        var imageCodes = [String]()
+        for stack in match.toteStacks.allObjects as [ToteStack] {
+            var code: String = ""
+            code += "\(stack.tote1)"
+            code += "\(stack.tote2)"
+            code += "\(stack.tote3)"
+            code += "\(stack.tote4)"
+            code += "\(stack.tote5)"
+            code += "\(stack.tote6)"
+            if(stack.containerLvl as Int > 0){
+                code += "c"
+            }
+            println(code)
+            imageCodes.append(code)
+        }
+        
+        for var i: CGFloat = 0; i < CGFloat(imageCodes.count); ++i {
+            /*var image = UIImage(named: imageCodes[Int(i)])
+            var imageView = UIImageView(frame: CGRect(x: 35 + 40 * i, y: detailViewHeight * 0.75 - 70, width: 25, height: 60))
+            imageView.image = image
+            detailView.addSubview(imageView)*/
+        }
+        
         //tele lbl
         var teleLbl = UILabel(frame: CGRect(x: detailViewWidth*0.5 - 50, y: detailViewHeight * 0.35 + 5, width: 100, height: 25))
         teleLbl.text = "Teleoperated"
@@ -232,6 +256,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         notesView.layer.cornerRadius = 5
         notesView.font = UIFont(name: "Heiti SC", size: 15)
         notesView.clipsToBounds = true
+        notesView.userInteractionEnabled = false
         detailView.addSubview(notesView)
     }
     
@@ -256,6 +281,30 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.teleScoreLbl.text = "\(matchData.teleScore)"
         cell.toteScoreLbl.text = "\(matchData.numTotes)"
         cell.containerScoreLbl.text = "\(matchData.numContainers)"
+        
+        //code to display stacks
+        var imageCodes = [String]()
+        for stack in match.toteStacks.allObjects as [ToteStack] {
+            var code: String = ""
+            code += "\(stack.tote1)"
+            code += "\(stack.tote2)"
+            code += "\(stack.tote3)"
+            code += "\(stack.tote4)"
+            code += "\(stack.tote5)"
+            code += "\(stack.tote6)"
+            if(stack.containerLvl as Int > 0){
+                code += "c"
+            }
+            println(code)
+            imageCodes.append(code)
+        }
+        
+        for var i: CGFloat = 0; i < CGFloat(imageCodes.count); ++i {
+            /*var image = UIImage(named: imageCodes[Int(i)])
+            var imageView = UIImageView(frame: CGRect(x: 30 + 40 * i, y: cell.bounds.height * 0.4, width: 25, height: 60))
+            imageView.image = image
+            cell.addSubview(imageView)*/
+        }
         return cell
     }
     

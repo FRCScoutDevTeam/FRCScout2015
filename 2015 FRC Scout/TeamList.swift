@@ -86,6 +86,8 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate {
         cell.containerScoreLbl.text = "\(team.containerAvg)"
         cell.toteScoreLbl.text = "\(team.toteAvg)"
         cell.regional = team.regional.name
+        
+        
         return cell
     }
 }
