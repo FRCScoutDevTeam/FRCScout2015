@@ -484,7 +484,12 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
                 println("Master Team Created")
             }
             context.save(nil)
-            createInputAlert("Pit Scouting Saved")
+            let alertController = UIAlertController(title: "Save Complete!", message: "", preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
             resetPitScouting()
         }
         

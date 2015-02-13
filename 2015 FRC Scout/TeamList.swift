@@ -39,6 +39,9 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        tableView.layer.borderWidth = 2
+        tableView.layer.cornerRadius = 5
+        tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
         // Do any additional setup after loading the view.
     }
     
