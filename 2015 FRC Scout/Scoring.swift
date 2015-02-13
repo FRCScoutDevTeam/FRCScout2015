@@ -21,8 +21,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
 
     //UI header Items
     @IBOutlet weak var scoutPosLbl: UILabel!
-    @IBOutlet weak var matchNumberLbl: UITextField!
-    @IBOutlet weak var teamNumberLbl: UITextField!
+    @IBOutlet weak var matchNumberTF: UITextField!
+    @IBOutlet weak var teamNumberTF: UITextField!
     @IBOutlet weak var modeLbl: UILabel!
 
     //Auto UI Items
@@ -162,7 +162,9 @@ class Scoring: UIViewController, UITextFieldDelegate {
         toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
         coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
 
-        resetScoringScreen()
+//        resetScoringScreen()
+        resetToteStack()
+        resetCoopStack()
         showAuto()
         self.view.userInteractionEnabled = true
         self.view.multipleTouchEnabled = true
@@ -530,8 +532,10 @@ class Scoring: UIViewController, UITextFieldDelegate {
         //Auto Items
 //        autoDriveBtn.alpha = 0.5
         autoToteScoreLbl.text = "0"
+        autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
         autoContainerScoreLbl.text = "0"
         autoZoneRobot.center = CGPoint(x: autoZoneRobot.center.x, y: autoZoneLine.center.y + 65)
+        autoZoneLbl.layer.backgroundColor = UIColor.clearColor().CGColor
 
         //Tele Items
         resetToteStack()
@@ -540,7 +544,12 @@ class Scoring: UIViewController, UITextFieldDelegate {
         landfillNoodleScoreLbl.text = "0"
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
-
+        
+        showAuto()
+        
+        var matchNum = matchNumberTF.text.toInt()!
+        
+        matchNumberTF.text = "\(matchNum + 1)"
     }
 
     //resets the UI for the tote stack
@@ -1085,7 +1094,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
 
         var teamRequest = NSFetchRequest(entityName: "Team")
-        var p1: NSPredicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)!
+        var p1: NSPredicate = NSPredicate(format: "teamNumber = %@", teamNumberTF.text)!
         var p2: NSPredicate = NSPredicate(format: "regional.name = %@", regional)!
         teamRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([p1,p2])
         var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
@@ -1096,13 +1105,13 @@ class Scoring: UIViewController, UITextFieldDelegate {
             var newTeam = NSEntityDescription.insertNewObjectForEntityForName("Team", inManagedObjectContext: context) as Team
             regionalData?.addTeam(newTeam)
             newTeam.regional = regionalData!
-            newTeam.teamNumber = teamNumberLbl.text
+            newTeam.teamNumber = teamNumberTF.text
             teamData = newTeam
             println("team created")
         }
 
         var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
-        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)
+        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumberTF.text)
         var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
         if (resultsMasterTeam.count > 0){
             teamData?.masterTeam = resultsMasterTeam.first! as MasterTeam
@@ -1110,7 +1119,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         } else {
             var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
             teamData?.masterTeam = newMasterTeam
-            newMasterTeam.teamNumber = teamNumberLbl.text
+            newMasterTeam.teamNumber = teamNumberTF.text
             newMasterTeam.addTeam(teamData!)
             println("Master Team Created")
         }
@@ -1157,8 +1166,18 @@ class Scoring: UIViewController, UITextFieldDelegate {
 
         teamData?.addMatch(newMatch)
         teamData = dataCalc.calculateAverages(teamData!)
-
-        context.save(nil)
+        
+        var saveErr : NSError?
+        if !context.save(&saveErr) {
+            println(saveErr!.localizedDescription)
+        } else {
+            var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
+        resetScoringScreen()
     }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
