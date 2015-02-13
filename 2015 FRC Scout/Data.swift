@@ -10,9 +10,14 @@ import UIKit
 
 class Data: UIViewController {
 
+    @IBOutlet weak var viewTeamsBtn: UIButton!
+    @IBOutlet weak var nextMatchBtn: UIButton!
+    @IBOutlet weak var allianceSelectionBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewTeamsBtn.layer.cornerRadius = 5
+        nextMatchBtn.layer.cornerRadius = 5
+        allianceSelectionBtn.layer.cornerRadius = 5
         // Do any additional setup after loading the view.
     }
 
@@ -20,16 +25,7 @@ class Data: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
