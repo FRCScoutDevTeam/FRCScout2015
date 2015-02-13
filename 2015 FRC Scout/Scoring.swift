@@ -11,12 +11,21 @@ import CoreData
 
 class Scoring: UIViewController {
 
+    var grayOutView : UIView!
+    var signInView : UIView!
+    
+    let signInLayoutWidth : CGFloat = 120
+    let signInLayoutHeight : CGFloat = 40
+    let signInLayoutXDiff : CGFloat = 30
+    let signInLayoutYDiff : CGFloat = 15
+    
+    //UI header Items
     @IBOutlet weak var scoutPosLbl: UILabel!
     @IBOutlet weak var matchNumberLbl: UITextField!
     @IBOutlet weak var teamNumberLbl: UITextField!
     @IBOutlet weak var modeLbl: UILabel!
     
-    //Auto UI items
+    //Auto UI Items
     @IBOutlet weak var autoToteLbl: UILabel!
     @IBOutlet weak var autoToteScoreLbl: UILabel!
     @IBOutlet weak var autoContainerLbl: UILabel!
@@ -25,7 +34,9 @@ class Scoring: UIViewController {
     @IBOutlet weak var autoToteSubBtn: UIButton!
     @IBOutlet weak var autoContainerAddBtn: UIButton!
     @IBOutlet weak var autoContainerSubBtn: UIButton!
-    @IBOutlet weak var autoDriveBtn: UIButton!
+    @IBOutlet weak var autoZoneLbl: UILabel!
+    @IBOutlet weak var autoZoneLine: UIView!
+    @IBOutlet weak var autoZoneRobot: UIImageView!
     @IBOutlet weak var autoStackBtn: UIButton!
     
     //Teleop UI Items
@@ -61,22 +72,28 @@ class Scoring: UIViewController {
     @IBOutlet weak var coopTote1: UIButton!
     @IBOutlet weak var coopToteInsertBtn: UIButton!
     @IBOutlet weak var coopToteBtmInsertBtn: UIButton!
-    @IBOutlet weak var penaltyBtn: UIButton!
+    @IBOutlet weak var penaltyLbl: UILabel!
+    @IBOutlet weak var penaltyValLbl: UILabel!
+    @IBOutlet weak var penaltyAddBtn: UIButton!
+    @IBOutlet weak var penaltySubBtn: UIButton!
+    
+    
+    @IBOutlet weak var finishMatchBtn: UIButton!
     
     //array of the buttons in the tote stack UI. Initialized in ViewDidLoad()
     var toteBtns = [UIButton]()
     //array of the buttons in the coop tote stack UI. Initialized in ViewDidLoad()
     var coopBtns = [UIButton]()
     //positions that the top tote insert button moves to
-    var toteInsertBtnLocations: [CGFloat] = [779,697,609,526,442,358]
+    var toteInsertBtnLocations: [CGFloat] = [707,637,567,497,427,357]
     //positions that the container insert button moves to
-    var containerInsertBtnLocations: [CGFloat] = [0,702,614,531,447,363,281]
+    var containerInsertBtnLocations: [CGFloat] = [0,634,564,494,424,354,284]
     //positions that the coop Tote insert button moves to
-    var coopInsertBtnLocations: [CGFloat] = [598,516,429,344]
+    var coopInsertBtnLocations: [CGFloat] = [522,452,382,312]
     //x position of the container insert button when it's to the left of the tote stack
     var containerInsertBtnSide: CGFloat = 27
     //x postion of the container insert button when it's in the center of the tote stack
-    var containerInsertBtnCenter: CGFloat = 141
+    var containerInsertBtnCenter: CGFloat = 173
     
     
     //Score Variables
@@ -111,9 +128,31 @@ class Scoring: UIViewController {
     var swipeGesture = UIPanGestureRecognizer()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Auto UI items
+        autoToteAddBtn.layer.cornerRadius = 5
+        autoToteSubBtn.layer.cornerRadius = 5
+        autoContainerAddBtn.layer.cornerRadius = 5
+        autoContainerSubBtn.layer.cornerRadius = 5
+        autoStackBtn.layer.cornerRadius = 5
+        
+        //Teleop UI Items
+        containerNoodleAddBtn.layer.cornerRadius = 5
+        containerNoodleSubBtn.layer.cornerRadius = 5
+        landfillNoodleAddBtn.layer.cornerRadius = 5
+        landfillNoodleSubBtn.layer.cornerRadius = 5
+        coopTotesAddBtn.layer.cornerRadius = 5
+        coopTotesUndoBtn.layer.cornerRadius = 5
+        stackKilledBtn.layer.cornerRadius = 5
+        toteStackAddBtn.layer.cornerRadius = 5
+        toteStackUndoBtn.layer.cornerRadius = 5
+        
+        finishMatchBtn.layer.cornerRadius = 5
+        
         toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
         coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
-        super.viewDidLoad()
+        
         resetScoringScreen()
         showAuto()
         self.view.userInteractionEnabled = true
@@ -121,196 +160,335 @@ class Scoring: UIViewController {
         swipeGesture.addTarget(self, action: "twoFingerPanDetected:")
         swipeGesture.minimumNumberOfTouches = 2
         self.view.addGestureRecognizer(swipeGesture)
+        
+        var robotDrag = UIPanGestureRecognizer(target: self, action: "robotDrag:")
+        robotDrag.maximumNumberOfTouches = 1
+        robotDrag.minimumNumberOfTouches = 1
+        autoZoneRobot.addGestureRecognizer(robotDrag)
+        
+//        self.showSignInView()
+    }
+    
+    func showSignInView() {
+        grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
+        self.view.addSubview(grayOutView)
+        
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        self.view.addGestureRecognizer(tapDismiss)
+        
+        signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 660))
+        signInView.backgroundColor = .whiteColor()
+        signInView.layer.cornerRadius = 10
+        self.view.addSubview(signInView)
+        self.view.bringSubviewToFront(signInView)
+        
+        let signInTitleLbl = UILabel(frame: CGRect(x: signInView.frame.width/2 - 50, y: 20, width: 100, height: 28))
+        signInTitleLbl.textAlignment = .Center
+        signInTitleLbl.text = "Sign In"
+        signInTitleLbl.font = UIFont.boldSystemFontOfSize(25)
+        signInView.addSubview(signInTitleLbl)
+        
+        let red1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red1Button.frame = CGRect(x: 80, y: signInTitleLbl.frame.origin.y + signInTitleLbl.frame.height + 20, width: signInLayoutWidth, height: signInLayoutHeight)
+        red1Button.layer.cornerRadius = 5
+        red1Button.layer.borderColor = UIColor.redColor().CGColor
+        red1Button.layer.borderWidth = 2
+        red1Button.backgroundColor = .whiteColor()
+        red1Button.setTitle("Red 1", forState: UIControlState.Normal)
+        red1Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red1Button)
+        
+        let red2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red2Button.frame = CGRect(x: red1Button.frame.origin.x + red1Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        red2Button.layer.cornerRadius = 5
+        red2Button.layer.borderColor = UIColor.redColor().CGColor
+        red2Button.layer.borderWidth = 2
+        red2Button.backgroundColor = .whiteColor()
+        red2Button.setTitle("Red 2", forState: UIControlState.Normal)
+        red2Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red2Button)
+        
+        let red3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red3Button.frame = CGRect(x: red2Button.frame.origin.x + red2Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        red3Button.layer.cornerRadius = 5
+        red3Button.layer.borderColor = UIColor.redColor().CGColor
+        red3Button.layer.borderWidth = 2
+        red3Button.backgroundColor = .whiteColor()
+        red3Button.setTitle("Red 3", forState: UIControlState.Normal)
+        red3Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red3Button)
+        
+        let blue1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue1Button.frame = CGRect(x: red1Button.frame.origin.x, y: red1Button.frame.origin.y + red1Button.frame.height + signInLayoutYDiff, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue1Button.layer.cornerRadius = 5
+        blue1Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue1Button.layer.borderWidth = 2
+        blue1Button.backgroundColor = .whiteColor()
+        blue1Button.setTitle("Blue 1", forState: UIControlState.Normal)
+        blue1Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue1Button)
+        
+        let blue2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue2Button.frame = CGRect(x: blue1Button.frame.origin.x + blue1Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue2Button.layer.cornerRadius = 5
+        blue2Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue2Button.layer.borderWidth = 2
+        blue2Button.backgroundColor = .whiteColor()
+        blue2Button.setTitle("Blue 2", forState: UIControlState.Normal)
+        blue2Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue2Button)
+        
+        let blue3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue3Button.frame = CGRect(x: blue2Button.frame.origin.x + blue2Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue3Button.layer.cornerRadius = 5
+        blue3Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue3Button.layer.borderWidth = 2
+        blue3Button.backgroundColor = .whiteColor()
+        blue3Button.setTitle("Blue 3", forState: UIControlState.Normal)
+        blue3Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue3Button)
+        
+        let initialsTF = UITextField(frame: CGRect(x: 80, y: blue1Button.frame.origin.y + blue1Button.frame.height + 50, width: signInLayoutWidth + 10, height: 35))
+        initialsTF.font = UIFont.systemFontOfSize(15)
+        initialsTF.textAlignment = .Center
+        initialsTF.placeholder = "3 Initials"
+        initialsTF.borderStyle = .RoundedRect
+        initialsTF.returnKeyType = .Next
+        signInView.addSubview(initialsTF)
+        let initialsLbl = UILabel(frame: CGRect(x: initialsTF.frame.origin.x, y: initialsTF.frame.origin.y - 16, width: initialsTF.frame.width, height: 15))
+        initialsLbl.font = UIFont.systemFontOfSize(14)
+        initialsLbl.text = "YOUR 3 Initials"
+        initialsLbl.textAlignment = .Center
+        initialsLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(initialsLbl)
+        
+        let teamNumTF = UITextField(frame: CGRect(x: initialsTF.frame.origin.x + initialsTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth, height: 35))
+        teamNumTF.font = UIFont.systemFontOfSize(15)
+        teamNumTF.textAlignment = .Center
+        teamNumTF.placeholder = "Your Team #"
+        teamNumTF.borderStyle = .RoundedRect
+        teamNumTF.keyboardType = .NumberPad
+        teamNumTF.returnKeyType = .Next
+        signInView.addSubview(teamNumTF)
+        let teamNumLbl = UILabel(frame: CGRect(x: teamNumTF.frame.origin.x, y: teamNumTF.frame.origin.y - 16, width: teamNumTF.frame.width, height: 15))
+        teamNumLbl.font = UIFont.systemFontOfSize(14)
+        teamNumLbl.text = "YOUR Team #"
+        teamNumLbl.textAlignment = .Center
+        teamNumLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(teamNumLbl)
+        
+        let matchNumTF = UITextField(frame: CGRect(x: teamNumTF.frame.origin.x + teamNumTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth + 10, height: 35))
+        matchNumTF.font = UIFont.systemFontOfSize(15)
+        matchNumTF.textAlignment = .Center
+        matchNumTF.placeholder = "Current Match #"
+        matchNumTF.borderStyle = .RoundedRect
+        matchNumTF.keyboardType = .NumberPad
+        matchNumTF.returnKeyType = .Done
+        signInView.addSubview(matchNumTF)
+        let matchNumLbl = UILabel(frame: CGRect(x: matchNumTF.frame.origin.x, y: matchNumTF.frame.origin.y - 16, width: matchNumTF.frame.width, height: 15))
+        matchNumLbl.font = UIFont.systemFontOfSize(14)
+        matchNumLbl.text = "Current Match #"
+        matchNumLbl.textAlignment = .Center
+        matchNumLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(matchNumLbl)
+    }
+    
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     //function to display all teleop UI items and hide auto UI
     func showTeleop(){
         //Auto Items
-        autoToteLbl.enabled = false
-        autoToteLbl.hidden = true
-        autoToteScoreLbl.enabled = false
-        autoToteScoreLbl.hidden = true
-        autoContainerScoreLbl.enabled = false
-        autoContainerScoreLbl.hidden = true
-        autoContainerLbl.enabled = false
-        autoContainerLbl.hidden = true
         autoToteAddBtn.enabled = false
-        autoToteAddBtn.hidden = true
         autoToteSubBtn.enabled = false
-        autoToteSubBtn.hidden = true
         autoContainerAddBtn.enabled = false
-        autoContainerAddBtn.hidden = true
         autoContainerSubBtn.enabled = false
-        autoContainerSubBtn.hidden = true
-        autoDriveBtn.enabled = false
-        autoDriveBtn.hidden = true
+        autoZoneRobot.userInteractionEnabled = false
         autoStackBtn.enabled = false
-        autoStackBtn.hidden = true
         
-        //Tele Items
-        containerNoodleAddBtn.enabled = true
-        containerNoodleAddBtn.hidden = false
-        containerNoodleSubBtn.enabled = true
-        containerNoodleSubBtn.hidden = false
-        containerNoodleScoreLbl.enabled = true
-        containerNoodleScoreLbl.hidden = false
-        containerNoodleLbl.enabled = true
-        containerNoodleLbl.hidden = false
-        landfillNoodleLbl.enabled = true
-        landfillNoodleLbl.hidden = false
-        landfillNoodleScoreLbl.enabled = true
-        landfillNoodleScoreLbl.hidden = false
-        landfillNoodleAddBtn.enabled = true
-        landfillNoodleAddBtn.hidden = false
-        landfillNoodleSubBtn.enabled = true
-        landfillNoodleSubBtn.hidden = false
-        coopTotesLbl.enabled = true
-        coopTotesLbl.hidden = false
-        coopTotesScoreLbl.enabled = true
-        coopTotesScoreLbl.hidden = false
-        coopTotesAddBtn.enabled = true
-        coopTotesAddBtn.hidden = false
-        coopTotesUndoBtn.enabled = true
-        coopTotesUndoBtn.hidden = false
-        coopTote1.enabled = true
-        coopTote1.hidden = false
-        coopTote2.enabled = true
-        coopTote2.hidden = false
-        coopTote3.enabled = true
-        coopTote3.hidden = false
-        coopTote4.enabled = true
-        coopTote4.hidden = false
-        coopToteInsertBtn.enabled = true
-        coopToteInsertBtn.hidden = false
-        coopToteBtmInsertBtn.enabled = false
-        coopToteBtmInsertBtn.hidden = true
-        toteStackLbl.enabled = true
-        toteStackLbl.hidden = false
-        toteStackScoreLbl.enabled = true
-        toteStackScoreLbl.hidden = false
-        toteStackAddBtn.enabled = true
-        toteStackAddBtn.hidden = false
-        toteStackUndoBtn.enabled = true
-        toteStackUndoBtn.hidden = false
-        tote1.enabled = true
-        tote1.hidden = false
-        tote2.enabled = true
-        tote2.hidden = false
-        tote3.enabled = true
-        tote3.hidden = false
-        tote4.enabled = true
-        tote4.hidden = false
-        tote5.enabled = true
-        tote5.hidden = false
-        tote6.enabled = true
-        tote6.hidden = false
-        toteInsertBtn.enabled = true
-        toteInsertBtn.hidden = false
-        toteBtmInsertBtn.enabled = false
-        toteBtmInsertBtn.hidden = true
-        containerInsertBtn.enabled = false
-        containerInsertBtn.hidden = true
-        stackKilledBtn.enabled = true
-        stackKilledBtn.hidden = false
-        penaltyBtn.enabled = true
-        penaltyBtn.hidden = false
-        modeLbl.text = "Teleoperated Scoring Mode"
-        autoShowing = false
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.autoToteLbl.alpha = 0.0
+            self.autoToteScoreLbl.alpha = 0.0
+            self.autoContainerScoreLbl.alpha = 0.0
+            self.autoContainerLbl.alpha = 0.0
+            self.autoToteAddBtn.alpha = 0.0
+            self.autoToteSubBtn.alpha = 0.0
+            self.autoContainerAddBtn.alpha = 0.0
+            self.autoContainerSubBtn.alpha = 0.0
+            self.autoZoneLbl.alpha = 0.0
+            self.autoZoneLine.alpha = 0.0
+            self.autoZoneRobot.alpha = 0.0
+            self.autoStackBtn.alpha = 0.0
+        }) { (completed) -> Void in
+            self.containerNoodleAddBtn.enabled = true
+            self.containerNoodleSubBtn.enabled = true
+            self.landfillNoodleAddBtn.enabled = true
+            self.landfillNoodleSubBtn.enabled = true
+            self.coopTotesAddBtn.enabled = true
+            self.coopTotesUndoBtn.enabled = true
+            self.coopTote1.enabled = true
+            self.coopTote2.enabled = true
+            self.coopTote3.enabled = true
+            self.coopTote4.enabled = true
+            self.coopToteInsertBtn.enabled = true
+            self.coopToteBtmInsertBtn.enabled = false
+            self.toteStackAddBtn.enabled = true
+            self.toteStackUndoBtn.enabled = true
+            self.tote1.enabled = true
+            self.tote2.enabled = true
+            self.tote3.enabled = true
+            self.tote4.enabled = true
+            self.tote5.enabled = true
+            self.tote6.enabled = true
+            self.toteInsertBtn.enabled = true
+            self.toteBtmInsertBtn.enabled = false
+            self.containerInsertBtn.enabled = false
+            self.stackKilledBtn.enabled = true
+            self.penaltyAddBtn.enabled = true
+            self.penaltySubBtn.enabled = true
+            
+            self.modeLbl.text = "Teleoperated Scoring Mode"
+            self.autoShowing = false
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.containerNoodleAddBtn.alpha = 1.0
+                self.containerNoodleSubBtn.alpha = 1.0
+                self.containerNoodleScoreLbl.alpha = 1.0
+                self.containerNoodleLbl.alpha = 1.0
+                self.landfillNoodleLbl.alpha = 1.0
+                self.landfillNoodleScoreLbl.alpha = 1.0
+                self.landfillNoodleAddBtn.alpha = 1.0
+                self.landfillNoodleSubBtn.alpha = 1.0
+                self.coopTotesLbl.alpha = 1.0
+                self.coopTotesScoreLbl.alpha = 1.0
+                self.coopTotesAddBtn.alpha = 1.0
+                self.coopTotesUndoBtn.alpha = 1.0
+                self.coopTote1.alpha = 1.0
+                self.coopTote2.alpha = 1.0
+                self.coopTote3.alpha = 1.0
+                self.coopTote4.alpha = 1.0
+                self.coopToteInsertBtn.alpha = 1.0
+                self.coopToteBtmInsertBtn.alpha = 1.0
+                self.toteStackLbl.alpha = 1.0
+                self.toteStackScoreLbl.alpha = 1.0
+                self.toteStackAddBtn.alpha = 1.0
+                self.toteStackUndoBtn.alpha = 1.0
+                self.tote1.alpha = 1.0
+                self.tote2.alpha = 1.0
+                self.tote3.alpha = 1.0
+                self.tote4.alpha = 1.0
+                self.tote5.alpha = 1.0
+                self.tote6.alpha = 1.0
+                self.toteInsertBtn.alpha = 1.0
+                self.toteBtmInsertBtn.alpha = 1.0
+                self.containerInsertBtn.alpha = 1.0
+                self.stackKilledBtn.alpha = 1.0
+                self.penaltyLbl.alpha = 1.0
+                self.penaltyValLbl.alpha = 1.0
+                self.penaltyAddBtn.alpha = 1.0
+                self.penaltySubBtn.alpha = 1.0
+            })
+        }
+        
+        
     }
     
     //function to display all auto UI items and hide teleop UI
     func showAuto(){
-        //Auto Items
-        autoToteLbl.enabled = true
-        autoToteLbl.hidden = false
-        autoToteScoreLbl.enabled = true
-        autoToteScoreLbl.hidden = false
-        autoContainerScoreLbl.enabled = true
-        autoContainerScoreLbl.hidden = false
-        autoContainerLbl.enabled = true
-        autoContainerLbl.hidden = false
-        autoToteAddBtn.enabled = true
-        autoToteAddBtn.hidden = false
-        autoToteSubBtn.enabled = true
-        autoToteSubBtn.hidden = false
-        autoContainerAddBtn.enabled = true
-        autoContainerAddBtn.hidden = false
-        autoContainerSubBtn.enabled = true
-        autoContainerSubBtn.hidden = false
-        autoDriveBtn.enabled = true
-        autoDriveBtn.hidden = false
-        autoStackBtn.enabled = true
-        autoStackBtn.hidden = false
-        
         //Tele Items
-        containerNoodleAddBtn.enabled = false
-        containerNoodleAddBtn.hidden = true
-        containerNoodleSubBtn.enabled = false
-        containerNoodleSubBtn.hidden = true
-        containerNoodleScoreLbl.enabled = false
-        containerNoodleScoreLbl.hidden = true
-        containerNoodleLbl.enabled = false
-        containerNoodleLbl.hidden = true
-        landfillNoodleLbl.enabled = false
-        landfillNoodleLbl.hidden = true
-        landfillNoodleScoreLbl.enabled = false
-        landfillNoodleScoreLbl.hidden = true
-        landfillNoodleAddBtn.enabled = false
-        landfillNoodleAddBtn.hidden = true
-        landfillNoodleSubBtn.enabled = false
-        landfillNoodleSubBtn.hidden = true
-        coopTotesLbl.enabled = false
-        coopTotesLbl.hidden = true
-        coopTotesScoreLbl.enabled = false
-        coopTotesScoreLbl.hidden = true
-        coopTotesAddBtn.enabled = false
-        coopTotesAddBtn.hidden = true
-        coopTotesUndoBtn.enabled = false
-        coopTotesUndoBtn.hidden = true
-        coopTote1.enabled = false
-        coopTote1.hidden = true
-        coopTote2.enabled = false
-        coopTote2.hidden = true
-        coopTote3.enabled = false
-        coopTote3.hidden = true
-        coopTote4.enabled = false
-        coopTote4.hidden = true
-        coopToteInsertBtn.enabled = false
-        coopToteInsertBtn.hidden = true
-        coopToteBtmInsertBtn.enabled = false
-        coopToteBtmInsertBtn.hidden = true
-        toteStackLbl.enabled = false
-        toteStackLbl.hidden = true
-        toteStackScoreLbl.enabled = false
-        toteStackScoreLbl.hidden = true
-        toteStackAddBtn.enabled = false
-        toteStackAddBtn.hidden = true
-        toteStackUndoBtn.enabled = false
-        toteStackUndoBtn.hidden = true
-        tote1.enabled = false
-        tote1.hidden = true
-        tote2.enabled = false
-        tote2.hidden = true
-        tote3.enabled = false
-        tote3.hidden = true
-        tote4.enabled = false
-        tote4.hidden = true
-        tote5.enabled = false
-        tote5.hidden = true
-        tote6.enabled = false
-        tote6.hidden = true
-        toteInsertBtn.enabled = false
-        toteInsertBtn.hidden = true
-        toteBtmInsertBtn.enabled = false
-        toteBtmInsertBtn.hidden = true
-        containerInsertBtn.enabled = false
-        containerInsertBtn.hidden = true
-        stackKilledBtn.enabled = false
-        stackKilledBtn.hidden = true
-        penaltyBtn.enabled = false
-        penaltyBtn.hidden = true
-        modeLbl.text = "Autonomous Scoring Mode"
-        autoShowing = true
+        self.containerNoodleAddBtn.enabled = false
+        self.containerNoodleSubBtn.enabled = false
+        self.landfillNoodleAddBtn.enabled = false
+        self.landfillNoodleSubBtn.enabled = false
+        self.coopTotesAddBtn.enabled = false
+        self.coopTotesUndoBtn.enabled = false
+        self.coopTote1.enabled = false
+        self.coopTote2.enabled = false
+        self.coopTote3.enabled = false
+        self.coopTote4.enabled = false
+        self.coopToteInsertBtn.enabled = false
+        self.coopToteBtmInsertBtn.enabled = false
+        self.toteStackAddBtn.enabled = false
+        self.toteStackUndoBtn.enabled = false
+        self.tote1.enabled = false
+        self.tote2.enabled = false
+        self.tote3.enabled = false
+        self.tote4.enabled = false
+        self.tote5.enabled = false
+        self.tote6.enabled = false
+        self.toteInsertBtn.enabled = false
+        self.toteBtmInsertBtn.enabled = false
+        self.containerInsertBtn.enabled = false
+        self.stackKilledBtn.enabled = false
+        self.penaltyAddBtn.enabled = false
+        self.penaltySubBtn.enabled = false
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.containerNoodleAddBtn.alpha = 0.0
+            self.containerNoodleSubBtn.alpha = 0.0
+            self.containerNoodleScoreLbl.alpha = 0.0
+            self.containerNoodleLbl.alpha = 0.0
+            self.landfillNoodleLbl.alpha = 0.0
+            self.landfillNoodleScoreLbl.alpha = 0.0
+            self.landfillNoodleAddBtn.alpha = 0.0
+            self.landfillNoodleSubBtn.alpha = 0.0
+            self.coopTotesLbl.alpha = 0.0
+            self.coopTotesScoreLbl.alpha = 0.0
+            self.coopTotesAddBtn.alpha = 0.0
+            self.coopTotesUndoBtn.alpha = 0.0
+            self.coopTote1.alpha = 0.0
+            self.coopTote2.alpha = 0.0
+            self.coopTote3.alpha = 0.0
+            self.coopTote4.alpha = 0.0
+            self.coopToteInsertBtn.alpha = 0.0
+            self.coopToteBtmInsertBtn.alpha = 0.0
+            self.toteStackLbl.alpha = 0.0
+            self.toteStackScoreLbl.alpha = 0.0
+            self.toteStackAddBtn.alpha = 0.0
+            self.toteStackUndoBtn.alpha = 0.0
+            self.tote1.alpha = 0.0
+            self.tote2.alpha = 0.0
+            self.tote3.alpha = 0.0
+            self.tote4.alpha = 0.0
+            self.tote5.alpha = 0.0
+            self.tote6.alpha = 0.0
+            self.toteInsertBtn.alpha = 0.0
+            self.toteBtmInsertBtn.alpha = 0.0
+            self.containerInsertBtn.alpha = 0.0
+            self.stackKilledBtn.alpha = 0.0
+            self.penaltyLbl.alpha = 0.0
+            self.penaltyValLbl.alpha = 0.0
+            self.penaltyAddBtn.alpha = 0.0
+            self.penaltySubBtn.alpha = 0.0
+            }, completion: { (completed) -> Void in
+                self.autoToteAddBtn.enabled = true
+                self.autoToteSubBtn.enabled = true
+                self.autoContainerAddBtn.enabled = true
+                self.autoContainerSubBtn.enabled = true
+                self.autoZoneRobot.userInteractionEnabled = true
+                self.autoStackBtn.enabled = true
+                
+                self.modeLbl.text = "Autonomous Scoring Mode"
+                self.autoShowing = true
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    //Auto Items
+                    self.autoToteLbl.alpha = 1.0
+                    self.autoToteScoreLbl.alpha = 1.0
+                    self.autoContainerScoreLbl.alpha = 1.0
+                    self.autoContainerLbl.alpha = 1.0
+                    self.autoToteAddBtn.alpha = 1.0
+                    self.autoToteSubBtn.alpha = 1.0
+                    self.autoContainerAddBtn.alpha = 1.0
+                    self.autoContainerSubBtn.alpha = 1.0
+                    self.autoZoneLbl.alpha = 1.0
+                    self.autoZoneLine.alpha = 1.0
+                    self.autoZoneRobot.alpha = 1.0
+                    self.autoStackBtn.alpha = 1.0
+                })
+        })
     }
     
     //resets all scores and button positions
@@ -329,10 +507,10 @@ class Scoring: UIViewController {
         autoStack = false
         
         //Auto Items
-        autoDriveBtn.alpha = 0.5
-        autoStackBtn.alpha = 0.5
+//        autoDriveBtn.alpha = 0.5
         autoToteScoreLbl.text = "0"
         autoContainerScoreLbl.text = "0"
+        autoZoneRobot.center = CGPoint(x: autoZoneRobot.center.x, y: autoZoneLine.center.y + 65)
         
         //Tele Items
         resetToteStack()
@@ -346,8 +524,7 @@ class Scoring: UIViewController {
     //resets the UI for the tote stack
     func resetToteStack(){
         for btn in toteBtns {
-            btn.alpha = 0.5
-            btn.backgroundColor = UIColor.darkGrayColor()
+            btn.setBackgroundImage(UIImage(named: "ToteOutline"), forState: .Normal)
             btn.enabled = true
             btn.hidden = false
         }
@@ -357,6 +534,9 @@ class Scoring: UIViewController {
         containerInsertBtn.enabled = false
         toteBtmInsertBtn.enabled = false
         toteBtmInsertBtn.hidden = true
+        containerInsertBtn.frame = CGRect(x: containerInsertBtn.frame.origin.x, y: containerInsertBtn.frame.origin.y, width: 86, height: 44)
+        containerInsertBtn.setBackgroundImage(UIImage(named: "ContainerArrow"), forState: .Normal)
+        containerInsertBtn.setTitle("Container", forState: .Normal)
         containerInsertBtn.frame.origin.y = containerInsertBtnLocations[0]
         containerInsertBtn.frame.origin.x = containerInsertBtnSide
     }
@@ -364,8 +544,7 @@ class Scoring: UIViewController {
     //resets the coop stack
     func resetCoopStack(){
         for btn in coopBtns {
-            btn.alpha = 0.5
-            btn.backgroundColor = UIColor.yellowColor()
+            btn.setBackgroundImage(UIImage(named: "ToteYellowOutline"), forState: .Normal)
             btn.enabled = true
             btn.hidden = false
         }
@@ -434,24 +613,67 @@ class Scoring: UIViewController {
             //set the auto score to zero
             numAutoTotes = 0
             autoToteScoreLbl.text = "0"
-            autoStackBtn.alpha = 1.0
+            autoStackBtn.setBackgroundImage(UIImage(named: "ToteStack"), forState: .Normal)
         } else {
             autoStack = false
-            autoStackBtn.alpha = 0.5
+            autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
         }
     }
     
-    //scores the auto bonus for ending in auto zone
-    @IBAction func autoDriveBtnPress(sender: AnyObject) {
-        if (autoDrive == false){
-            autoDrive = true
-            autoDriveBtn.alpha = 1.0
-        } else {
-            autoDrive = false
-            autoDriveBtn.alpha = 0.5
+    //listens for Robot Drag and handles what to do with it
+    var startY : CGFloat = 0
+    func robotDrag(sender: UIPanGestureRecognizer) {
+        var robotView = sender.view!
+        var recognizerState = sender.state
+        
+        let moveDiff : CGFloat = 65
+        
+        switch recognizerState{
+            case .Began:
+                startY = robotView.center.y
+            case .Changed:
+                var translation = sender.translationInView(self.view)
+                robotView.center = CGPoint(x: robotView.center.x, y: robotView.center.y + translation.y)
+                if robotView.center.y < autoZoneLine.center.y - moveDiff {
+                    robotView.center = CGPoint(x: robotView.center.x, y: autoZoneLine.center.y - moveDiff)
+                } else if robotView.center.y > autoZoneLine.center.y + moveDiff {
+                    robotView.center = CGPoint(x: robotView.center.x, y: autoZoneLine.center.y + moveDiff)
+                }
+                sender.setTranslation(CGPoint(x: 0, y: 0), inView: self.view)
+                
+            case .Ended:
+                if robotView.center.y < autoZoneLine.center.y - 10 {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoZoneLine.center.y - moveDiff)
+                    })
+                } else if robotView.center.y > autoZoneLine.center.y + 10 {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.autoZoneLine.center.y + moveDiff)
+                    })
+                } else {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        robotView.center = CGPoint(x: robotView.center.x, y: self.startY)
+                    })
+                }
+            
+                if robotView.center.y == autoZoneLine.center.y - moveDiff {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.autoZoneLbl.layer.backgroundColor = UIColor(red: 3.0/255, green: 200.0/255, blue: 4.0/255, alpha: 1.0).CGColor
+                        self.autoZoneLbl.layer.borderColor = UIColor.whiteColor().CGColor
+                        self.autoDrive = true
+                    })
+                } else {
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        self.autoZoneLbl.layer.backgroundColor = UIColor.whiteColor().CGColor
+                        self.autoZoneLbl.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+                        self.autoDrive = false
+                    })
+                }
+            default:
+                return
         }
     }
-
+    
     //adds to number of noodles placed into a container
     @IBAction func noodleContainerAddBtnPress(sender: AnyObject) {
         if( numNoodlesInContainer < 10){
@@ -587,11 +809,11 @@ class Scoring: UIViewController {
             for var i = 0; i < currentToteStack.totes.count; ++i{
                 if (currentToteStack.totes[i] == false){
                     toteBtns[i].alpha = 1.0
-                    toteBtns[i].backgroundColor = UIColor.cyanColor()
+                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
                 }
                 else {
                     toteBtns[i].alpha = 1.0
-                    toteBtns[i].backgroundColor = UIColor.darkGrayColor()
+                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
                 }
             }
         }
@@ -638,30 +860,42 @@ class Scoring: UIViewController {
         containerInsertBtn.hidden = false
         containerInsertBtn.enabled = true
         containerInsertBtn.frame.origin.y = containerInsertBtnLocations[numTotes]
+        if currentToteStack.containerLvl > 0 {
+            containerInsertBtn.frame.origin.y -= 35
+        }
         //shows and adds color to totes based on if they're new or old
         for var i = 0; i < currentToteStack.totes.count; ++i{
             toteBtns[i].hidden = false
             toteBtns[i].enabled = true
             if (currentToteStack.totes[i] == false){
                 toteBtns[i].alpha = 1.0
-                toteBtns[i].backgroundColor = UIColor.cyanColor()
+                toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
             }
             else {
                 toteBtns[i].alpha = 1.0
-                toteBtns[i].backgroundColor = UIColor.darkGrayColor()
+                toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
             }
         }
     }
     
     //adds a container to top of stack and hides the unused totes above it
     @IBAction func containerInsertBtnPress(sender: AnyObject) {
-        containerInsertBtn.frame.origin.x = containerInsertBtnCenter
-        currentToteStack.containerLvl = currentToteStack.totes.count
-        for (var i = 5; i >= currentToteStack.totes.count; i -= 1 ){
-            toteBtns[i].hidden = true
-            toteBtns[i].enabled = false
+        if currentToteStack.containerLvl == 0 {
+            containerInsertBtn.frame = CGRect(x: containerInsertBtn.frame.origin.x, y: containerInsertBtn.frame.origin.y - 35, width: 80, height: 80)
+            containerInsertBtn.center.x = containerInsertBtnCenter
+            containerInsertBtn.setBackgroundImage(UIImage(named: "Container"), forState: .Normal)
+            containerInsertBtn.setTitle("", forState: .Normal)
+            currentToteStack.containerLvl = currentToteStack.totes.count
+            for (var i = 5; i >= currentToteStack.totes.count; i -= 1 ){
+                toteBtns[i].hidden = true
+                toteBtns[i].enabled = false
+            }
         }
-        
+    }
+    
+    //adds to number of stacks knocked over
+    @IBAction func knockStackBtnPress(sender: AnyObject) {
+        numStacksKnockedOver++
     }
     
     //a coop totes in the stack UI has been touched. That coop tote
@@ -687,7 +921,7 @@ class Scoring: UIViewController {
             //adds old totes to currentCoopStack and colors them
             for var i = 0;i <= toteIndex; ++i {
                 coopBtns[i].alpha = 1.0
-                coopBtns[i].backgroundColor = UIColor.cyanColor()
+                coopBtns[i].setBackgroundImage(UIImage(named: "ToteYellowGray"), forState: .Normal)
                 currentCoopStack.totes.append(false)
             }
             if(numCoopTotes >= 3){
@@ -703,19 +937,14 @@ class Scoring: UIViewController {
         
     }
     
-    //adds to number of stacks knocked over
-    @IBAction func knockStackBtnPress(sender: AnyObject) {
-        numStacksKnockedOver++
-    }
-    
-    //adds to number of penalties in match
-    @IBAction func penaltyBtnPress(sender: AnyObject) {
-        numPenalties++
-    }
-    
     //adds coop tote to top of currentCoopStack
     @IBAction func coopInsertBtnPress(sender: AnyObject) {
         insertCoopTote(false)
+    }
+    
+    //inserts a coop tote into the bottom of the stack
+    @IBAction func coopBtmInsertBtnPress(sender: AnyObject) {
+        insertCoopTote(true)
     }
     
     //inserts a tote into the stack
@@ -758,20 +987,27 @@ class Scoring: UIViewController {
         for var i = 0; i < currentCoopStack.totes.count; ++i{
             if (currentCoopStack.totes[i] == false){
                 coopBtns[i].alpha = 1.0
-                coopBtns[i].backgroundColor = UIColor.cyanColor()
+                coopBtns[i].setBackgroundImage(UIImage(named: "ToteYellowGray"), forState: .Normal)
             }
             else {
                 coopBtns[i].alpha = 1.0
-                coopBtns[i].backgroundColor = UIColor.darkGrayColor()
+                coopBtns[i].setBackgroundImage(UIImage(named: "ToteYellow"), forState: .Normal)
             }
         }
     }
     
-    //inserts a coop tote into the bottom of the stack
-    @IBAction func coopBtmInsertBtnPress(sender: AnyObject) {
-        insertCoopTote(true)
+    //adds to number of penalties in match
+    @IBAction func penaltyAddBtnPress(sender: AnyObject) {
+        numPenalties++
+        penaltyValLbl.text = "\(numPenalties)"
     }
     
+    @IBAction func penaltySubBtnPress(sender: AnyObject) {
+        if numPenalties > 0 {
+            numPenalties--
+            penaltyValLbl.text = "\(numPenalties)"
+        }
+    }
     
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
