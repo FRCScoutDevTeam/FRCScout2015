@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
-    
+
     var frameView: UIView!
     //UI Items
     @IBOutlet weak var captureImageLbl: UILabel!
@@ -18,40 +18,40 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var teamNumberLbl: UILabel!
     @IBOutlet weak var teamNumberTxt: UITextField!
-    
+
     @IBOutlet weak var teamNameLbl: UILabel!
     @IBOutlet weak var teamNameTxt: UITextField!
-    
+
     @IBOutlet weak var driveTrainLbl: UILabel!
     @IBOutlet weak var dropCenterBtn: UIButton!
     @IBOutlet weak var fourWheelDriveBtn: UIButton!
     @IBOutlet weak var mecanumBtn: UIButton!
     @IBOutlet weak var swerveCrabBtn: UIButton!
     @IBOutlet weak var otherDriveTrainTxt: UITextField!
-    
+
     @IBOutlet weak var stackTotesLbl: UILabel!
     @IBOutlet weak var stackTotesYesBtn: UIButton!
     @IBOutlet weak var stackTotesNoBtn: UIButton!
-    
+
     @IBOutlet weak var stackerTypeLbl: UILabel!
     @IBOutlet weak var bottomStackerButton: UIButton!
     @IBOutlet weak var topStackerBtn: UIButton!
     @IBOutlet weak var nABtn: UIButton!
-    
+
     @IBOutlet weak var heightOfStackLbl: UILabel!
     @IBOutlet weak var heightOfStackTxt: UITextField!
-    
+
     @IBOutlet weak var stackContainerLbl: UILabel!
     @IBOutlet weak var stackContainerYesBtn: UIButton!
     @IBOutlet weak var stackContainerNoBtn: UIButton!
-    
+
     @IBOutlet weak var containerLvlLbl: UILabel!
     @IBOutlet weak var containerLvlTxt: UITextField!
-    
+
     @IBOutlet weak var carryCapacityLbl: UILabel!
     @IBOutlet weak var carryCapacityTxt: UITextField!
     @IBOutlet weak var carryContainerBtn: UIButton!
-    
+
     @IBOutlet weak var autoModesLbl: UILabel!
     @IBOutlet weak var autoNoneBtn: UIButton!
     @IBOutlet weak var mobilityBtn: UIButton!
@@ -59,26 +59,26 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var moveContainerBtn: UIButton!
     @IBOutlet weak var stackTotesBtn: UIButton!
     @IBOutlet weak var stepContainersBtn: UIButton!
-    
+
     @IBOutlet weak var coopLbl: UILabel!
     @IBOutlet weak var coopNoneBtn: UIButton!
     @IBOutlet weak var placerBtn: UIButton!
     @IBOutlet weak var stackerBtn: UIButton!
-    
+
     @IBOutlet weak var noodlesLbl: UILabel!
     @IBOutlet weak var noodlesNoneBtn: UIButton!
     @IBOutlet weak var intoContainerBtn: UIButton!
     @IBOutlet weak var intoLandFillBtn: UIButton!
-    
+
     @IBOutlet weak var strategyLbl: UILabel!
     @IBOutlet weak var feederBtn: UIButton!
     @IBOutlet weak var totePlacerBtn: UIButton!
     @IBOutlet weak var containerPlacerBtn: UIButton!
     @IBOutlet weak var toteAndContainerBtn: UIButton!
-    
+
     @IBOutlet weak var additionalNotesTxt: UITextView!
     @IBOutlet weak var saveBtn: UIButton!
-    
+
     //Variables
     var teamNumber = String()
     var teamName = String()
@@ -100,22 +100,22 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     var noodles = String()
     var strategy = String()
     var additionalNotes = String()
-    
+
     //Extra variables for noodles
     var intoContainer = false
     var intoLandfill = false
-    
+
     //tables
     var buttons = [UIButton]()
     var textFields = [UITextField]()
-    
+
     var textViewOriginalHeight: CGFloat = CGFloat()
     var textViewIsSelected = false
-    
+
     //Variable to tell if editing preexisting data
     var editingOldData = false
-    
-    
+
+
     func textFieldShouldEndEditing(textField: UITextField) -> Bool{
         switch textField{
         case teamNumberTxt:
@@ -140,10 +140,10 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         return true
     }
-    
+
     func displayLoadedData(loadedData: PitTeam) {
         resetPitScouting()
-        
+
         teamNumber = loadedData.teamNumber
         teamName = loadedData.teamName
         driveTrain = loadedData.driveTrain
@@ -164,7 +164,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         noodles = loadedData.noodles
         strategy = loadedData.strategy
         additionalNotes = loadedData.additionalNotes
-        
+
         var infoStrings: [String] = [driveTrain,stackTotes,stackerType,coop,strategy]
         var driveTrainSet = false
         for s in infoStrings {
@@ -181,11 +181,11 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             additionalNotesTxt.text = "Additional Notes"
             additionalNotesTxt.textColor = UIColor.lightGrayColor()
         }
-        
+
         heightOfStackTxt.text = heightOfStack
         containerLvlTxt.text = containerLevel
         carryCapacityTxt.text = carryCapacity
-        
+
         if(withContainer){ carryContainerBtn.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1) }
         if(autoNone){ autoNoneBtn.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1) }
         if(autoMobility){ mobilityBtn.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1) }
@@ -193,11 +193,11 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         if(autoContainer){ moveContainerBtn.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1) }
         if(autoStack){ stackTotesBtn.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1) }
         if(autoStepContainer){ stepContainersBtn.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1) }
-        
+
         teamNameTxt.text = teamName
         teamNumberTxt.text = teamNumber
     }
-    
+
     func checkForTeam() {
         var appDel: AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
         let context: NSManagedObjectContext = appDel.managedObjectContext!
@@ -212,7 +212,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             editingOldData = false
         }
     }
-    
+
     @IBAction func scoutButtonPress(sender: UIButton){
         switch sender {
         case dropCenterBtn, fourWheelDriveBtn ,mecanumBtn, swerveCrabBtn:
@@ -430,7 +430,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             return
         }
     }
-    
+
     @IBAction func saveBtnPress(sender: AnyObject) {
         if(checkData()) {
             let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -470,7 +470,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             newPitTeam!.noodles = noodles
             newPitTeam!.strategy = strategy
             newPitTeam!.additionalNotes = additionalNotes
-            
+
             var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
             requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumber)
             var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
@@ -485,33 +485,33 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             }
             context.save(nil)
             let alertController = UIAlertController(title: "Save Complete!", message: "", preferredStyle: .Alert)
-            
+
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
-            
+
             presentViewController(alertController, animated: true, completion: nil)
             resetPitScouting()
         }
-        
+
     }
-    
+
     func loadSaved() {
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
-        
+
         let request = NSFetchRequest(entityName: "PitTeam")
         request.returnsObjectsAsFaults = false
-        
+
         var results:NSArray = context.executeFetchRequest(request, error: nil)!
-        
+
         for res in results{
-            
+
             var newPitTeam = res as PitTeam
             println(newPitTeam.driveTrain)
-            
+
         }
     }
-    
+
     func checkData() -> Bool{
         if(teamNumber.toInt() == nil){
             createInputAlert("Invalid Team Number")
@@ -571,16 +571,16 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         return true
     }
-    
+
     func createInputAlert(message: String){
         let alertController = UIAlertController(title: "Input Error!", message: message, preferredStyle: .Alert)
-        
+
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
-        
+
         presentViewController(alertController, animated: true, completion: nil)
     }
-    
+
     func resetPitScouting(){
         teamNumber = String()
         teamName = String()
@@ -602,47 +602,47 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         noodles = String()
         strategy = String()
         additionalNotes = String()
-        
+
         for button in buttons {
             button.layer.cornerRadius = 5
             if(button != saveBtn){
                 button.backgroundColor = UIColor.lightGrayColor()
             }
         }
-        
+
         for txt in textFields {
             txt.text = ""
         }
-        
+
         additionalNotesTxt.layer.borderWidth = 1
         additionalNotesTxt.layer.borderColor = UIColor.lightGrayColor().CGColor
         additionalNotesTxt.layer.cornerRadius = 5
         additionalNotesTxt.text = "Additional Notes"
         additionalNotesTxt.textColor = UIColor.lightGrayColor()
-        
-        
+
+
     }
-    
-    
+
+
     override func viewDidLoad() {
-        
+
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         buttons = [dropCenterBtn,fourWheelDriveBtn,mecanumBtn,swerveCrabBtn,stackTotesYesBtn,stackTotesNoBtn,bottomStackerButton,topStackerBtn, nABtn,stackContainerYesBtn,stackContainerNoBtn,carryContainerBtn,autoNoneBtn,mobilityBtn,moveToteBtn,moveContainerBtn,stackTotesBtn,stepContainersBtn,coopNoneBtn,placerBtn,stackerBtn,noodlesNoneBtn,intoContainerBtn,intoLandFillBtn,feederBtn,totePlacerBtn,containerPlacerBtn,toteAndContainerBtn,saveBtn]
-        
+
         textFields = [teamNumberTxt,teamNameTxt,otherDriveTrainTxt,heightOfStackTxt,containerLvlTxt,carryCapacityTxt]
-        
+
         resetPitScouting()
-        
-        
+
+
         textViewOriginalHeight = additionalNotesTxt.frame.origin.y
-        
+
         self.frameView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
-        
-        
+
+
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         resetPitScouting()
@@ -653,7 +653,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
 
     }
-    
+
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
@@ -664,16 +664,16 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
-    
+
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         textViewIsSelected = true
         if additionalNotesTxt.textColor == UIColor.lightGrayColor() {
@@ -682,7 +682,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         return true
     }
-    
+
     func textViewShouldEndEditing(textView: UITextView) -> Bool {
         textViewIsSelected = false
         additionalNotes = additionalNotesTxt.text
@@ -692,40 +692,40 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         return true
     }
-    
-    
-    
+
+
+
     func keyboardWillShow(notification: NSNotification) {
         if(textViewIsSelected){
             var info:NSDictionary = notification.userInfo!
             var keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as NSValue).CGRectValue()
-        
+
             var keyboardHeight:CGFloat = keyboardSize.height
-        
+
             var animationDuration:CGFloat = info[UIKeyboardAnimationDurationUserInfoKey] as CGFloat
-        
+
             self.view.bringSubviewToFront(additionalNotesTxt)
-        
+
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.additionalNotesTxt.frame = CGRect(x: self.additionalNotesTxt.frame.origin.x, y: UIScreen.mainScreen().bounds.height - keyboardHeight - self.additionalNotesTxt.frame.height, width: self.additionalNotesTxt.frame.width, height: self.additionalNotesTxt.frame.height)
             }, completion: nil)
         }
-        
+
     }
-    
+
     func keyboardWillHide(notification: NSNotification) {
         var info:NSDictionary = notification.userInfo!
         var keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as NSValue).CGRectValue()
-        
+
         var keyboardHeight:CGFloat = keyboardSize.height
-        
+
         var animationDuration:CGFloat = info[UIKeyboardAnimationDurationUserInfoKey] as CGFloat
-        
+
         UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.additionalNotesTxt.frame = CGRect(x: self.additionalNotesTxt.frame.origin.x, y: self.textViewOriginalHeight, width: self.additionalNotesTxt.frame.width, height: self.additionalNotesTxt.frame.height)
             }, completion: nil)
-        
+
     }
-    
+
 
 }
