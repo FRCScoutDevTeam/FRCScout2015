@@ -66,14 +66,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Totes in Auto Zone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CRg-rP-8oe" userLabel="TotesInAutoZoneLbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Totes in Auto Zone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CRg-rP-8oe" userLabel="TotesInAutoZoneLbl">
                                 <rect key="frame" x="100" y="285" width="144" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5o2-TD-4jr" userLabel="TotesInAutoZoneSubtract">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5o2-TD-4jr" userLabel="TotesInAutoZoneSubtract">
                                 <rect key="frame" x="74" y="322" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -86,14 +86,14 @@
                                     <action selector="autoToteSubBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="OFu-5U-3kA"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mc3-aC-HzW" userLabel="TotesInAutoZoneVal">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mc3-aC-HzW" userLabel="TotesInAutoZoneVal">
                                 <rect key="frame" x="158" y="327" width="30" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fwz-z2-TJ6" userLabel="TotesInAutoZoneAdd">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fwz-z2-TJ6" userLabel="TotesInAutoZoneAdd">
                                 <rect key="frame" x="209" y="322" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -106,7 +106,7 @@
                                     <action selector="autoToteAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="MZZ-ur-zGE"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="57S-Hm-a6y" userLabel="ScoredStackBtn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="57S-Hm-a6y" userLabel="ScoredStackBtn">
                                 <rect key="frame" x="101" y="461" width="145" height="254"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -119,14 +119,14 @@
                                     <action selector="autoStackBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="OHt-JF-0fN"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Containers in Auto Zone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6wi-R2-9lF" userLabel="ContainersInAutoZoneLbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Containers in Auto Zone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6wi-R2-9lF" userLabel="ContainersInAutoZoneLbl">
                                 <rect key="frame" x="485" y="285" width="186" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PNJ-lt-M4t" userLabel="ContainersInAutoZoneSubtract">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PNJ-lt-M4t" userLabel="ContainersInAutoZoneSubtract">
                                 <rect key="frame" x="480" y="322" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -139,14 +139,14 @@
                                     <action selector="autoContainerSubBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="whG-D6-nmD"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="37a-8E-9JA" userLabel="ContainersInAutoZoneVal">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="37a-8E-9JA" userLabel="ContainersInAutoZoneVal">
                                 <rect key="frame" x="563" y="327" width="30" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WeY-z2-pY4" userLabel="ContainersInAutoZoneAdd">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WeY-z2-pY4" userLabel="ContainersInAutoZoneAdd">
                                 <rect key="frame" x="614" y="322" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -159,19 +159,19 @@
                                     <action selector="autoContainerAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="g5p-CB-vqI"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moved into Auto Zone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8ZF-jS-UPF" userLabel="AutoZoneLbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moved into Auto Zone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8ZF-jS-UPF" userLabel="AutoZoneLbl">
                                 <rect key="frame" x="483" y="433" width="190" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view hidden="YES" contentMode="scaleToFill" id="S0F-4l-AcF" userLabel="AutoZoneLine">
+                            <view contentMode="scaleToFill" id="S0F-4l-AcF" userLabel="AutoZoneLine">
                                 <rect key="frame" x="453" y="577" width="250" height="6"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <imageView hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RedRobot" id="Ch0-ed-4On" userLabel="RobotDragger">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RedRobot" id="Ch0-ed-4On" userLabel="RobotDragger">
                                 <rect key="frame" x="503" y="595" width="150" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -183,7 +183,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zy1-4C-NM2" userLabel="Tote1Btn">
-                                <rect key="frame" x="118" y="615" width="110" height="63"/>
+                                <rect key="frame" x="118" y="660" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Tote 1" backgroundImage="ToteOutline">
@@ -195,7 +195,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mkq-bJ-plb" userLabel="Tote2Btn">
-                                <rect key="frame" x="118" y="545" width="110" height="63"/>
+                                <rect key="frame" x="118" y="590" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Tote 2" backgroundImage="ToteOutline">
@@ -207,7 +207,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FtJ-TU-4gc" userLabel="Tote3Btn">
-                                <rect key="frame" x="118" y="475" width="110" height="63"/>
+                                <rect key="frame" x="118" y="520" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Tote 3" backgroundImage="ToteOutline">
@@ -219,7 +219,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9Qg-MN-NHe" userLabel="Tote4Btn">
-                                <rect key="frame" x="118" y="405" width="110" height="63"/>
+                                <rect key="frame" x="118" y="450" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Tote 4" backgroundImage="ToteOutline">
@@ -231,7 +231,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lOX-h7-R8n" userLabel="Tote5Btn">
-                                <rect key="frame" x="118" y="335" width="110" height="63"/>
+                                <rect key="frame" x="118" y="380" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Tote 5" backgroundImage="ToteOutline">
@@ -243,7 +243,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xJD-uh-gdD" userLabel="Tote6Btn">
-                                <rect key="frame" x="118" y="265" width="110" height="63"/>
+                                <rect key="frame" x="118" y="310" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Tote 6" backgroundImage="ToteOutline">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -254,7 +254,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fwd-Sk-3N3" userLabel="ContainerBtn">
-                                <rect key="frame" x="16" y="589" width="86" height="45"/>
+                                <rect key="frame" x="16" y="634" width="86" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="6" maxY="0.0"/>
                                 <state key="normal" title="Container" backgroundImage="ContainerArrow">
@@ -266,7 +266,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jeA-vE-FIr" userLabel="ToteInsertBtn1">
-                                <rect key="frame" x="236" y="662" width="64" height="36"/>
+                                <rect key="frame" x="236" y="707" width="64" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="contentEdgeInsets" minX="11" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="Tote" backgroundImage="ToteArrow">
@@ -278,7 +278,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7Pj-Ui-mjH" userLabel="ToteInsertBtn2">
-                                <rect key="frame" x="236" y="662" width="64" height="36"/>
+                                <rect key="frame" x="236" y="707" width="64" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="NO"/>
@@ -293,14 +293,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Ff-H0-6uS" userLabel="TotesInStackVal">
-                                <rect key="frame" x="158" y="717" width="30" height="21"/>
+                                <rect key="frame" x="158" y="762" width="30" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e7Y-lA-zgd" userLabel="ToteStackAdd">
-                                <rect key="frame" x="195" y="712" width="90" height="32"/>
+                                <rect key="frame" x="195" y="757" width="90" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0030522649477763841" green="0.7857142857142857" blue="0.0091250037381436378" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -313,7 +313,7 @@
                                 </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fhL-Dq-yw5" userLabel="ToteStackUndo">
-                                <rect key="frame" x="61" y="711" width="90" height="32"/>
+                                <rect key="frame" x="61" y="756" width="90" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0030522649477763841" green="0.7857142857142857" blue="0.0091250037381436378" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -326,7 +326,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pn0-Ec-fBI" userLabel="KnockedOverStackBtn">
-                                <rect key="frame" x="95" y="766" width="156" height="30"/>
+                                <rect key="frame" x="95" y="811" width="156" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Disrupted Stack">
@@ -348,7 +348,7 @@
                                 <rect key="frame" x="523" y="265" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Tote 4" backgroundImage="ToteYellowOutline">
-                                    <color key="titleColor" red="0.82352941176470584" green="0.80392156862745101" blue="0.48627450980392156" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -359,7 +359,7 @@
                                 <rect key="frame" x="523" y="335" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Tote 3" backgroundImage="ToteYellowOutline">
-                                    <color key="titleColor" red="0.82352941176470584" green="0.80392156862745101" blue="0.48627450980392156" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -370,7 +370,7 @@
                                 <rect key="frame" x="523" y="405" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Tote 2" backgroundImage="ToteYellowOutline">
-                                    <color key="titleColor" red="0.82352941176470584" green="0.80392156862745101" blue="0.48627450980392156" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -381,7 +381,7 @@
                                 <rect key="frame" x="523" y="475" width="110" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Tote 1" backgroundImage="ToteYellowOutline">
-                                    <color key="titleColor" red="0.82352941176470584" green="0.80392156862745101" blue="0.48627450980392156" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -424,7 +424,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0030522649477763841" green="0.7857142857142857" blue="0.0091250037381436378" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" title="Lock Stack">
+                                <state key="normal" title="Save Stack">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -446,21 +446,21 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noodles in Containers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bTS-5N-oof" userLabel="NoodlesInContainersLbl">
-                                <rect key="frame" x="493" y="635" width="170" height="21"/>
+                                <rect key="frame" x="493" y="624" width="170" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yAz-m8-OQm" userLabel="NoodlesInContainersVal">
-                                <rect key="frame" x="563" y="676" width="30" height="21"/>
+                                <rect key="frame" x="563" y="658" width="30" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eZZ-uT-1hW" userLabel="NoodlesInContainersAdd">
-                                <rect key="frame" x="614" y="671" width="63" height="32"/>
+                                <rect key="frame" x="614" y="653" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" image="GreenPlusUp">
@@ -473,7 +473,7 @@
                                 </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Wiw-2J-uF2" userLabel="NoodlesInContainersSubtract">
-                                <rect key="frame" x="480" y="671" width="63" height="32"/>
+                                <rect key="frame" x="480" y="653" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" image="GreenMinusUp">
@@ -487,21 +487,21 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noodles in Landfill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3VK-YQ-zyy" userLabel="NoodlesInLandfillLbl">
-                                <rect key="frame" x="507" y="722" width="142" height="21"/>
+                                <rect key="frame" x="507" y="694" width="142" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hco-4e-qt4" userLabel="NoodlesInLandfillVal">
-                                <rect key="frame" x="563" y="761" width="30" height="21"/>
+                                <rect key="frame" x="563" y="728" width="30" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RCY-HK-fQN" userLabel="NoodlesInLandfillAdd">
-                                <rect key="frame" x="614" y="756" width="63" height="32"/>
+                                <rect key="frame" x="614" y="723" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" image="GreenPlusUp">
@@ -514,7 +514,7 @@
                                 </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DNr-8w-Q4T" userLabel="NoodlesInLandfillSubtract">
-                                <rect key="frame" x="480" y="756" width="63" height="32"/>
+                                <rect key="frame" x="480" y="723" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" image="GreenMinusUp">
@@ -527,23 +527,35 @@
                                     <action selector="noodleLandfillSubBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Ra1-Wg-2pg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TZ0-cE-Nol" userLabel="PenaltyBtn">
-                                <rect key="frame" x="345" y="804" width="68" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="TZ0-cE-Nol" userLabel="PenaltyBtn">
+                                <rect key="frame" x="614" y="810" width="63" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Penalty">
+                                <state key="normal" image="RedPlusUp">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="highlighted" image="RedPlusDown"/>
                                 <connections>
-                                    <action selector="penaltyBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="eEZ-1y-gj8"/>
+                                    <action selector="penaltyAddBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="E5V-lj-7vF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dBh-fv-eo6" userLabel="PenaltyBtn">
+                                <rect key="frame" x="480" y="810" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="RedMinusUp">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="RedMinusDown"/>
+                                <connections>
+                                    <action selector="penaltySubBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="sm2-7p-MaI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="q3K-u3-tXS" userLabel="SaveMatchBtn">
                                 <rect key="frame" x="316" y="895" width="137" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Finish Match">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -551,6 +563,20 @@
                                     <action selector="saveMatchButtonPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="cwt-uR-9ck"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Penalties" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W9E-Qq-vc8">
+                                <rect key="frame" x="543" y="782" width="70" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pbV-3R-bni" userLabel="NoodlesInLandfillVal">
+                                <rect key="frame" x="563" y="815" width="30" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -583,13 +609,17 @@
                         <outlet property="coopTotesLbl" destination="5P4-zI-P2r" id="qdG-QC-PRT"/>
                         <outlet property="coopTotesScoreLbl" destination="ruO-Dp-iXr" id="cfu-vZ-zFb"/>
                         <outlet property="coopTotesUndoBtn" destination="zSV-bb-qKs" id="v2E-ef-a77"/>
+                        <outlet property="finishMatchBtn" destination="q3K-u3-tXS" id="43E-Jz-zVR"/>
                         <outlet property="landfillNoodleAddBtn" destination="RCY-HK-fQN" id="EIY-jJ-UOg"/>
                         <outlet property="landfillNoodleLbl" destination="3VK-YQ-zyy" id="7Bz-4E-QsZ"/>
                         <outlet property="landfillNoodleScoreLbl" destination="hco-4e-qt4" id="pg8-8G-yx0"/>
                         <outlet property="landfillNoodleSubBtn" destination="DNr-8w-Q4T" id="SmL-9G-q0n"/>
                         <outlet property="matchNumberLbl" destination="7Ko-4i-4ns" id="u1F-54-n8L"/>
                         <outlet property="modeLbl" destination="HHm-Yd-2eT" id="tWD-n5-RdN"/>
-                        <outlet property="penaltyBtn" destination="TZ0-cE-Nol" id="eJi-cS-cBO"/>
+                        <outlet property="penaltyAddBtn" destination="TZ0-cE-Nol" id="dHb-PA-N6c"/>
+                        <outlet property="penaltyLbl" destination="W9E-Qq-vc8" id="JRS-5D-HL0"/>
+                        <outlet property="penaltySubBtn" destination="dBh-fv-eo6" id="cwW-TG-AnP"/>
+                        <outlet property="penaltyValLbl" destination="pbV-3R-bni" id="5tD-bU-HAC"/>
                         <outlet property="scoutPosLbl" destination="FVo-fo-8hd" id="dmB-Nq-is7"/>
                         <outlet property="stackKilledBtn" destination="Pn0-Ec-fBI" id="l72-Vm-wFh"/>
                         <outlet property="swipeGesture" destination="qDc-pV-yu1" id="a0F-vL-RNO"/>
@@ -1447,6 +1477,10 @@
         <image name="GreenPlusUp" width="200" height="100"/>
         <image name="More" width="30" height="17"/>
         <image name="PitScouting" width="30" height="30"/>
+        <image name="RedMinusDown" width="200" height="100"/>
+        <image name="RedMinusUp" width="200" height="100"/>
+        <image name="RedPlusDown" width="200" height="100"/>
+        <image name="RedPlusUp" width="200" height="100"/>
         <image name="RedRobot" width="300" height="200"/>
         <image name="ToteArrow" width="64" height="47"/>
         <image name="ToteOutline" width="121" height="66"/>
