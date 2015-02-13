@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
+		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
 		E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */; };
 		E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */; };
 		E16EBB8E1A89BED0007D6E29 /* PitTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB8D1A89BED0007D6E29 /* PitTeamCell.swift */; };
@@ -36,7 +37,6 @@
 		E1F9F8D91A8C83B200709C9D /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8D81A8C83B200709C9D /* Team.swift */; };
 		E1F9F8DB1A8CFC1200709C9D /* SingleTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */; };
 		E1F9F8DD1A8D147B00709C9D /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */; };
-		E1F9F8DF1A8D2C0900709C9D /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DE1A8D2C0900709C9D /* PitTeam.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
+		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitScoutingNav.swift; sourceTree = "<group>"; };
 		E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPitTeams.swift; sourceTree = "<group>"; };
 		E16EBB8D1A89BED0007D6E29 /* PitTeamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeamCell.swift; sourceTree = "<group>"; };
@@ -75,14 +76,13 @@
 		E1F4BEED1A608DF20091EA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1F4BEEE1A608DF20091EA2E /* FRC_ScoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRC_ScoutTests.swift; sourceTree = "<group>"; };
 		E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Data.swift; path = ../Data.swift; sourceTree = "<group>"; };
-		E1F4BEFD1A6090090091EA2E /* More.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = More.swift; path = ../More.swift; sourceTree = "<group>"; };
-		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitScouting.swift; path = ../PitScouting.swift; sourceTree = "<group>"; };
+		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		E1F4BEFD1A6090090091EA2E /* More.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = More.swift; sourceTree = "<group>"; };
+		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitScouting.swift; sourceTree = "<group>"; };
 		E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCalculator.swift; sourceTree = "<group>"; };
-		E1F9F8D81A8C83B200709C9D /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Team.swift; path = ../Team.swift; sourceTree = "<group>"; };
+		E1F9F8D81A8C83B200709C9D /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
 		E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
-		E1F9F8DE1A8D2C0900709C9D /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +117,6 @@
 		E1A4D6F71A8C2DF100FCF562 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
 				E1A4D6F81A8C300300FCF562 /* TeamList.swift */,
 				E1A4D6FA1A8C333900FCF562 /* TeamListCell.swift */,
 				E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */,
@@ -130,7 +129,6 @@
 		E1B5154D1A8714E000C48D6F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				E1F9F8DE1A8D2C0900709C9D /* PitTeam.swift */,
 				E1F9F8D81A8C83B200709C9D /* Team.swift */,
 				E1A4D7001A8C3D5400FCF562 /* MasterTeam.swift */,
 				E1A4D6FE1A8C3D5300FCF562 /* Regional.swift */,
@@ -167,10 +165,12 @@
 			isa = PBXGroup;
 			children = (
 				E1A4D6F71A8C2DF100FCF562 /* Data */,
-				E16EBB881A8989F7007D6E29 /* PitScouting */,
 				E1F4BEDC1A608DF20091EA2E /* Main.storyboard */,
+				28A3F23C1A8D5EDD001009C8 /* Globals.swift */,
 				2855A3081A874663004260DE /* Scoring.swift */,
 				E1F4BEFD1A6090090091EA2E /* More.swift */,
+				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
+				E16EBB881A8989F7007D6E29 /* PitScouting */,
 				E1B5154D1A8714E000C48D6F /* ManagedObjects */,
 				E1F4BED41A608DF20091EA2E /* Supporting Files */,
 			);
@@ -307,7 +307,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1F9F8DF1A8D2C0900709C9D /* PitTeam.swift in Sources */,
 				E1A4D7091A8C4FBC00FCF562 /* MasterTeamExtension.swift in Sources */,
 				E1A4D6FF1A8C3D5300FCF562 /* Regional.swift in Sources */,
 				E1F4BEFE1A6090090091EA2E /* More.swift in Sources */,
@@ -330,6 +329,7 @@
 				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
 				E1A4D6F91A8C300300FCF562 /* TeamList.swift in Sources */,
+				28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */,
 				E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
 				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,

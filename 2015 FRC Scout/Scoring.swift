@@ -11,12 +11,21 @@ import CoreData
 
 class Scoring: UIViewController, UITextFieldDelegate {
 
+    var grayOutView : UIView!
+    var signInView : UIView!
+
+    let signInLayoutWidth : CGFloat = 120
+    let signInLayoutHeight : CGFloat = 40
+    let signInLayoutXDiff : CGFloat = 30
+    let signInLayoutYDiff : CGFloat = 15
+
+    //UI header Items
     @IBOutlet weak var scoutPosLbl: UILabel!
     @IBOutlet weak var matchNumberLbl: UITextField!
     @IBOutlet weak var teamNumberLbl: UITextField!
     @IBOutlet weak var modeLbl: UILabel!
-    
-    //Auto UI items
+
+    //Auto UI Items
     @IBOutlet weak var autoToteLbl: UILabel!
     @IBOutlet weak var autoToteScoreLbl: UILabel!
     @IBOutlet weak var autoContainerLbl: UILabel!
@@ -29,7 +38,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var autoZoneLine: UIView!
     @IBOutlet weak var autoZoneRobot: UIImageView!
     @IBOutlet weak var autoStackBtn: UIButton!
-    
+
     //Teleop UI Items
     @IBOutlet weak var containerNoodleLbl: UILabel!
     @IBOutlet weak var containerNoodleScoreLbl: UILabel!
@@ -67,10 +76,10 @@ class Scoring: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var penaltyValLbl: UILabel!
     @IBOutlet weak var penaltyAddBtn: UIButton!
     @IBOutlet weak var penaltySubBtn: UIButton!
-    
-    
+
+
     @IBOutlet weak var finishMatchBtn: UIButton!
-    
+
     //array of the buttons in the tote stack UI. Initialized in ViewDidLoad()
     var toteBtns = [UIButton]()
     //array of the buttons in the coop tote stack UI. Initialized in ViewDidLoad()
@@ -85,18 +94,18 @@ class Scoring: UIViewController, UITextFieldDelegate {
     var containerInsertBtnSide: CGFloat = 27
     //x postion of the container insert button when it's in the center of the tote stack
     var containerInsertBtnCenter: CGFloat = 173
-    
-    
+
+
     //Score Variables
     struct ToteStackStruct {
         var totes = [Bool]()
         var containerLvl = 0
     }
-    
+
     struct CoopStackStruct {
         var totes = [Bool]()
     }
-    
+
     var numStacks = 0
     var numCoopStacks = 0
     var numNoodlesInContainer = 0
@@ -112,29 +121,29 @@ class Scoring: UIViewController, UITextFieldDelegate {
     var currentCoopStack = CoopStackStruct()
     var numCoopTotes = 0
     var numPenalties = 0
-    
+
     //Regional
     var regional = "Week Zero"
-    
+
     //Variable stores if Autonomous mode is showing. false if in teleop mode
     var autoShowing = true
     //recognizes if the user has swiped to change between modes
     var swipeGesture = UIPanGestureRecognizer()
-    
+
     //toteStack control variables
     var bottomToteStacking = false
     var bottomCoopStacking = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //Auto UI items
         autoToteAddBtn.layer.cornerRadius = 5
         autoToteSubBtn.layer.cornerRadius = 5
         autoContainerAddBtn.layer.cornerRadius = 5
         autoContainerSubBtn.layer.cornerRadius = 5
         autoStackBtn.layer.cornerRadius = 5
-        
+
         //Teleop UI Items
         containerNoodleAddBtn.layer.cornerRadius = 5
         containerNoodleSubBtn.layer.cornerRadius = 5
@@ -145,12 +154,12 @@ class Scoring: UIViewController, UITextFieldDelegate {
         stackKilledBtn.layer.cornerRadius = 5
         toteStackAddBtn.layer.cornerRadius = 5
         toteStackUndoBtn.layer.cornerRadius = 5
-        
+
         finishMatchBtn.layer.cornerRadius = 5
-        
+
         toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
         coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
-        
+
         resetScoringScreen()
         showAuto()
         self.view.userInteractionEnabled = true
@@ -158,13 +167,144 @@ class Scoring: UIViewController, UITextFieldDelegate {
         swipeGesture.addTarget(self, action: "twoFingerPanDetected:")
         swipeGesture.minimumNumberOfTouches = 2
         self.view.addGestureRecognizer(swipeGesture)
-        
+
         var robotDrag = UIPanGestureRecognizer(target: self, action: "robotDrag:")
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
         autoZoneRobot.addGestureRecognizer(robotDrag)
+
+//        self.showSignInView()
     }
-    
+
+    func showSignInView() {
+        grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
+        self.view.addSubview(grayOutView)
+
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        self.view.addGestureRecognizer(tapDismiss)
+
+        signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 660))
+        signInView.backgroundColor = .whiteColor()
+        signInView.layer.cornerRadius = 10
+        self.view.addSubview(signInView)
+        self.view.bringSubviewToFront(signInView)
+
+        let signInTitleLbl = UILabel(frame: CGRect(x: signInView.frame.width/2 - 50, y: 20, width: 100, height: 28))
+        signInTitleLbl.textAlignment = .Center
+        signInTitleLbl.text = "Sign In"
+        signInTitleLbl.font = UIFont.boldSystemFontOfSize(25)
+        signInView.addSubview(signInTitleLbl)
+
+        let red1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red1Button.frame = CGRect(x: 80, y: signInTitleLbl.frame.origin.y + signInTitleLbl.frame.height + 20, width: signInLayoutWidth, height: signInLayoutHeight)
+        red1Button.layer.cornerRadius = 5
+        red1Button.layer.borderColor = UIColor.redColor().CGColor
+        red1Button.layer.borderWidth = 2
+        red1Button.backgroundColor = .whiteColor()
+        red1Button.setTitle("Red 1", forState: UIControlState.Normal)
+        red1Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red1Button)
+
+        let red2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red2Button.frame = CGRect(x: red1Button.frame.origin.x + red1Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        red2Button.layer.cornerRadius = 5
+        red2Button.layer.borderColor = UIColor.redColor().CGColor
+        red2Button.layer.borderWidth = 2
+        red2Button.backgroundColor = .whiteColor()
+        red2Button.setTitle("Red 2", forState: UIControlState.Normal)
+        red2Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red2Button)
+
+        let red3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        red3Button.frame = CGRect(x: red2Button.frame.origin.x + red2Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        red3Button.layer.cornerRadius = 5
+        red3Button.layer.borderColor = UIColor.redColor().CGColor
+        red3Button.layer.borderWidth = 2
+        red3Button.backgroundColor = .whiteColor()
+        red3Button.setTitle("Red 3", forState: UIControlState.Normal)
+        red3Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        signInView.addSubview(red3Button)
+
+        let blue1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue1Button.frame = CGRect(x: red1Button.frame.origin.x, y: red1Button.frame.origin.y + red1Button.frame.height + signInLayoutYDiff, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue1Button.layer.cornerRadius = 5
+        blue1Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue1Button.layer.borderWidth = 2
+        blue1Button.backgroundColor = .whiteColor()
+        blue1Button.setTitle("Blue 1", forState: UIControlState.Normal)
+        blue1Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue1Button)
+
+        let blue2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue2Button.frame = CGRect(x: blue1Button.frame.origin.x + blue1Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue2Button.layer.cornerRadius = 5
+        blue2Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue2Button.layer.borderWidth = 2
+        blue2Button.backgroundColor = .whiteColor()
+        blue2Button.setTitle("Blue 2", forState: UIControlState.Normal)
+        blue2Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue2Button)
+
+        let blue3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        blue3Button.frame = CGRect(x: blue2Button.frame.origin.x + blue2Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
+        blue3Button.layer.cornerRadius = 5
+        blue3Button.layer.borderColor = UIColor.blueColor().CGColor
+        blue3Button.layer.borderWidth = 2
+        blue3Button.backgroundColor = .whiteColor()
+        blue3Button.setTitle("Blue 3", forState: UIControlState.Normal)
+        blue3Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        signInView.addSubview(blue3Button)
+
+        let initialsTF = UITextField(frame: CGRect(x: 80, y: blue1Button.frame.origin.y + blue1Button.frame.height + 50, width: signInLayoutWidth + 10, height: 35))
+        initialsTF.font = UIFont.systemFontOfSize(15)
+        initialsTF.textAlignment = .Center
+        initialsTF.placeholder = "3 Initials"
+        initialsTF.borderStyle = .RoundedRect
+        initialsTF.returnKeyType = .Next
+        signInView.addSubview(initialsTF)
+        let initialsLbl = UILabel(frame: CGRect(x: initialsTF.frame.origin.x, y: initialsTF.frame.origin.y - 16, width: initialsTF.frame.width, height: 15))
+        initialsLbl.font = UIFont.systemFontOfSize(14)
+        initialsLbl.text = "YOUR 3 Initials"
+        initialsLbl.textAlignment = .Center
+        initialsLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(initialsLbl)
+
+        let teamNumTF = UITextField(frame: CGRect(x: initialsTF.frame.origin.x + initialsTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth, height: 35))
+        teamNumTF.font = UIFont.systemFontOfSize(15)
+        teamNumTF.textAlignment = .Center
+        teamNumTF.placeholder = "Your Team #"
+        teamNumTF.borderStyle = .RoundedRect
+        teamNumTF.keyboardType = .NumberPad
+        teamNumTF.returnKeyType = .Next
+        signInView.addSubview(teamNumTF)
+        let teamNumLbl = UILabel(frame: CGRect(x: teamNumTF.frame.origin.x, y: teamNumTF.frame.origin.y - 16, width: teamNumTF.frame.width, height: 15))
+        teamNumLbl.font = UIFont.systemFontOfSize(14)
+        teamNumLbl.text = "YOUR Team #"
+        teamNumLbl.textAlignment = .Center
+        teamNumLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(teamNumLbl)
+
+        let matchNumTF = UITextField(frame: CGRect(x: teamNumTF.frame.origin.x + teamNumTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth + 10, height: 35))
+        matchNumTF.font = UIFont.systemFontOfSize(15)
+        matchNumTF.textAlignment = .Center
+        matchNumTF.placeholder = "Current Match #"
+        matchNumTF.borderStyle = .RoundedRect
+        matchNumTF.keyboardType = .NumberPad
+        matchNumTF.returnKeyType = .Done
+        signInView.addSubview(matchNumTF)
+        let matchNumLbl = UILabel(frame: CGRect(x: matchNumTF.frame.origin.x, y: matchNumTF.frame.origin.y - 16, width: matchNumTF.frame.width, height: 15))
+        matchNumLbl.font = UIFont.systemFontOfSize(14)
+        matchNumLbl.text = "Current Match #"
+        matchNumLbl.textAlignment = .Center
+        matchNumLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(matchNumLbl)
+    }
+
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
     //function to display all teleop UI items and hide auto UI
     func showTeleop(){
         //Auto Items
@@ -174,7 +314,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         autoContainerSubBtn.enabled = false
         autoZoneRobot.userInteractionEnabled = false
         autoStackBtn.enabled = false
-        
+
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.autoToteLbl.alpha = 0.0
             self.autoToteScoreLbl.alpha = 0.0
@@ -215,10 +355,10 @@ class Scoring: UIViewController, UITextFieldDelegate {
             self.stackKilledBtn.enabled = true
             self.penaltyAddBtn.enabled = true
             self.penaltySubBtn.enabled = true
-            
+
             self.modeLbl.text = "Teleoperated Scoring Mode"
             self.autoShowing = false
-            
+
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.containerNoodleAddBtn.alpha = 1.0
                 self.containerNoodleSubBtn.alpha = 1.0
@@ -258,10 +398,10 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 self.penaltySubBtn.alpha = 1.0
             })
         }
-        
-        
+
+
     }
-    
+
     //function to display all auto UI items and hide teleop UI
     func showAuto(){
         //Tele Items
@@ -291,7 +431,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         self.stackKilledBtn.enabled = false
         self.penaltyAddBtn.enabled = false
         self.penaltySubBtn.enabled = false
-        
+
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.containerNoodleAddBtn.alpha = 0.0
             self.containerNoodleSubBtn.alpha = 0.0
@@ -336,10 +476,10 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 self.autoContainerSubBtn.enabled = true
                 self.autoZoneRobot.userInteractionEnabled = true
                 self.autoStackBtn.enabled = true
-                
+
                 self.modeLbl.text = "Autonomous Scoring Mode"
                 self.autoShowing = true
-                
+
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     //Auto Items
                     self.autoToteLbl.alpha = 1.0
@@ -357,7 +497,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 })
         })
     }
-    
+
     //resets all scores and button positions
     func resetScoringScreen(){
         //Variables
@@ -372,13 +512,13 @@ class Scoring: UIViewController, UITextFieldDelegate {
         numAutoContainers = 0
         autoDrive = false
         autoStack = false
-        
+
         //Auto Items
 //        autoDriveBtn.alpha = 0.5
         autoToteScoreLbl.text = "0"
         autoContainerScoreLbl.text = "0"
         autoZoneRobot.center = CGPoint(x: autoZoneRobot.center.x, y: autoZoneLine.center.y + 65)
-        
+
         //Tele Items
         resetToteStack()
         resetCoopStack()
@@ -386,9 +526,9 @@ class Scoring: UIViewController, UITextFieldDelegate {
         landfillNoodleScoreLbl.text = "0"
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
-        
+
     }
-    
+
     //resets the UI for the tote stack
     func resetToteStack(){
         for btn in toteBtns {
@@ -410,7 +550,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         bottomToteStacking = false
         bottomCoopStacking = false
     }
-    
+
     //resets the coop stack
     func resetCoopStack(){
         for btn in coopBtns {
@@ -428,7 +568,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         coopToteBtmInsertBtn.enabled = false
         bottomCoopStacking = false
     }
-    
+
     //switches between auto and tele scorring mode
     func twoFingerPanDetected(recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translationInView(self.view)
@@ -440,7 +580,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
     //removes auto totes from score
     @IBAction func autoToteSubBtnPress(sender: AnyObject) {
         //checks to see if there are auto totes scored
@@ -449,7 +589,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             autoToteScoreLbl.text = "\(numAutoTotes)"
         }
     }
-    
+
     //adds auto totes to score
     @IBAction func autoToteAddBtnPress(sender: AnyObject) {
         //makes sure no more than three auto totes have been scored and there is no autoStack
@@ -458,7 +598,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             autoToteScoreLbl.text = "\(numAutoTotes)"
         }
     }
-    
+
     //removes auto Containers from score
     @IBAction func autoContainerSubBtnPress(sender: AnyObject) {
         //checks to make sure score is greater than 0
@@ -467,7 +607,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             autoContainerScoreLbl.text = "\(numAutoContainers)"
         }
     }
-    
+
     //adds auto Containers to score
     @IBAction func autoContainerAddBtnPress(sender: AnyObject) {
         //checks to make sure no more than 7 containers have been scored
@@ -476,7 +616,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             autoContainerScoreLbl.text = "\(numAutoContainers)"
         }
     }
-    
+
     //scores a stack of three auto containers
     @IBAction func autoStackBtnPress(sender: AnyObject) {
         if (autoStack == false){
@@ -490,15 +630,15 @@ class Scoring: UIViewController, UITextFieldDelegate {
             autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
         }
     }
-    
+
     //listens for Robot Drag and handles what to do with it
     var startY : CGFloat = 0
     func robotDrag(sender: UIPanGestureRecognizer) {
         var robotView = sender.view!
         var recognizerState = sender.state
-        
+
         let moveDiff : CGFloat = 65
-        
+
         switch recognizerState{
             case .Began:
                 startY = robotView.center.y
@@ -511,7 +651,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                     robotView.center = CGPoint(x: robotView.center.x, y: autoZoneLine.center.y + moveDiff)
                 }
                 sender.setTranslation(CGPoint(x: 0, y: 0), inView: self.view)
-                
+
             case .Ended:
                 if robotView.center.y < autoZoneLine.center.y - 10 {
                     UIView.animateWithDuration(0.2, animations: { () -> Void in
@@ -526,7 +666,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                         robotView.center = CGPoint(x: robotView.center.x, y: self.startY)
                     })
                 }
-            
+
                 if robotView.center.y == autoZoneLine.center.y - moveDiff {
                     UIView.animateWithDuration(0.2, animations: { () -> Void in
                         self.autoZoneLbl.layer.backgroundColor = UIColor(red: 3.0/255, green: 200.0/255, blue: 4.0/255, alpha: 1.0).CGColor
@@ -544,7 +684,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 return
         }
     }
-    
+
     //adds to number of noodles placed into a container
     @IBAction func noodleContainerAddBtnPress(sender: AnyObject) {
         if( numNoodlesInContainer < 10){
@@ -552,7 +692,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             containerNoodleScoreLbl.text = "\(numNoodlesInContainer)"
         }
     }
-    
+
     //subtracts from number of noodles placed in a container
     @IBAction func noodleContainerSubBtnPress(sender: AnyObject) {
         if( numNoodlesInContainer > 0){
@@ -560,7 +700,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             containerNoodleScoreLbl.text = "\(numNoodlesInContainer)"
         }
     }
-    
+
     //adds to number of noodles scored in landfill
     @IBAction func noodleLandfillAddBtnPress(sender: AnyObject) {
         if(numNoodlesPushedInLandfill < 10){
@@ -568,7 +708,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             landfillNoodleScoreLbl.text = "\(numNoodlesPushedInLandfill)"
         }
     }
-    
+
     //subtracts from number of noodles scored in landfill
     @IBAction func noodleLandfillSubBtnPress(sender: AnyObject) {
         if(numNoodlesPushedInLandfill > 0){
@@ -576,7 +716,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             landfillNoodleScoreLbl.text = "\(numNoodlesPushedInLandfill)"
         }
     }
-    
+
     //adds the currentToteStack to the scored tote stacks
     @IBAction func toteStackAddBtnPress(sender: AnyObject) {
         //determine if there is a new tote in the current stack
@@ -586,7 +726,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
                 newToteInStack = true
             }
         }
-        
+
         //checks to make sure there are totes in the current stack and that either there are new totes
         //or that there is a container scored
         if(currentToteStack.totes.count > 0 && (newToteInStack || currentToteStack.containerLvl > 0)){
@@ -595,7 +735,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             resetToteStack()
         }
     }
-    
+
     //removes the last scored tote stack
     @IBAction func toteStackUndoBtnPress(sender: AnyObject) {
         //If there is a current stack, reset it
@@ -607,7 +747,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             toteStackScoreLbl.text = "\(toteStacks.count)"
         }
     }
-    
+
     //adds the currentCoopStack to scored coop Stacks
     @IBAction func coopStackAddBtnPress(sender: AnyObject) {
         //determine if there is a new tote in the stack
@@ -625,11 +765,11 @@ class Scoring: UIViewController, UITextFieldDelegate {
             resetCoopStack()
         }
     }
-    
+
     //remove last scored coop stack
     @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
-        
-        
+
+
         if(coopStacks.count > 0 && currentCoopStack.totes.count==0){   //check that is a stack to remove
             //subtract from number of used coop totes
             var newToteInStack = false
@@ -644,13 +784,13 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
         resetCoopStack()
     }
-    
+
     //a tote in the tote stack has been touched. That tote and all of the
     //totes below it will be marked as having been there before
     @IBAction func toteTouch(sender: UIButton) {
         //determine which tote button was pressed
         var toteIndex = find(toteBtns,sender)
-        
+
         //Special case if the user is trying to reset bottom tote
         if ((toteIndex == 0 && currentToteStack.totes.count == 1) == false){
             resetToteStack()
@@ -691,19 +831,19 @@ class Scoring: UIViewController, UITextFieldDelegate {
         else {
             resetToteStack()
         }
-        
+
     }
-    
+
     //adds a tote to top of current tote stack
     @IBAction func toteInsertBtnPress(sender: AnyObject) {
         insertTote(false)
     }
-    
+
     //adds a tote to bottom of current tote stack
     @IBAction func toteBtmInsertBtnPress(sender: AnyObject) {
         insertTote(true)
     }
-    
+
     //inserts a tote into the stack
     func insertTote(fromBottom: Bool) {
         //adds to bottom if true, adds to top if false
@@ -758,7 +898,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
     //adds a container to top of stack and hides the unused totes above it
     @IBAction func containerInsertBtnPress(sender: AnyObject) {
         if currentToteStack.containerLvl == 0 {
@@ -773,12 +913,12 @@ class Scoring: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
     //adds to number of stacks knocked over
     @IBAction func knockStackBtnPress(sender: AnyObject) {
         numStacksKnockedOver++
     }
-    
+
     //a coop totes in the stack UI has been touched. That coop tote
     //and those below it will be marked as having been there before
     @IBAction func coopTouch(sender: UIButton) {
@@ -815,19 +955,19 @@ class Scoring: UIViewController, UITextFieldDelegate {
         else {
             resetCoopStack()
         }
-        
+
     }
-    
+
     //adds coop tote to top of currentCoopStack
     @IBAction func coopInsertBtnPress(sender: AnyObject) {
         insertCoopTote(false)
     }
-    
+
     //inserts a coop tote into the bottom of the stack
     @IBAction func coopBtmInsertBtnPress(sender: AnyObject) {
         insertCoopTote(true)
     }
-    
+
     //inserts a tote into the stack
     func insertCoopTote(fromBottom: Bool){
         //if true then adds a tote to the the bottom, else adds to the bottom
@@ -839,7 +979,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
         //determines number of totes in the stack
         var numTotes = currentCoopStack.totes.count
-        
+
         if (numTotes<4){    //moves top tote insert button and shows bottom insert button
             coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[numTotes]
             if(bottomCoopStacking){
@@ -886,26 +1026,26 @@ class Scoring: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
     //adds to number of penalties in match
     @IBAction func penaltyAddBtnPress(sender: AnyObject) {
         numPenalties++
         penaltyValLbl.text = "\(numPenalties)"
     }
-    
+
     @IBAction func penaltySubBtnPress(sender: AnyObject) {
         if numPenalties > 0 {
             numPenalties--
             penaltyValLbl.text = "\(numPenalties)"
         }
     }
-    
+
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
         println("save press")
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
-        
+
         var regionalData: Regional?
         var teamData: Team?
         var request = NSFetchRequest(entityName: "Regional")
@@ -919,7 +1059,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             regionalData?.name = regional
             println("Regional created")
         }
-        
+
         var teamRequest = NSFetchRequest(entityName: "Team")
         var p1: NSPredicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)!
         var p2: NSPredicate = NSPredicate(format: "regional.name = %@", regional)!
@@ -936,7 +1076,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
             teamData = newTeam
             println("team created")
         }
-        
+
         var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
         requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)
         var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
@@ -951,9 +1091,9 @@ class Scoring: UIViewController, UITextFieldDelegate {
             println("Master Team Created")
         }
         let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
-        
+
         var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
-        
+
         newMatch.autoContainers = numAutoContainers
         newMatch.autoTotes = numAutoTotes
         newMatch.numCoopStacks = numCoopStacks
@@ -990,40 +1130,40 @@ class Scoring: UIViewController, UITextFieldDelegate {
             if(numTotes >= 4) {newCoopStack.tote4 = (stack.totes[3]) ? 2:1} else {newCoopStack.tote4 = 0}
             newMatch.addCoopStack(newCoopStack)
         }
-        
+
         teamData?.addMatch(newMatch)
         teamData = dataCalc.calculateAverages(teamData!)
-        
+
         context.save(nil)
     }
-    
+
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
-    
+
     /*func loadSaved() {
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
-        
+
         let request = NSFetchRequest(entityName: "Match")
         request.returnsObjectsAsFaults = false
-        
+
         var results:NSArray = context.executeFetchRequest(request, error: nil)!
-        
+
         for res in results{
-            
+
             var newMatch = res as Match
             for stack in newMatch.coopStacks {
-                
+
                 var newStack = stack as CoopStack
                 //println("tote1 \(newStack.tote1)")
             }
         }
     }*/
-    
+
 }
