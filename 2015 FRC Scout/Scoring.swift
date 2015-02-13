@@ -95,7 +95,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
     //x postion of the container insert button when it's in the center of the tote stack
     var containerInsertBtnCenter: CGFloat = 173
 
-
+    var confirmedSwipe : Bool!
+    
     //Score Variables
     struct ToteStackStruct {
         var totes = [Bool]()
@@ -105,7 +106,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
     struct CoopStackStruct {
         var totes = [Bool]()
     }
-
+    
     var numStacks = 0
     var numCoopStacks = 0
     var numNoodlesInContainer = 0
@@ -176,8 +177,26 @@ class Scoring: UIViewController, UITextFieldDelegate {
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
         autoZoneRobot.addGestureRecognizer(robotDrag)
+        
+        if let swipeConfirm : Bool = NSUserDefaults.standardUserDefaults().objectForKey(SWIPECONFIRMKEY) as? Bool {
+            confirmedSwipe = swipeConfirm
+        } else {
+            confirmedSwipe = false
+        }
 
 //        self.showSignInView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if !confirmedSwipe {
+            var dragSwitchAlert = UIAlertController(title: "HEY YOU!!", message: "Try dragging two fingers up and down. It switches the scoring mode between Autonomous and Teleoperated", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "Right on", style: .Cancel) { (cancel) -> Void in
+                self.confirmedSwipe = true
+                NSUserDefaults.standardUserDefaults().setBool(self.confirmedSwipe, forKey: SWIPECONFIRMKEY)
+            }
+            dragSwitchAlert.addAction(confirmAction)
+            self.presentViewController(dragSwitchAlert, animated: true, completion: nil)
+        }
     }
 
     func showSignInView() {
