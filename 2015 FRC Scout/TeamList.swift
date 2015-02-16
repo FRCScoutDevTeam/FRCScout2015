@@ -79,7 +79,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let cell: TeamListCell = tableView.dequeueReusableCellWithIdentifier("TeamCell", forIndexPath: indexPath) as TeamListCell
         var team = data[indexPath.row] as Team
-        cell.teamNumberLbl.text = team.teamNumber
+        cell.teamNumberLbl.text = "\(team.teamNumber)"
         cell.rankLbl.text = "#"+String(indexPath.row+1)
         cell.autoAvgScoreLbl.text = "\(team.autoStrength)"
         cell.teleAvgScoreLbl.text = "\(team.teleAvg)"
