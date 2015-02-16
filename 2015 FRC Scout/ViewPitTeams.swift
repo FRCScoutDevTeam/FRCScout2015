@@ -52,11 +52,12 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         var selectedData: PitTeam = data[indexPath.row]
-        var info: [String] = [selectedData.driveTrain,selectedData.stackTotes,selectedData.stackerType,selectedData.heightOfStack,selectedData.containerLevel,selectedData.coop,selectedData.noodles,selectedData.strategy]
+        var stackTotes: String = (selectedData.stackTotes == true) ? "Yes" : "No"
+        var info: [String] = [selectedData.driveTrain,stackTotes,selectedData.stackerType,"\(selectedData.heightOfStack)","\(selectedData.containerLevel)",selectedData.coop,selectedData.noodles,selectedData.strategy]
         if(selectedData.withContainer == true){
-            info.append(selectedData.carryCapacity + " with Container")
+            info.append("\(selectedData.carryCapacity)" + " with Container")
         } else {
-            info.append(selectedData.carryCapacity)
+            info.append("\(selectedData.carryCapacity)")
         }
         var titles: [String] = ["Drive Train","Stack Totes", "Stacker Type", "Height of Stack", "Container Level", "Coop","Noodles","Strategy","Carry Capacity"]
         //temp variables for screen size
