@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CoopStack" representedClassName="CoopStack" syncable="YES">
         <attribute name="tote1" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="tote2" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -9,7 +9,7 @@
         <relationship name="match" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="coopStacks" inverseEntity="Match" syncable="YES"/>
     </entity>
     <entity name="MasterTeam" representedClassName="MasterTeam" syncable="YES">
-        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="pitTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PitTeam" inverseName="masterTeam" inverseEntity="PitTeam" syncable="YES"/>
         <relationship name="regionalTeams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="masterTeam" inverseEntity="Team" syncable="YES"/>
     </entity>
@@ -52,7 +52,7 @@
         <attribute name="stackTotes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="strategy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="withContainer" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="masterTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MasterTeam" inverseName="pitTeam" inverseEntity="MasterTeam" syncable="YES"/>
@@ -67,7 +67,7 @@
         <attribute name="autoStrength" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="containerAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="teleAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="toteAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="masterTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MasterTeam" inverseName="regionalTeams" inverseEntity="MasterTeam" syncable="YES"/>
@@ -89,11 +89,11 @@
     </entity>
     <elements>
         <element name="CoopStack" positionX="232" positionY="98" width="128" height="133"/>
-        <element name="MasterTeam" positionX="-279" positionY="-171" width="128" height="88"/>
+        <element name="MasterTeam" positionX="-279" positionY="-171" width="128" height="90"/>
         <element name="Match" positionX="-173" positionY="62" width="128" height="313"/>
-        <element name="PitTeam" positionX="-90" positionY="-331" width="128" height="373"/>
+        <element name="PitTeam" positionX="-90" positionY="-331" width="128" height="375"/>
         <element name="Regional" positionX="-639" positionY="-4" width="128" height="103"/>
-        <element name="Team" positionX="-351" positionY="-27" width="128" height="208"/>
+        <element name="Team" positionX="-351" positionY="-27" width="128" height="210"/>
         <element name="ToteStack" positionX="72" positionY="-61" width="128" height="178"/>
     </elements>
 </model>

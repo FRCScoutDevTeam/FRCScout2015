@@ -9,20 +9,34 @@
 import UIKit
 import CoreData
 
-class Scoring: UIViewController, UITextFieldDelegate {
-
+class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    //Sign In View Items
     var grayOutView : UIView!
     var signInView : UIView!
+    var initialsTF : UITextField!
+    var teamNumTF : UITextField!
+    var matchNumTF : UITextField!
+    var regionalPicker : UIPickerView!
+    var weekSelector : UISegmentedControl!
 
     let signInLayoutWidth : CGFloat = 120
     let signInLayoutHeight : CGFloat = 40
     let signInLayoutXDiff : CGFloat = 30
     let signInLayoutYDiff : CGFloat = 15
+    var scoutPositionBtns = Array<UIButton>()
+    var weekSelected : Int!
 
     //UI header Items
     @IBOutlet weak var scoutPosLbl: UILabel!
-    @IBOutlet weak var matchNumberLbl: UITextField!
-    @IBOutlet weak var teamNumberLbl: UITextField!
+    @IBOutlet weak var matchNumHeaderLbl: UILabel!
+    @IBOutlet weak var matchNumberCoverBtn: UIButton!
+    @IBOutlet weak var matchNumberTF: UITextField!
+    @IBOutlet weak var matchNumTapToEditLbl: UILabel!
+    @IBOutlet weak var teamNumHeaderLbl: UILabel!
+    @IBOutlet weak var teamNumberCoverBtn: UIButton!
+    @IBOutlet weak var teamNumberTF: UITextField!
+    @IBOutlet weak var teamNumTapToEditLbl: UILabel!
     @IBOutlet weak var modeLbl: UILabel!
 
     //Auto UI Items
@@ -85,17 +99,18 @@ class Scoring: UIViewController, UITextFieldDelegate {
     //array of the buttons in the coop tote stack UI. Initialized in ViewDidLoad()
     var coopBtns = [UIButton]()
     //positions that the top tote insert button moves to
-    var toteInsertBtnLocations: [CGFloat] = [707,637,567,497,427,357]
+    var toteInsertBtnLocations: [CGFloat] = [722,652,582,512,442,372]
     //positions that the container insert button moves to
-    var containerInsertBtnLocations: [CGFloat] = [0,634,564,494,424,354,284]
+    var containerInsertBtnLocations: [CGFloat] = [0,648,578,508,438,368,298]
     //positions that the coop Tote insert button moves to
-    var coopInsertBtnLocations: [CGFloat] = [522,452,382,312]
+    var coopInsertBtnLocations: [CGFloat] = [539,469,399,329]
     //x position of the container insert button when it's to the left of the tote stack
     var containerInsertBtnSide: CGFloat = 27
     //x postion of the container insert button when it's in the center of the tote stack
     var containerInsertBtnCenter: CGFloat = 173
 
-
+    var confirmedSwipe : Bool!
+    
     //Score Variables
     struct ToteStackStruct {
         var totes = [Bool]()
@@ -105,7 +120,13 @@ class Scoring: UIViewController, UITextFieldDelegate {
     struct CoopStackStruct {
         var totes = [Bool]()
     }
-
+    
+    var scoutPosition : Int!
+    var scoutInitials : String!
+    var scoutTeamNum : Int!
+    var regionalName : String!
+    var matchNum : String!
+    var teamNum : Int!
     var numStacks = 0
     var numCoopStacks = 0
     var numNoodlesInContainer = 0
@@ -138,8 +159,21 @@ class Scoring: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //Auto UI items
+        
+        //Header UI Items
+        scoutPosLbl.layer.cornerRadius = 5
+        scoutPosLbl.clipsToBounds = true
+        scoutPosLbl.alpha = 0
+        matchNumHeaderLbl.alpha = 0
+        matchNumberCoverBtn.alpha = 0
+        matchNumberTF.alpha = 0
+        matchNumTapToEditLbl.alpha = 0
+        teamNumHeaderLbl.alpha = 0
+        teamNumberCoverBtn.alpha = 0
+        teamNumberTF.alpha = 0
+        teamNumTapToEditLbl.alpha = 0
+        
+        //Auto UI Items
         autoToteAddBtn.layer.cornerRadius = 5
         autoToteSubBtn.layer.cornerRadius = 5
         autoContainerAddBtn.layer.cornerRadius = 5
@@ -162,7 +196,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
         toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
         coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
 
-        resetScoringScreen()
+        resetToteStack()
+        resetCoopStack()
         showAuto()
         self.view.userInteractionEnabled = true
         self.view.multipleTouchEnabled = true
@@ -174,10 +209,33 @@ class Scoring: UIViewController, UITextFieldDelegate {
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
         autoZoneRobot.addGestureRecognizer(robotDrag)
-
-//        self.showSignInView()
+        
+        if let swipeConfirm : Bool = NSUserDefaults.standardUserDefaults().objectForKey(SWIPECONFIRMKEY) as? Bool {
+            confirmedSwipe = swipeConfirm
+        } else {
+            confirmedSwipe = false
+        }
+        
+        weekSelected = NSUserDefaults.standardUserDefaults().integerForKey(WEEKSELECTEDKEY) ?? 0
+        regionalPicker = UIPickerView()
+        regionalPicker.delegate = self
+        regionalPicker.dataSource = self
+        self.showSignInView()
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+//        if !confirmedSwipe {
+//            var dragSwitchAlert = UIAlertController(title: "HEY YOU!!", message: "Try dragging two fingers up and down. It switches the scoring mode between Autonomous and Teleoperated", preferredStyle: .Alert)
+//            let confirmAction = UIAlertAction(title: "Right on", style: .Cancel) { (cancel) -> Void in
+//                self.confirmedSwipe = true
+//                NSUserDefaults.standardUserDefaults().setBool(self.confirmedSwipe, forKey: SWIPECONFIRMKEY)
+//            }
+//            dragSwitchAlert.addAction(confirmAction)
+//            self.presentViewController(dragSwitchAlert, animated: true, completion: nil)
+//        }
+    }
+    
+    //Shows the Sign In View (should only be called if the scout is not signed in)
     func showSignInView() {
         grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
@@ -186,7 +244,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
         self.view.addGestureRecognizer(tapDismiss)
 
-        signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 660))
+        signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 630))
         signInView.backgroundColor = .whiteColor()
         signInView.layer.cornerRadius = 10
         self.view.addSubview(signInView)
@@ -206,7 +264,11 @@ class Scoring: UIViewController, UITextFieldDelegate {
         red1Button.backgroundColor = .whiteColor()
         red1Button.setTitle("Red 1", forState: UIControlState.Normal)
         red1Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        red1Button.addTarget(self, action: Selector("positionBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(red1Button)
+        if !contains(scoutPositionBtns, red1Button){
+            scoutPositionBtns.insert(red1Button, atIndex: 0)
+        }
 
         let red2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         red2Button.frame = CGRect(x: red1Button.frame.origin.x + red1Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -216,7 +278,11 @@ class Scoring: UIViewController, UITextFieldDelegate {
         red2Button.backgroundColor = .whiteColor()
         red2Button.setTitle("Red 2", forState: UIControlState.Normal)
         red2Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        red2Button.addTarget(self, action: Selector("positionBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(red2Button)
+        if !contains(scoutPositionBtns, red2Button){
+            scoutPositionBtns.insert(red2Button, atIndex: 1)
+        }
 
         let red3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         red3Button.frame = CGRect(x: red2Button.frame.origin.x + red2Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -226,7 +292,11 @@ class Scoring: UIViewController, UITextFieldDelegate {
         red3Button.backgroundColor = .whiteColor()
         red3Button.setTitle("Red 3", forState: UIControlState.Normal)
         red3Button.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        red3Button.addTarget(self, action: Selector("positionBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(red3Button)
+        if !contains(scoutPositionBtns, red3Button){
+            scoutPositionBtns.insert(red3Button, atIndex: 2)
+        }
 
         let blue1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         blue1Button.frame = CGRect(x: red1Button.frame.origin.x, y: red1Button.frame.origin.y + red1Button.frame.height + signInLayoutYDiff, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -236,7 +306,11 @@ class Scoring: UIViewController, UITextFieldDelegate {
         blue1Button.backgroundColor = .whiteColor()
         blue1Button.setTitle("Blue 1", forState: UIControlState.Normal)
         blue1Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        blue1Button.addTarget(self, action: Selector("positionBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(blue1Button)
+        if !contains(scoutPositionBtns, blue1Button){
+            scoutPositionBtns.insert(blue1Button, atIndex: 3)
+        }
 
         let blue2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         blue2Button.frame = CGRect(x: blue1Button.frame.origin.x + blue1Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -246,7 +320,11 @@ class Scoring: UIViewController, UITextFieldDelegate {
         blue2Button.backgroundColor = .whiteColor()
         blue2Button.setTitle("Blue 2", forState: UIControlState.Normal)
         blue2Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        blue2Button.addTarget(self, action: Selector("positionBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(blue2Button)
+        if !contains(scoutPositionBtns, blue2Button){
+            scoutPositionBtns.insert(blue2Button, atIndex: 4)
+        }
 
         let blue3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         blue3Button.frame = CGRect(x: blue2Button.frame.origin.x + blue2Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -256,14 +334,21 @@ class Scoring: UIViewController, UITextFieldDelegate {
         blue3Button.backgroundColor = .whiteColor()
         blue3Button.setTitle("Blue 3", forState: UIControlState.Normal)
         blue3Button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        blue3Button.addTarget(self, action: Selector("positionBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(blue3Button)
+        if !contains(scoutPositionBtns, blue3Button){
+            scoutPositionBtns.insert(blue3Button, atIndex: 5)
+        }
 
-        let initialsTF = UITextField(frame: CGRect(x: 80, y: blue1Button.frame.origin.y + blue1Button.frame.height + 50, width: signInLayoutWidth + 10, height: 35))
+        initialsTF = UITextField(frame: CGRect(x: 80, y: blue1Button.frame.origin.y + blue1Button.frame.height + 50, width: signInLayoutWidth + 10, height: 35))
         initialsTF.font = UIFont.systemFontOfSize(15)
         initialsTF.textAlignment = .Center
         initialsTF.placeholder = "3 Initials"
         initialsTF.borderStyle = .RoundedRect
+        initialsTF.autocorrectionType = .No
+        initialsTF.autocapitalizationType = .AllCharacters
         initialsTF.returnKeyType = .Next
+        initialsTF.addTarget(self, action: Selector("initialsTFReturnPressed:"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
         signInView.addSubview(initialsTF)
         let initialsLbl = UILabel(frame: CGRect(x: initialsTF.frame.origin.x, y: initialsTF.frame.origin.y - 16, width: initialsTF.frame.width, height: 15))
         initialsLbl.font = UIFont.systemFontOfSize(14)
@@ -272,13 +357,14 @@ class Scoring: UIViewController, UITextFieldDelegate {
         initialsLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(initialsLbl)
 
-        let teamNumTF = UITextField(frame: CGRect(x: initialsTF.frame.origin.x + initialsTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth, height: 35))
+        teamNumTF = UITextField(frame: CGRect(x: initialsTF.frame.origin.x + initialsTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth, height: 35))
         teamNumTF.font = UIFont.systemFontOfSize(15)
         teamNumTF.textAlignment = .Center
         teamNumTF.placeholder = "Your Team #"
         teamNumTF.borderStyle = .RoundedRect
         teamNumTF.keyboardType = .NumberPad
         teamNumTF.returnKeyType = .Next
+        teamNumTF.addTarget(self, action: Selector("teamNumTFReturnPressed:"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
         signInView.addSubview(teamNumTF)
         let teamNumLbl = UILabel(frame: CGRect(x: teamNumTF.frame.origin.x, y: teamNumTF.frame.origin.y - 16, width: teamNumTF.frame.width, height: 15))
         teamNumLbl.font = UIFont.systemFontOfSize(14)
@@ -287,13 +373,14 @@ class Scoring: UIViewController, UITextFieldDelegate {
         teamNumLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(teamNumLbl)
 
-        let matchNumTF = UITextField(frame: CGRect(x: teamNumTF.frame.origin.x + teamNumTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth + 10, height: 35))
+        matchNumTF = UITextField(frame: CGRect(x: teamNumTF.frame.origin.x + teamNumTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth + 10, height: 35))
         matchNumTF.font = UIFont.systemFontOfSize(15)
         matchNumTF.textAlignment = .Center
         matchNumTF.placeholder = "Current Match #"
         matchNumTF.borderStyle = .RoundedRect
         matchNumTF.keyboardType = .NumberPad
         matchNumTF.returnKeyType = .Done
+        matchNumTF.addTarget(self, action: Selector("matchNumTFReturnPressed:"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
         signInView.addSubview(matchNumTF)
         let matchNumLbl = UILabel(frame: CGRect(x: matchNumTF.frame.origin.x, y: matchNumTF.frame.origin.y - 16, width: matchNumTF.frame.width, height: 15))
         matchNumLbl.font = UIFont.systemFontOfSize(14)
@@ -301,11 +388,236 @@ class Scoring: UIViewController, UITextFieldDelegate {
         matchNumLbl.textAlignment = .Center
         matchNumLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(matchNumLbl)
+        
+        weekSelector = UISegmentedControl(items: ["All", "1", "2", "3", "4", "5", "6", "7+"])
+        weekSelector.frame = CGRect(x: -42, y: 397, width: 216, height: 30)
+        weekSelector.addTarget(self, action: Selector("weekSelectorChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        signInView.addSubview(weekSelector)
+        weekSelector.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2.0))
+        for view in weekSelector.subviews {
+            for subview in view.subviews {
+                if let label = subview as? UILabel {
+                    label.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI/2.0))
+                }
+            }
+        }
+        if let selectedWeek = NSUserDefaults.standardUserDefaults().objectForKey(WEEKSELECTEDKEY) as? Int {
+            weekSelector.selectedSegmentIndex = selectedWeek
+            weekSelected = selectedWeek
+        } else {
+            weekSelector.selectedSegmentIndex = 0
+            weekSelected = 0
+            NSUserDefaults.standardUserDefaults().setInteger(0, forKey: WEEKSELECTEDKEY)
+        }
+        let weekSelectorLbl = UILabel(frame: CGRect(x: initialsTF.frame.origin.x - 32, y: initialsTF.frame.origin.y + initialsTF.frame.height + signInLayoutYDiff + 20, width: 36, height: 18))
+        weekSelectorLbl.font = UIFont.systemFontOfSize(15)
+        weekSelectorLbl.textAlignment = .Center
+        weekSelectorLbl.text = "Week"
+        weekSelectorLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(weekSelectorLbl)
+        
+        regionalPicker.frame = CGRect(x: initialsTF.frame.origin.x + 20, y: initialsTF.frame.origin.y + initialsTF.frame.height + signInLayoutYDiff + 40, width: 420, height: 216)
+        regionalPicker.showsSelectionIndicator = true
+        regionalPicker.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
+        regionalPicker.layer.cornerRadius = 5
+        signInView.addSubview(regionalPicker)
+        if let regName = NSUserDefaults.standardUserDefaults().objectForKey(REGIONALSELECTEDKEY) as? String {
+            regionalPicker.selectRow(find(allWeekRegionals[weekSelected], regName)!, inComponent: 0, animated: true)
+        }
+        let regionalPickerLbl = UILabel(frame: CGRect(x: regionalPicker.frame.origin.x, y: regionalPicker.frame.origin.y - 20, width: regionalPicker.frame.width, height: 18))
+        regionalPickerLbl.font = UIFont.systemFontOfSize(15)
+        regionalPickerLbl.textAlignment = .Center
+        regionalPickerLbl.text = "Select Your Regional"
+        regionalPickerLbl.adjustsFontSizeToFitWidth = true
+        signInView.addSubview(regionalPickerLbl)
+        
+        let signInSaveBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        signInSaveBtn.frame = CGRect(x: signInView.frame.width/2 - 40, y: regionalPicker.frame.origin.y + regionalPicker.frame.height + 45, width: 80, height: 35)
+        signInSaveBtn.layer.cornerRadius = 5
+        signInSaveBtn.backgroundColor = UIColor(red: 37.0/255, green: 149.0/255, blue: 212.0/255, alpha: 1.0)
+        signInSaveBtn.titleLabel!.font = UIFont.boldSystemFontOfSize(18)
+        signInSaveBtn.setTitle("Save", forState: .Normal)
+        signInSaveBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        signInSaveBtn.addTarget(self, action: Selector("signInSaveBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
+        signInView.addSubview(signInSaveBtn)
     }
-
-    func screenTapped(sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
+    
+    //All scouting position buttons point to this function and it takes care of changing scout position
+    func positionBtnPressed(pressedBtn: UIButton) {
+        for btn in scoutPositionBtns {
+            if btn != pressedBtn {
+                btn.backgroundColor = .whiteColor()
+                if find(scoutPositionBtns, btn)! < 3 {
+                    btn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                } else {
+                    btn.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+                }
+            } else {
+                btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                if find(scoutPositionBtns, btn) < 3 {
+                    btn.backgroundColor = .redColor()
+                } else {
+                    btn.backgroundColor = .blueColor()
+                }
+            }
+            scoutPosition = find(scoutPositionBtns, pressedBtn)
+        }
     }
+    
+    //Sign in text fields (when return is pressed)
+    func initialsTFReturnPressed(sender: AnyObject?) { teamNumTF.becomeFirstResponder() }
+    func teamNumTFReturnPressed(sender: AnyObject?) { matchNumTF.becomeFirstResponder() }
+    func matchNumTFReturnPressed(sender: AnyObject?) { self.view.resignFirstResponder() }
+    
+    //Makes there only be one column in the Regional Picker
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    //Tells the Regional Picker how many rows to display
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return allWeekRegionals[weekSelected].count
+    }
+    
+    //Provides the Regional Picker with resizable labels with the regional names
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+        var lblView = UILabel()
+        lblView.text = allWeekRegionals[weekSelected][row]
+        
+        lblView.textAlignment = .Center
+        lblView.font = UIFont.systemFontOfSize(20)
+        lblView.minimumScaleFactor = 0.2
+        lblView.adjustsFontSizeToFitWidth = true
+        
+        return lblView
+    }
+    
+    //If user changes the week they're viewing on the Sign In View
+    func weekSelectorChanged(sender: UISegmentedControl) {
+        NSUserDefaults.standardUserDefaults().setInteger(sender.selectedSegmentIndex, forKey: WEEKSELECTEDKEY)
+        weekSelected = sender.selectedSegmentIndex
+        if let selectedLbl = regionalPicker.viewForRow(regionalPicker.selectedRowInComponent(0), forComponent: 0) as? UILabel {
+            if contains(allWeekRegionals[weekSelected], selectedLbl.text!) {
+                regionalPicker.reloadAllComponents()
+                regionalPicker.selectRow(find(allWeekRegionals[weekSelected], selectedLbl.text!)!, inComponent: 0, animated: true)
+                return
+            }
+        }
+        regionalPicker.reloadAllComponents()
+        regionalPicker.selectRow(0, inComponent: 0, animated: true)
+    }
+    
+    //When save button is pressed on Sign In View
+    func signInSaveBtnPressed(sender: UIButton){
+        self.view.resignFirstResponder()
+        if scoutPosition == nil {
+            let alertController = UIAlertController(title: "No scout position!", message: "Select a scouting position and continue", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "Aye Aye", style: .Cancel, handler: nil)
+            alertController.addAction(confirmAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else if countElements(initialsTF.text) != 3 {
+            let alertController = UIAlertController(title: "Three initials weren't entered!", message: "Please enter three initials and continue", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "Gotcha", style: .Cancel, handler: { (action) -> Void in
+                self.initialsTF.becomeFirstResponder()
+                return
+            })
+            alertController.addAction(confirmAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else if teamNumTF.text.toInt() == nil {
+            let alertController = UIAlertController(title: "Team number incorrect!", message: "Please your team number correctly", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "Will do", style: .Cancel, handler: { (action) -> Void in
+                self.teamNumTF.becomeFirstResponder()
+                return
+            })
+            alertController.addAction(confirmAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else if matchNumTF.text.toInt() == nil || matchNumTF.text.toInt() < 1 {
+            let alertController = UIAlertController(title: "Match number incorrect!", message: "Please correctly input the match number", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "Affirmative", style: .Cancel, handler: { (action) -> Void in
+                self.matchNumTF.becomeFirstResponder()
+                return
+            })
+            alertController.addAction(confirmAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            scoutInitials = initialsTF.text
+            scoutTeamNum = teamNumTF.text.toInt()!
+            matchNum = matchNumTF.text
+            matchNumberCoverBtn.setTitle(matchNumTF.text, forState: .Normal)
+            regionalName = allWeekRegionals[weekSelected][regionalPicker.selectedRowInComponent(0)]
+            NSUserDefaults.standardUserDefaults().setObject(regionalName, forKey: REGIONALSELECTEDKEY)
+            switch scoutPosition {
+            case 0:
+                scoutPosLbl.backgroundColor = .redColor()
+                scoutPosLbl.text = "Red 1"
+            case 1:
+                scoutPosLbl.backgroundColor = .redColor()
+                scoutPosLbl.text = "Red 2"
+            case 2:
+                scoutPosLbl.backgroundColor = .redColor()
+                scoutPosLbl.text = "Red 3"
+            case 3:
+                scoutPosLbl.backgroundColor = .blueColor()
+                scoutPosLbl.text = "Blue 1"
+            case 4:
+                scoutPosLbl.backgroundColor = .blueColor()
+                scoutPosLbl.text = "Blue 2"
+            case 5:
+                scoutPosLbl.backgroundColor = .blueColor()
+                scoutPosLbl.text = "Blue 3"
+            default:
+                scoutPosLbl.backgroundColor = .redColor()
+                scoutPosLbl.text = "Red 1"
+            }
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.signInView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+            }, completion: { (completed) -> Void in
+                self.signInView.removeFromSuperview()
+                self.grayOutView.removeFromSuperview()
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.scoutPosLbl.alpha = 1.0
+                    self.teamNumHeaderLbl.alpha = 1.0
+                    self.teamNumberCoverBtn.alpha = 1.0
+                    self.teamNumTapToEditLbl.alpha = 1.0
+                    self.matchNumHeaderLbl.alpha = 1.0
+                    self.matchNumberCoverBtn.alpha = 1.0
+                    self.matchNumTapToEditLbl.alpha = 1.0
+                })
+            })
+        }
+    }
+    
+    @IBAction func matchNumCoverBtnPressed(sender: UIButton) {
+        matchNumberTF.text = sender.titleForState(.Normal)
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.matchNumberCoverBtn.alpha = 0
+        }) { (completed) -> Void in
+            self.matchNumberCoverBtn.enabled = false
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.matchNumberTF.alpha = 1
+            }, completion: { (completed) -> Void in
+                self.matchNumberTF.enabled = true
+                self.matchNumberTF.becomeFirstResponder()
+            })
+        }
+    }
+    
+    @IBAction func teamNumCoverBtnPressed(sender: UIButton) {
+        teamNumberTF.text = sender.titleForState(.Normal)
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.teamNumberCoverBtn.alpha = 0
+        }) { (completed) -> Void in
+            self.teamNumberCoverBtn.enabled = false
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.teamNumberTF.alpha = 1
+            }, completion: { (completed) -> Void in
+                    self.teamNumberTF.enabled = true
+                    self.teamNumberTF.becomeFirstResponder()
+            })
+        }
+    }
+    
 
     //function to display all teleop UI items and hide auto UI
     func showTeleop(){
@@ -526,12 +838,14 @@ class Scoring: UIViewController, UITextFieldDelegate {
         numAutoContainers = 0
         autoDrive = false
         autoStack = false
+        numPenalties = 0
 
         //Auto Items
-//        autoDriveBtn.alpha = 0.5
         autoToteScoreLbl.text = "0"
+        autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
         autoContainerScoreLbl.text = "0"
         autoZoneRobot.center = CGPoint(x: autoZoneRobot.center.x, y: autoZoneLine.center.y + 65)
+        autoZoneLbl.layer.backgroundColor = UIColor.clearColor().CGColor
 
         //Tele Items
         resetToteStack()
@@ -540,7 +854,25 @@ class Scoring: UIViewController, UITextFieldDelegate {
         landfillNoodleScoreLbl.text = "0"
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
-
+        penaltyValLbl.text = "0"
+        
+        showAuto()
+        
+        let tempMatchNum = matchNum.toInt()!
+        matchNum = "\(tempMatchNum + 1)"
+        matchNumberCoverBtn.setTitle(matchNum, forState: .Normal)
+        if matchNumberCoverBtn.alpha == 0 {
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.matchNumberTF.alpha = 0
+            }, completion: { (completed) -> Void in
+                self.matchNumberTF.enabled = false
+                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                    self.matchNumberCoverBtn.alpha = 1
+                }, completion: { (completed) -> Void in
+                    self.matchNumberCoverBtn.enabled = true
+                })
+            })
+        }
     }
 
     //resets the UI for the tote stack
@@ -1056,7 +1388,8 @@ class Scoring: UIViewController, UITextFieldDelegate {
         numPenalties++
         penaltyValLbl.text = "\(numPenalties)"
     }
-
+    
+    //subtracts from number of penalties in match
     @IBAction func penaltySubBtnPress(sender: AnyObject) {
         if numPenalties > 0 {
             numPenalties--
@@ -1064,11 +1397,47 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
     }
 
+    //Hides keyboard for a return press on any UITextField whose delegate is this class
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //Hides keyboard if the screen is tapped
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
-        println("save press")
-        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        if matchNumberCoverBtn.alpha == 1 {
+            matchNum = matchNumberCoverBtn.titleForState(UIControlState.Normal)
+        } else {
+            matchNum = matchNumberTF.text
+        }
+        if matchNum.toInt() == nil {
+            let alertController = UIAlertController(title: "Invalid Match Number!", message: "Please fix the match number before saving again", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "On it!", style: .Cancel, handler: nil)
+            alertController.addAction(confirmAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            return
+        }
+        
+        if teamNumberCoverBtn.alpha == 1 {
+            teamNum = teamNumberCoverBtn.titleForState(UIControlState.Normal)!.toInt()
+        } else {
+            teamNum = teamNumberTF.text.toInt()
+        }
+        if teamNum == nil {
+            let alertController = UIAlertController(title: "Invalid Team Number!", message: "Please fix the team number before saving again", preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "On it!", style: .Cancel, handler: nil)
+            alertController.addAction(confirmAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            return
+        }
+        
+        
+        let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
 
         var regionalData: Regional?
         var teamData: Team?
@@ -1085,9 +1454,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         }
 
         var teamRequest = NSFetchRequest(entityName: "Team")
-        var p1: NSPredicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)!
-        var p2: NSPredicate = NSPredicate(format: "regional.name = %@", regional)!
-        teamRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([p1,p2])
+        teamRequest.predicate = NSPredicate(format: "(teamNumber = \(teamNum)) AND (regional.name = %@)", regional)
         var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
         if (teamResults?.count > 0) {
             teamData = teamResults.first
@@ -1096,13 +1463,13 @@ class Scoring: UIViewController, UITextFieldDelegate {
             var newTeam = NSEntityDescription.insertNewObjectForEntityForName("Team", inManagedObjectContext: context) as Team
             regionalData?.addTeam(newTeam)
             newTeam.regional = regionalData!
-            newTeam.teamNumber = teamNumberLbl.text
+            newTeam.teamNumber = teamNum
             teamData = newTeam
             println("team created")
         }
 
         var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
-        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumberLbl.text)
+        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = \(teamNum)")
         var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
         if (resultsMasterTeam.count > 0){
             teamData?.masterTeam = resultsMasterTeam.first! as MasterTeam
@@ -1110,7 +1477,7 @@ class Scoring: UIViewController, UITextFieldDelegate {
         } else {
             var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
             teamData?.masterTeam = newMasterTeam
-            newMasterTeam.teamNumber = teamNumberLbl.text
+            newMasterTeam.teamNumber = teamNum
             newMasterTeam.addTeam(teamData!)
             println("Master Team Created")
         }
@@ -1157,19 +1524,20 @@ class Scoring: UIViewController, UITextFieldDelegate {
 
         teamData?.addMatch(newMatch)
         teamData = dataCalc.calculateAverages(teamData!)
-
-        context.save(nil)
+        
+        var saveErr : NSError?
+        if !context.save(&saveErr) {
+            println(saveErr!.localizedDescription)
+        } else {
+            var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
+        resetScoringScreen()
     }
-
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        self.view.endEditing(true)
-    }
-
+    
     /*func loadSaved() {
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
