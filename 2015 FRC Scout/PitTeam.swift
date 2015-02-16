@@ -2,7 +2,7 @@
 //  PitTeam.swift
 //  FRC Scout
 //
-//  Created by David Swed on 2/12/15.
+//  Created by Louie Bertoncin on 2/15/15.
 //  Copyright (c) 2015 David Swed. All rights reserved.
 //
 
@@ -30,7 +30,7 @@ class PitTeam: NSManagedObject {
     @NSManaged var stackTotes: String
     @NSManaged var strategy: String
     @NSManaged var teamName: String
-    @NSManaged var teamNumber: String
+    @NSManaged var teamNumber: NSNumber
     @NSManaged var uniqueID: NSNumber
     @NSManaged var withContainer: NSNumber
     @NSManaged var masterTeam: MasterTeam

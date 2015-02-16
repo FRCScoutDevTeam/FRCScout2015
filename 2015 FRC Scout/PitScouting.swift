@@ -144,7 +144,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     func displayLoadedData(loadedData: PitTeam) {
         resetPitScouting()
 
-        teamNumber = loadedData.teamNumber
+        teamNumber = "\(loadedData.teamNumber)"
         teamName = loadedData.teamName
         driveTrain = loadedData.driveTrain
         stackTotes = loadedData.stackTotes
@@ -450,7 +450,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
                 newPitTeam!.uniqueID =  Int(NSDate().timeIntervalSince1970)
             }
             editingOldData = false
-            newPitTeam!.teamNumber = teamNumber
+            newPitTeam!.teamNumber = teamNumber.toInt()!
             newPitTeam!.teamName = teamName
             newPitTeam!.driveTrain = driveTrain
             newPitTeam!.stackTotes = stackTotes
@@ -480,7 +480,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             } else {
                 var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
                 newPitTeam!.masterTeam = newMasterTeam
-                newMasterTeam.teamNumber = teamNumber
+                newMasterTeam.teamNumber = teamNumber.toInt()!
                 println("Master Team Created")
             }
             context.save(nil)

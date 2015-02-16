@@ -101,7 +101,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         
         //Team Number
         var teamNumberLbl = UILabel(frame: CGRect(x: detailViewWidth*0.75 - 50, y: detailViewHeight*0.1, width: 100, height: 40))
-        teamNumberLbl.text = selectedData.teamNumber
+        teamNumberLbl.text = "\(selectedData.teamNumber)"
         teamNumberLbl.font = UIFont(name: "Futura-CondensedExtraBold", size: 35)
         teamNumberLbl.textAlignment = NSTextAlignment.Center
         detailView.addSubview(teamNumberLbl)
@@ -205,7 +205,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let cell: PitTeamCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as PitTeamCell
-        cell.teamNumberLbl.text = data[indexPath.row].teamNumber
+        cell.teamNumberLbl.text = "\(data[indexPath.row].teamNumber)"
         cell.teamNameLbl.text = data[indexPath.row].teamName
         return cell
     }
