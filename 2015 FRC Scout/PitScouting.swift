@@ -147,12 +147,12 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         teamNumber = "\(loadedData.teamNumber)"
         teamName = loadedData.teamName
         driveTrain = loadedData.driveTrain
-        stackTotes = loadedData.stackTotes
+        stackTotes = (loadedData.stackTotes == true) ? "Yes" : "No"
         stackerType = loadedData.stackerType
-        heightOfStack = loadedData.heightOfStack
-        stackContainer = loadedData.stackContainer
-        containerLevel = loadedData.containerLevel
-        carryCapacity = loadedData.carryCapacity
+        heightOfStack = "\(loadedData.heightOfStack)"
+        stackContainer = (loadedData.stackContainer == true) ? "Yes" : "No"
+        containerLevel = "\(loadedData.containerLevel)"
+        carryCapacity = "\(loadedData.carryCapacity)"
         withContainer = (loadedData.withContainer == true)
         autoNone = (loadedData.autoNone == true)
         autoMobility = (loadedData.autoMobility == true)
@@ -453,12 +453,12 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             newPitTeam!.teamNumber = teamNumber.toInt()!
             newPitTeam!.teamName = teamName
             newPitTeam!.driveTrain = driveTrain
-            newPitTeam!.stackTotes = stackTotes
+            newPitTeam!.stackTotes = (stackTotes == "Yes") ? true : false
             newPitTeam!.stackerType = stackerType
-            newPitTeam!.heightOfStack = heightOfStack
-            newPitTeam!.stackContainer = stackContainer
-            newPitTeam!.containerLevel = containerLevel
-            newPitTeam!.carryCapacity = carryCapacity
+            newPitTeam!.heightOfStack = heightOfStack.toInt()!
+            newPitTeam!.stackContainer = (stackContainer == "Yes") ? true : false
+            newPitTeam!.containerLevel = containerLevel.toInt()!
+            newPitTeam!.carryCapacity = carryCapacity.toInt()!
             newPitTeam!.withContainer = withContainer
             newPitTeam!.autoNone = autoNone
             newPitTeam!.autoMobility = autoMobility

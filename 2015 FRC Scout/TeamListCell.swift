@@ -22,6 +22,7 @@ class TeamListCell: UITableViewCell {
     @IBOutlet weak var toteScoreLbl: UILabel!
     
     var regional = String()
+    var uniqueID = Int32()
     
     override func awakeFromNib() {
         super.awakeFromNib()
