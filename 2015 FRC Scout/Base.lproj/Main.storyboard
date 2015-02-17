@@ -356,18 +356,6 @@
                                     <action selector="toteStackUndoBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="2mD-ib-jad"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pn0-Ec-fBI" userLabel="KnockedOverStackBtn">
-                                <rect key="frame" x="95" y="826" width="156" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Disrupted Stack">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="knockStackBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="mtD-4u-5G7"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Totes on Step" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5P4-zI-P2r" userLabel="TotesOnStepLbl">
                                 <rect key="frame" x="525" y="248" width="106" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -608,6 +596,37 @@
                                     <action selector="saveMatchButtonPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="5gi-xf-Atc"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZIn-2c-xri" userLabel="PenaltiesVal">
+                                <rect key="frame" x="158" y="817" width="30" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pn0-Ec-fBI" userLabel="KnockedOverStackBtn">
+                                <rect key="frame" x="195" y="812" width="100" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="Toppled Stack">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toppleStackBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="nnN-1P-SHy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UTo-au-Qe8" userLabel="KnockedOverStackBtn">
+                                <rect key="frame" x="51" y="812" width="100" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="Undo Topple">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toppleUndoBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="fFY-oq-4Pf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -655,12 +674,14 @@
                         <outlet property="penaltySubBtn" destination="dBh-fv-eo6" id="cwW-TG-AnP"/>
                         <outlet property="penaltyValLbl" destination="pbV-3R-bni" id="5tD-bU-HAC"/>
                         <outlet property="scoutPosLbl" destination="FVo-fo-8hd" id="dmB-Nq-is7"/>
-                        <outlet property="stackKilledBtn" destination="Pn0-Ec-fBI" id="l72-Vm-wFh"/>
                         <outlet property="swipeGesture" destination="qDc-pV-yu1" id="a0F-vL-RNO"/>
                         <outlet property="teamNumHeaderLbl" destination="Tnk-vf-9IE" id="vel-QG-TOk"/>
                         <outlet property="teamNumTapToEditLbl" destination="UwB-uL-hyq" id="llY-hx-jeT"/>
                         <outlet property="teamNumberCoverBtn" destination="9lc-Rx-VdQ" id="mYL-Jx-aao"/>
                         <outlet property="teamNumberTF" destination="hZO-YL-DS0" id="80j-3O-DbR"/>
+                        <outlet property="toppleLbl" destination="ZIn-2c-xri" id="Fev-5x-rZc"/>
+                        <outlet property="toppleStackBtn" destination="Pn0-Ec-fBI" id="pO6-Oc-tPv"/>
+                        <outlet property="toppleUndoBtn" destination="UTo-au-Qe8" id="UFG-7A-Hls"/>
                         <outlet property="tote1" destination="zy1-4C-NM2" id="Ce3-57-vAb"/>
                         <outlet property="tote2" destination="Mkq-bJ-plb" id="anN-LG-Rt0"/>
                         <outlet property="tote3" destination="FtJ-TU-4gc" id="U56-5J-j7z"/>
