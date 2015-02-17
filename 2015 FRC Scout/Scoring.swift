@@ -225,7 +225,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     
     override func viewDidAppear(animated: Bool) {
         if scoutPosition == nil {
-            self.showSignInView()
+//            self.showSignInView()
         }
     }
     
@@ -1115,10 +1115,16 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             //set the auto score to zero
             numAutoTotes = 0
             autoToteScoreLbl.text = "0"
+            autoToteAddBtn.enabled = false
+            autoToteAddBtn.alpha = 0.7
+            autoToteSubBtn.enabled = false
+            autoToteSubBtn.alpha = 0.7
             autoStackBtn.setBackgroundImage(UIImage(named: "ToteStack"), forState: .Normal)
         } else {
             autoStack = false
             autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
+            autoToteAddBtn.enabled = true
+            autoToteAddBtn.alpha = 1.0
         }
     }
 
@@ -1360,7 +1366,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         var numTotes = currentToteStack.totes.count
         //shows bottom tote insert button and moves top tote insert button,
         //hides insert buttons if there's 6 totes
-        if (currentToteStack.totes.count<6){
+        if (currentToteStack.totes.count > 1 && currentToteStack.totes.count < 6){
             toteInsertBtn.frame.origin.y = toteInsertBtnLocations[numTotes]
             if(bottomToteStacking){
                 toteBtmInsertBtn.enabled = true
@@ -1373,8 +1379,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 toteInsertBtn.hidden = false
                 toteInsertBtn.enabled = true
             }
-        }
-        else {
+        } else if currentToteStack.totes.count == 1 {
+            toteInsertBtn.frame.origin.y = toteInsertBtnLocations[numTotes]
+            toteBtmInsertBtn.enabled = true
+            toteBtmInsertBtn.hidden = false
+            toteInsertBtn.enabled = true
+            toteInsertBtn.hidden = false
+        } else {
             toteInsertBtn.hidden = true
             toteInsertBtn.enabled = false
             toteBtmInsertBtn.enabled = false
@@ -1571,7 +1582,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         //determines number of totes in the stack
         var numTotes = currentCoopStack.totes.count
 
-        if (numTotes<4){    //moves top tote insert button and shows bottom insert button
+        if (numTotes > 1 && numTotes < 4){    //moves top tote insert button and shows bottom insert button
             coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[numTotes]
             if(bottomCoopStacking){
                 coopToteBtmInsertBtn.hidden = false
@@ -1584,8 +1595,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 coopToteInsertBtn.hidden = false
                 coopToteInsertBtn.enabled = true
             }
-        }
-        else {      //if at the top of the stack, hide the insert buttons
+        } else if numTotes == 1 {
+            coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[numTotes]
+            coopToteBtmInsertBtn.hidden = false
+            coopToteBtmInsertBtn.enabled = true
+            coopToteInsertBtn.hidden = false
+            coopToteInsertBtn.enabled = true
+        } else {      //if at the top of the stack, hide the insert buttons
             coopToteInsertBtn.hidden = true
             coopToteInsertBtn.enabled = false
             coopToteBtmInsertBtn.hidden = true
