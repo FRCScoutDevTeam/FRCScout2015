@@ -145,9 +145,6 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     var numCoopTotes = 0
     var numPenalties = 0
 
-    //Regional
-    var regional = "Week Zero"
-
     //Variable stores if Autonomous mode is showing. false if in teleop mode
     var autoShowing = true
     //recognizes if the user has swiped to change between modes
@@ -228,7 +225,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     
     override func viewDidAppear(animated: Bool) {
         if scoutPosition == nil {
-//            self.showSignInView()
+            self.showSignInView()
         }
     }
     
@@ -1692,19 +1689,19 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         var regionalData: Regional?
         var teamData: Team?
         var request = NSFetchRequest(entityName: "Regional")
-        request.predicate = NSPredicate(format: "name = %@", regional)
+        request.predicate = NSPredicate(format: "name = %@", regionalName)
         var results = context.executeFetchRequest(request, error: nil) as [Regional]!
         if (results.count > 0){
             regionalData = results.first! as Regional!
             println("Regional Found!")
         } else {
             regionalData = NSEntityDescription.insertNewObjectForEntityForName("Regional", inManagedObjectContext: context) as? Regional
-            regionalData?.name = regional
+            regionalData?.name = regionalName
             println("Regional created")
         }
 
         var teamRequest = NSFetchRequest(entityName: "Team")
-        teamRequest.predicate = NSPredicate(format: "(teamNumber = \(teamNum)) AND (regional.name = %@)", regional)
+        teamRequest.predicate = NSPredicate(format: "(teamNumber = \(teamNum)) AND (regional.name = %@)", regionalName)
         var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
         if (teamResults?.count > 0) {
             teamData = teamResults.first
@@ -1714,6 +1711,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             regionalData?.addTeam(newTeam)
             newTeam.regional = regionalData!
             newTeam.teamNumber = teamNum
+            newTeam.uniqueID = Int(NSDate().timeIntervalSince1970)
             teamData = newTeam
             println("team created")
         }

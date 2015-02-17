@@ -20,8 +20,6 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     var detailView = UIView()
     var grayOutColor = UIColor(white: 0.5, alpha: 0.5)
     
-    // set by AppDelegate on application startup
-    //var managedObjectContext: NSManagedObjectContext?
     
     /* `NSFetchedResultsController`
     lazily initialized
