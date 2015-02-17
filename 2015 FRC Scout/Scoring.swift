@@ -66,7 +66,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     @IBOutlet weak var coopTotesScoreLbl: UILabel!
     @IBOutlet weak var coopTotesAddBtn: UIButton!
     @IBOutlet weak var coopTotesUndoBtn: UIButton!
-    @IBOutlet weak var stackKilledBtn: UIButton!
+    @IBOutlet weak var toppleStackBtn: UIButton!
+    @IBOutlet weak var toppleLbl: UILabel!
+    @IBOutlet weak var toppleUndoBtn: UIButton!
     @IBOutlet weak var toteStackLbl: UILabel!
     @IBOutlet weak var tote1: UIButton!
     @IBOutlet weak var tote2: UIButton!
@@ -160,6 +162,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        self.view.addGestureRecognizer(tapDismiss)
+        
         //Header UI Items
         scoutPosLbl.layer.cornerRadius = 5
         scoutPosLbl.clipsToBounds = true
@@ -187,7 +192,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         landfillNoodleSubBtn.layer.cornerRadius = 5
         coopTotesAddBtn.layer.cornerRadius = 5
         coopTotesUndoBtn.layer.cornerRadius = 5
-        stackKilledBtn.layer.cornerRadius = 5
+        toppleStackBtn.layer.cornerRadius = 5
+        toppleUndoBtn.layer.cornerRadius = 5
         toteStackAddBtn.layer.cornerRadius = 5
         toteStackUndoBtn.layer.cornerRadius = 5
 
@@ -196,9 +202,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         toteBtns = [tote1,tote2,tote3,tote4,tote5,tote6]
         coopBtns = [coopTote1,coopTote2,coopTote3,coopTote4]
 
-        resetToteStack()
-        resetCoopStack()
-        showAuto()
+        resetScoringScreen(false)
         self.view.userInteractionEnabled = true
         self.view.multipleTouchEnabled = true
         swipeGesture.addTarget(self, action: "twoFingerPanDetected:")
@@ -220,19 +224,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         regionalPicker = UIPickerView()
         regionalPicker.delegate = self
         regionalPicker.dataSource = self
-        self.showSignInView()
     }
     
     override func viewDidAppear(animated: Bool) {
-//        if !confirmedSwipe {
-//            var dragSwitchAlert = UIAlertController(title: "HEY YOU!!", message: "Try dragging two fingers up and down. It switches the scoring mode between Autonomous and Teleoperated", preferredStyle: .Alert)
-//            let confirmAction = UIAlertAction(title: "Right on", style: .Cancel) { (cancel) -> Void in
-//                self.confirmedSwipe = true
-//                NSUserDefaults.standardUserDefaults().setBool(self.confirmedSwipe, forKey: SWIPECONFIRMKEY)
-//            }
-//            dragSwitchAlert.addAction(confirmAction)
-//            self.presentViewController(dragSwitchAlert, animated: true, completion: nil)
-//        }
+        if scoutPosition == nil {
+//            self.showSignInView()
+        }
     }
     
     //Shows the Sign In View (should only be called if the scout is not signed in)
@@ -241,16 +238,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
         self.view.addSubview(grayOutView)
 
-        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
-        self.view.addGestureRecognizer(tapDismiss)
-
         signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 630))
         signInView.backgroundColor = .whiteColor()
         signInView.layer.cornerRadius = 10
+        signInView.transform = CGAffineTransformMakeScale(0.01, 0.01)
         self.view.addSubview(signInView)
         self.view.bringSubviewToFront(signInView)
 
-        let signInTitleLbl = UILabel(frame: CGRect(x: signInView.frame.width/2 - 50, y: 20, width: 100, height: 28))
+        let signInTitleLbl = UILabel(frame: CGRect(x: 240, y: 20, width: 100, height: 28))
         signInTitleLbl.textAlignment = .Center
         signInTitleLbl.text = "Sign In"
         signInTitleLbl.font = UIFont.boldSystemFontOfSize(25)
@@ -432,7 +427,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         signInView.addSubview(regionalPickerLbl)
         
         let signInSaveBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        signInSaveBtn.frame = CGRect(x: signInView.frame.width/2 - 40, y: regionalPicker.frame.origin.y + regionalPicker.frame.height + 45, width: 80, height: 35)
+        signInSaveBtn.frame = CGRect(x: 250, y: regionalPicker.frame.origin.y + regionalPicker.frame.height + 45, width: 80, height: 35)
         signInSaveBtn.layer.cornerRadius = 5
         signInSaveBtn.backgroundColor = UIColor(red: 37.0/255, green: 149.0/255, blue: 212.0/255, alpha: 1.0)
         signInSaveBtn.titleLabel!.font = UIFont.boldSystemFontOfSize(18)
@@ -440,6 +435,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         signInSaveBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         signInSaveBtn.addTarget(self, action: Selector("signInSaveBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(signInSaveBtn)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.signInView.transform = CGAffineTransformIdentity
+        })
     }
     
     //All scouting position buttons point to this function and it takes care of changing scout position
@@ -647,7 +646,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.containerNoodleSubBtn.enabled = true
             self.landfillNoodleAddBtn.enabled = true
             self.landfillNoodleSubBtn.enabled = true
-            if(self.currentCoopStack.totes.count == 0) { self.coopTotesAddBtn.enabled = false }
+            self.coopTotesAddBtn.enabled = true
             self.coopTotesUndoBtn.enabled = true
             self.coopTote1.enabled = true
             self.coopTote2.enabled = true
@@ -659,7 +658,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             } else {
                 self.coopToteBtmInsertBtn.enabled = false
             }
-            if(self.currentToteStack.totes.count == 0){ self.toteStackAddBtn.enabled = false }
+            self.toteStackAddBtn.enabled = true
             self.toteStackUndoBtn.enabled = true
             self.tote1.enabled = true
             self.tote2.enabled = true
@@ -678,7 +677,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             } else {
                 self.containerInsertBtn.enabled = true
             }
-            self.stackKilledBtn.enabled = true
+            self.toppleStackBtn.enabled = true
+            self.toppleUndoBtn.enabled = true
+            
             self.penaltyAddBtn.enabled = true
             self.penaltySubBtn.enabled = true
 
@@ -686,18 +687,58 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.autoShowing = false
 
             UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.containerNoodleAddBtn.alpha = 1.0
-                self.containerNoodleSubBtn.alpha = 1.0
+                if self.numNoodlesInContainer == 10 {
+                    self.containerNoodleAddBtn.alpha = 0.7
+                    self.containerNoodleAddBtn.enabled = false
+                } else {
+                    self.containerNoodleAddBtn.alpha = 1.0
+                }
+                if self.numNoodlesInContainer == 0 {
+                    self.containerNoodleSubBtn.alpha = 0.5
+                    self.containerNoodleSubBtn.enabled = false
+                } else {
+                    self.containerNoodleSubBtn.alpha = 1.0
+                }
                 self.containerNoodleScoreLbl.alpha = 1.0
                 self.containerNoodleLbl.alpha = 1.0
+                
+                if self.numNoodlesPushedInLandfill == 10 {
+                    self.landfillNoodleAddBtn.alpha = 0.7
+                    self.landfillNoodleAddBtn.enabled = false
+                } else {
+                    self.landfillNoodleAddBtn.alpha = 1.0
+                }
+                if self.numNoodlesPushedInLandfill == 0 {
+                    self.landfillNoodleSubBtn.alpha = 0.7
+                    self.landfillNoodleSubBtn.enabled = false
+                } else {
+                    self.landfillNoodleSubBtn.alpha = 1.0
+                }
                 self.landfillNoodleLbl.alpha = 1.0
                 self.landfillNoodleScoreLbl.alpha = 1.0
-                self.landfillNoodleAddBtn.alpha = 1.0
-                self.landfillNoodleSubBtn.alpha = 1.0
+                
                 self.coopTotesLbl.alpha = 1.0
                 self.coopTotesScoreLbl.alpha = 1.0
-                self.coopTotesAddBtn.alpha = 1.0
-                self.coopTotesUndoBtn.alpha = 1.0
+                var activeCoopExists = false
+                for tote in self.currentCoopStack.totes {
+                    if tote {
+                        activeCoopExists = true
+                    }
+                }
+                if activeCoopExists {
+                    self.coopTotesAddBtn.alpha = 1.0
+                    self.coopTotesAddBtn.enabled = true
+                } else {
+                    self.coopTotesAddBtn.alpha = 0.5
+                    self.coopTotesAddBtn.enabled = false
+                }
+                if self.coopStacks.count == 0 && self.coopTotesUndoBtn.titleForState(.Normal) != "Clear Stack" {
+                    self.coopTotesUndoBtn.alpha = 0.5
+                    self.coopTotesUndoBtn.enabled = false
+                } else {
+                    self.coopTotesUndoBtn.alpha = 1.0
+                }
+                self.containerNoodleSubBtn.enabled = false
                 self.coopTote1.alpha = 1.0
                 self.coopTote2.alpha = 1.0
                 self.coopTote3.alpha = 1.0
@@ -706,8 +747,27 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 self.coopToteBtmInsertBtn.alpha = 1.0
                 self.toteStackLbl.alpha = 1.0
                 self.toteStackScoreLbl.alpha = 1.0
-                self.toteStackAddBtn.alpha = 1.0
-                self.toteStackUndoBtn.alpha = 1.0
+                
+                var activeToteExists = false
+                for tote in self.currentToteStack.totes {
+                    if tote {
+                        activeToteExists = true
+                    }
+                }
+                if activeToteExists {
+                    self.toteStackAddBtn.alpha = 1.0
+                    self.toteStackAddBtn.enabled = true
+                } else {
+                    self.toteStackAddBtn.alpha = 0.5
+                    self.toteStackAddBtn.enabled = false
+                }
+                self.toppleStackBtn.alpha = 1.0
+                if self.toteStacks.count == 0  && self.toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
+                    self.toteStackUndoBtn.alpha = 0.5
+                    self.toteStackUndoBtn.enabled = false
+                } else {
+                    self.toteStackUndoBtn.alpha = 1.0
+                }
                 self.tote1.alpha = 1.0
                 self.tote2.alpha = 1.0
                 self.tote3.alpha = 1.0
@@ -717,11 +777,22 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 self.toteInsertBtn.alpha = 1.0
                 self.toteBtmInsertBtn.alpha = 1.0
                 self.containerInsertBtn.alpha = 1.0
-                self.stackKilledBtn.alpha = 1.0
+                self.toppleLbl.alpha = 1.0
+                if self.numStacksKnockedOver == 0 {
+                    self.toppleUndoBtn.alpha = 0.5
+                    self.toppleUndoBtn.enabled = false
+                } else {
+                    self.toppleUndoBtn.alpha = 1.0
+                }
                 self.penaltyLbl.alpha = 1.0
                 self.penaltyValLbl.alpha = 1.0
                 self.penaltyAddBtn.alpha = 1.0
-                self.penaltySubBtn.alpha = 1.0
+                if self.numPenalties == 0 {
+                    self.penaltySubBtn.alpha = 0.7
+                    self.penaltySubBtn.enabled = false
+                } else {
+                    self.penaltySubBtn.alpha = 1.0
+                }
             })
         }
 
@@ -754,7 +825,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         self.toteInsertBtn.enabled = false
         self.toteBtmInsertBtn.enabled = false
         self.containerInsertBtn.enabled = false
-        self.stackKilledBtn.enabled = false
+        self.toppleStackBtn.enabled = false
+        self.toppleUndoBtn.enabled = false
         self.penaltyAddBtn.enabled = false
         self.penaltySubBtn.enabled = false
 
@@ -790,7 +862,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.toteInsertBtn.alpha = 0.0
             self.toteBtmInsertBtn.alpha = 0.0
             self.containerInsertBtn.alpha = 0.0
-            self.stackKilledBtn.alpha = 0.0
+            self.toppleStackBtn.alpha = 0.0
+            self.toppleLbl.alpha = 0.0
+            self.toppleUndoBtn.alpha = 0.0
             self.penaltyLbl.alpha = 0.0
             self.penaltyValLbl.alpha = 0.0
             self.penaltyAddBtn.alpha = 0.0
@@ -812,10 +886,30 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                     self.autoToteScoreLbl.alpha = 1.0
                     self.autoContainerScoreLbl.alpha = 1.0
                     self.autoContainerLbl.alpha = 1.0
-                    self.autoToteAddBtn.alpha = 1.0
-                    self.autoToteSubBtn.alpha = 1.0
-                    self.autoContainerAddBtn.alpha = 1.0
-                    self.autoContainerSubBtn.alpha = 1.0
+                    if self.numAutoTotes == 0 {
+                        self.autoToteSubBtn.alpha = 0.7
+                        self.autoToteSubBtn.enabled = false
+                    } else {
+                        self.autoToteSubBtn.alpha = 1.0
+                    }
+                    if self.numAutoTotes == 3 {
+                        self.autoToteAddBtn.alpha = 0.7
+                        self.autoToteAddBtn.enabled = false
+                    } else {
+                        self.autoToteAddBtn.alpha = 1.0
+                    }
+                    if self.numAutoContainers == 0 {
+                        self.autoContainerSubBtn.alpha = 0.7
+                        self.autoContainerSubBtn.enabled = false
+                    } else {
+                        self.autoContainerSubBtn.alpha = 1.0
+                    }
+                    if self.numAutoContainers == 7 {
+                        self.autoContainerAddBtn.alpha = 0.7
+                        self.autoContainerAddBtn.enabled = false
+                    } else {
+                        self.autoContainerAddBtn.alpha = 1.0
+                    }
                     self.autoZoneLbl.alpha = 1.0
                     self.autoZoneLine.alpha = 1.0
                     self.autoZoneRobot.alpha = 1.0
@@ -825,7 +919,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     }
 
     //resets all scores and button positions
-    func resetScoringScreen(){
+    func resetScoringScreen(incrementMatch: Bool){
         //Variables
         numStacks = 0
         numCoopStacks = 0
@@ -858,6 +952,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         
         showAuto()
         
+        if !incrementMatch { return }
         let tempMatchNum = matchNum.toInt()!
         matchNum = "\(tempMatchNum + 1)"
         matchNumberCoverBtn.setTitle(matchNum, forState: .Normal)
@@ -898,6 +993,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         bottomToteStacking = false
         topToteStacking = false
         toteStackAddBtn.enabled = false
+        toteStackAddBtn.alpha = 0.5
+        if toteStackUndoBtn.titleForState(.Normal) == "Clear Stack" {
+            toteStackUndoBtn.setTitle("Undo Save", forState: .Normal)
+        }
+        if toteStacks.count == 0 {
+            toteStackUndoBtn.enabled = false
+            toteStackUndoBtn.alpha = 0.5
+        }
     }
 
     //resets the coop stack
@@ -918,7 +1021,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         bottomCoopStacking = false
         topCoopStacking = false
         coopTotesAddBtn.enabled = false
-        
+        coopTotesAddBtn.alpha = 0.5
+        if coopTotesUndoBtn.titleForState(.Normal) == "Clear Stack" {
+            coopTotesUndoBtn.setTitle("Undo Save", forState: .Normal)
+        }
+        if coopStacks.count == 0 {
+            coopTotesUndoBtn.enabled = false
+            coopTotesUndoBtn.alpha = 0.5
+        }
     }
 
     //switches between auto and tele scorring mode
@@ -940,6 +1050,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             numAutoTotes -= 1
             autoToteScoreLbl.text = "\(numAutoTotes)"
         }
+        if numAutoTotes == 0 {
+            autoToteSubBtn.enabled = false
+            autoToteSubBtn.alpha = 0.7
+        }
+        if !autoToteAddBtn.enabled {
+            autoToteAddBtn.enabled = true
+            autoToteAddBtn.alpha = 1.0
+        }
     }
 
     //adds auto totes to score
@@ -948,6 +1066,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         if (numAutoTotes < 3 && autoStack == false) {
             numAutoTotes += 1
             autoToteScoreLbl.text = "\(numAutoTotes)"
+        }
+        if !autoToteSubBtn.enabled {
+            autoToteSubBtn.enabled = true
+            autoToteSubBtn.alpha = 1.0
+        }
+        if numAutoTotes == 3 {
+            autoToteAddBtn.enabled = false
+            autoToteAddBtn.alpha = 0.7
         }
     }
 
@@ -958,6 +1084,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             numAutoContainers -= 1
             autoContainerScoreLbl.text = "\(numAutoContainers)"
         }
+        if numAutoContainers == 0 {
+            autoContainerSubBtn.enabled = false
+            autoContainerSubBtn.alpha = 0.7
+        }
+        if !autoContainerAddBtn.enabled {
+            autoContainerAddBtn.enabled = true
+            autoContainerAddBtn.alpha = 1.0
+        }
     }
 
     //adds auto Containers to score
@@ -966,6 +1100,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         if (numAutoContainers < 7){
             numAutoContainers += 1
             autoContainerScoreLbl.text = "\(numAutoContainers)"
+        }
+        if !autoContainerSubBtn.enabled {
+            autoContainerSubBtn.enabled = true
+            autoContainerSubBtn.alpha = 1.0
+        }
+        if numAutoContainers == 7 {
+            autoContainerAddBtn.enabled = false
+            autoContainerAddBtn.alpha = 0.7
         }
     }
 
@@ -1039,9 +1181,17 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
 
     //adds to number of noodles placed into a container
     @IBAction func noodleContainerAddBtnPress(sender: AnyObject) {
-        if( numNoodlesInContainer < 10){
+        if (numNoodlesInContainer < 10){
             numNoodlesInContainer += 1
             containerNoodleScoreLbl.text = "\(numNoodlesInContainer)"
+        }
+        if !containerNoodleSubBtn.enabled {
+            containerNoodleSubBtn.enabled = true
+            containerNoodleSubBtn.alpha = 1.0
+        }
+        if numNoodlesInContainer == 10 {
+            containerNoodleAddBtn.enabled = false
+            containerNoodleAddBtn.alpha = 0.7
         }
     }
 
@@ -1051,6 +1201,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             numNoodlesInContainer -= 1
             containerNoodleScoreLbl.text = "\(numNoodlesInContainer)"
         }
+        if !containerNoodleAddBtn.enabled {
+            containerNoodleAddBtn.enabled = true
+            containerNoodleAddBtn.alpha = 1.0
+        }
+        if numNoodlesInContainer == 0 {
+            containerNoodleSubBtn.enabled = false
+            containerNoodleSubBtn.alpha = 0.7
+        }
     }
 
     //adds to number of noodles scored in landfill
@@ -1058,6 +1216,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         if(numNoodlesPushedInLandfill < 10){
             numNoodlesPushedInLandfill += 1
             landfillNoodleScoreLbl.text = "\(numNoodlesPushedInLandfill)"
+        }
+        if !landfillNoodleSubBtn.enabled {
+            landfillNoodleSubBtn.enabled = true
+            landfillNoodleSubBtn.alpha = 1.0
+        }
+        if numNoodlesPushedInLandfill == 10 {
+            landfillNoodleAddBtn.enabled = false
+            landfillNoodleAddBtn.alpha = 0.7
         }
     }
 
@@ -1067,7 +1233,17 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             numNoodlesPushedInLandfill -= 1
             landfillNoodleScoreLbl.text = "\(numNoodlesPushedInLandfill)"
         }
+        if !landfillNoodleAddBtn.enabled {
+            landfillNoodleAddBtn.enabled = true
+            landfillNoodleAddBtn.alpha = 1.0
+        }
+        if numNoodlesPushedInLandfill == 0 {
+            landfillNoodleSubBtn.enabled = false
+            landfillNoodleSubBtn.alpha = 0.7
+        }
     }
+    
+    
 
     //adds the currentToteStack to the scored tote stacks
     @IBAction func toteStackAddBtnPress(sender: AnyObject) {
@@ -1084,6 +1260,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         if(currentToteStack.totes.count > 0 && (newToteInStack || currentToteStack.containerLvl > 0)){
             toteStacks.append(currentToteStack)
             toteStackScoreLbl.text = "\(toteStacks.count)"
+            toteStackAddBtn.enabled = false
+            toteStackAddBtn.alpha = 0.5
+            toteStackUndoBtn.enabled = true
+            toteStackUndoBtn.alpha = 1.0
             resetToteStack()
         }
     }
@@ -1091,60 +1271,28 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     //removes the last scored tote stack
     @IBAction func toteStackUndoBtnPress(sender: AnyObject) {
         //If there is a current stack, reset it
-        if(currentToteStack.totes.count > 0){
+        if toteStackUndoBtn.titleForState(.Normal) == "Clear Stack" {
             resetToteStack()
-        }
-        else if(toteStacks.count > 0){ //else remove last stack
-            toteStacks.removeLast()
-            toteStackScoreLbl.text = "\(toteStacks.count)"
-        }
-    }
-
-    //adds the currentCoopStack to scored coop Stacks
-    @IBAction func coopStackAddBtnPress(sender: AnyObject) {
-        //determine if there is a new tote in the stack
-        var newToteInStack = false
-        for tote in currentCoopStack.totes {
-            if (tote == true) {
-                newToteInStack = true
-                numCoopTotes++
+        } else {
+            if(toteStacks.count > 0){ //else remove last stack
+                toteStacks.removeLast()
+                toteStackScoreLbl.text = "\(toteStacks.count)"
             }
         }
-        //check if there are totes in the stack if any are new
-        if(currentCoopStack.totes.count > 0 && newToteInStack){
-            coopStacks.append(currentCoopStack)
-            coopTotesScoreLbl.text = "\(coopStacks.count)"
-            resetCoopStack()
+        if toteStacks.count == 0 {
+            toteStackUndoBtn.enabled = false
+            toteStackUndoBtn.alpha = 0.5
         }
-    }
-
-    //remove last scored coop stack
-    @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
-
-
-        if(coopStacks.count > 0 && currentCoopStack.totes.count==0){   //check that is a stack to remove
-            //subtract from number of used coop totes
-            var newToteInStack = false
-            for tote in coopStacks[coopStacks.count-1].totes {
-                if (tote == true) {
-                    newToteInStack = true
-                    numCoopTotes--
-                }
-            }
-            coopStacks.removeLast()
-            coopTotesScoreLbl.text = "\(coopStacks.count)"
-        }
-        resetCoopStack()
     }
 
     //a tote in the tote stack has been touched. That tote and all of the
     //totes below it will be marked as having been there before
     @IBAction func toteTouch(sender: UIButton) {
         //determine which tote button was pressed
-        var toteIndex = find(toteBtns,sender)
+        var toteIndex = find(toteBtns, sender)
 
         //Special case if the user is trying to reset bottom tote
-        if ((toteIndex == 0 && currentToteStack.totes.count == 1) == false){
+        if !(toteIndex == 0 && currentToteStack.totes.count == 1){
             resetToteStack()
             //hide the containerInsertBtn and bottom tote insert tote button
             containerInsertBtn.hidden = false
@@ -1179,11 +1327,16 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                     toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
                 }
             }
+            
+            if toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
+                toteStackUndoBtn.setTitle("Clear Stack", forState: .Normal)
+                toteStackUndoBtn.enabled = true
+                toteStackUndoBtn.alpha = 1.0
+            }
         }
         else {
             resetToteStack()
         }
-
     }
 
     //adds a tote to top of current tote stack
@@ -1251,6 +1404,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             }
         }
         toteStackAddBtn.enabled = true
+        toteStackAddBtn.alpha = 1.0
+        if toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
+            toteStackUndoBtn.setTitle("Clear Stack", forState: .Normal)
+            toteStackUndoBtn.enabled = true
+            toteStackUndoBtn.alpha = 1.0
+        }
     }
 
     //adds a container to top of stack and hides the unused totes above it
@@ -1270,10 +1429,76 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     }
 
     //adds to number of stacks knocked over
-    @IBAction func knockStackBtnPress(sender: AnyObject) {
-        numStacksKnockedOver++
+    @IBAction func toppleStackBtnPress(sender: AnyObject) {
+        toppleLbl.text = "\(++numStacksKnockedOver)"
+        if !toppleUndoBtn.enabled {
+            toppleUndoBtn.enabled = true
+            toppleUndoBtn.alpha = 1.0
+        }
     }
-
+    
+    //subtracts from number of stacks knocked over
+    @IBAction func toppleUndoBtnPress(sender: AnyObject) {
+        if numStacksKnockedOver > 0 {
+            toppleLbl.text = "\(--numStacksKnockedOver)"
+        }
+        if numStacksKnockedOver == 0 {
+            toppleUndoBtn.enabled = false
+            toppleUndoBtn.alpha = 0.5
+        }
+    }
+    
+    
+    
+    //adds the currentCoopStack to scored coop Stacks
+    @IBAction func coopStackAddBtnPress(sender: AnyObject) {
+        //determine if there is a new tote in the stack
+        var newToteInStack = false
+        for tote in currentCoopStack.totes {
+            if (tote == true) {
+                newToteInStack = true
+                numCoopTotes++
+            }
+        }
+        //check if there are totes in the stack if any are new
+        if(currentCoopStack.totes.count > 0 && newToteInStack){
+            coopStacks.append(currentCoopStack)
+            coopTotesScoreLbl.text = "\(coopStacks.count)"
+            coopTotesAddBtn.enabled = false
+            coopTotesAddBtn.alpha = 0.5
+            if !coopTotesUndoBtn.enabled {
+                coopTotesUndoBtn.enabled = true
+                coopTotesUndoBtn.alpha = 1.0
+            }
+            resetCoopStack()
+        }
+    }
+    
+    //remove last scored coop stack
+    @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
+        if coopTotesUndoBtn.titleForState(.Normal) == "Clear Stack" {
+            resetCoopStack()
+        } else {
+            if(coopStacks.count > 0){   //check that is a stack to remove
+                //subtract from number of used coop totes
+                var newToteInStack = false
+                for tote in coopStacks[coopStacks.count-1].totes {
+                    if (tote == true) {
+                        newToteInStack = true
+                        numCoopTotes--
+                    }
+                }
+                coopStacks.removeLast()
+                coopTotesScoreLbl.text = "\(coopStacks.count)"
+            }
+        }
+        if coopStacks.count == 0 {
+            coopTotesUndoBtn.enabled = false
+            coopTotesUndoBtn.alpha = 0.5
+        }
+//        resetCoopStack()
+    }
+    
     //a coop totes in the stack UI has been touched. That coop tote
     //and those below it will be marked as having been there before
     @IBAction func coopTouch(sender: UIButton) {
@@ -1306,6 +1531,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 coopToteBtmInsertBtn.hidden = true
                 coopToteBtmInsertBtn.enabled = false
             }
+            
+            if coopTotesUndoBtn.titleForState(.Normal) != "Clear Stack" {
+                coopTotesUndoBtn.setTitle("Clear Stack", forState: .Normal)
+                coopTotesUndoBtn.enabled = true
+                coopTotesUndoBtn.alpha = 1.0
+            }
         }
         else {
             resetCoopStack()
@@ -1329,8 +1560,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         if(fromBottom){
             currentCoopStack.totes.insert(true, atIndex: 0)
             bottomCoopStacking = true
+            println("Bottom")
         } else {
             currentCoopStack.totes.append(true)
+            println("Top")
         }
         //determines number of totes in the stack
         var numTotes = currentCoopStack.totes.count
@@ -1381,12 +1614,23 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             }
         }
         coopTotesAddBtn.enabled = true
+        coopTotesAddBtn.alpha = 1.0
+        if coopTotesUndoBtn.titleForState(.Normal) != "Clear Stack" {
+            coopTotesUndoBtn.setTitle("Clear Stack", forState: .Normal)
+            coopTotesUndoBtn.enabled = true
+            coopTotesUndoBtn.alpha = 1.0
+        }
     }
+    
+    
 
     //adds to number of penalties in match
     @IBAction func penaltyAddBtnPress(sender: AnyObject) {
-        numPenalties++
-        penaltyValLbl.text = "\(numPenalties)"
+        penaltyValLbl.text = "\(++numPenalties)"
+        if !penaltySubBtn.enabled {
+            penaltySubBtn.enabled = true
+            penaltySubBtn.alpha = 1.0
+        }
     }
     
     //subtracts from number of penalties in match
@@ -1395,7 +1639,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             numPenalties--
             penaltyValLbl.text = "\(numPenalties)"
         }
+        if numPenalties == 0 {
+            penaltySubBtn.enabled = false
+            penaltySubBtn.alpha = 0.7
+        }
     }
+    
+    
 
     //Hides keyboard for a return press on any UITextField whose delegate is this class
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -1535,7 +1785,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
         }
         
-        resetScoringScreen()
+        resetScoringScreen(true)
     }
     
     /*func loadSaved() {
