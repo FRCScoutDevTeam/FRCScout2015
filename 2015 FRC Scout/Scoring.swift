@@ -603,7 +603,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     }
     
     @IBAction func teamNumCoverBtnPressed(sender: UIButton) {
-        teamNumberTF.text = sender.titleForState(.Normal)
+        teamNumberTF.text = ""
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.teamNumberCoverBtn.alpha = 0
         }) { (completed) -> Void in
@@ -1426,6 +1426,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             }
         }
         toteStackAddBtn.enabled = true
+        toteStackAddBtn.alpha = 1.0
+        if toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
+            toteStackUndoBtn.setTitle("Clear Stack", forState: .Normal)
+            toteStackUndoBtn.enabled = true
+            toteStackUndoBtn.alpha = 1.0
+        }
     }
 
     //adds to number of stacks knocked over
