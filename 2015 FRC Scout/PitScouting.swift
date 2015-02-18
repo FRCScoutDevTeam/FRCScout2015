@@ -435,54 +435,33 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         if(checkData()) {
             let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             let context:NSManagedObjectContext = appDel.managedObjectContext!
-            var newPitTeam : PitTeam?
-            if(editingOldData){
-                var request = NSFetchRequest(entityName: "PitTeam")
-                request.predicate = NSPredicate(format: "teamNumber = %@", teamNumber)
-                var results = context.executeFetchRequest(request, error: nil) as [PitTeam]!
-                if (results.count > 0){
-                    newPitTeam = results.first! as PitTeam!
-                }
-
-            } else {
-                let ent = NSEntityDescription.entityForName("PitTeam", inManagedObjectContext: context)
-                newPitTeam = PitTeam(entity: ent!, insertIntoManagedObjectContext: context) as PitTeam!
-                newPitTeam!.uniqueID =  Int(NSDate().timeIntervalSince1970)
-            }
-            editingOldData = false
-            newPitTeam!.teamNumber = teamNumber.toInt()!
-            newPitTeam!.teamName = teamName
-            newPitTeam!.driveTrain = driveTrain
-            newPitTeam!.stackTotes = (stackTotes == "Yes") ? true : false
-            newPitTeam!.stackerType = stackerType
-            newPitTeam!.heightOfStack = heightOfStack.toInt()!
-            newPitTeam!.stackContainer = (stackContainer == "Yes") ? true : false
-            newPitTeam!.containerLevel = containerLevel.toInt()!
-            newPitTeam!.carryCapacity = carryCapacity.toInt()!
-            newPitTeam!.withContainer = withContainer
-            newPitTeam!.autoNone = autoNone
-            newPitTeam!.autoMobility = autoMobility
-            newPitTeam!.autoTote = autoTote
-            newPitTeam!.autoContainer = autoContainer
-            newPitTeam!.autoStack = autoStack
-            newPitTeam!.autoStepContainer = autoStepContainer
-            newPitTeam!.coop = coop
-            newPitTeam!.noodles = noodles
-            newPitTeam!.strategy = strategy
-            newPitTeam!.additionalNotes = additionalNotes
-
-            var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
-            requestMasterTeam.predicate = NSPredicate(format: "teamNumber = %@", teamNumber)
-            var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
-            if (resultsMasterTeam.count > 0){
-                newPitTeam!.masterTeam = resultsMasterTeam.first! as MasterTeam
-                println("Master Team found")
-            } else {
-                var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
-                newPitTeam!.masterTeam = newMasterTeam
-                newMasterTeam.teamNumber = teamNumber.toInt()!
-                println("Master Team Created")
-            }
+            
+            var masterTeam = MasterTeam.createMasterTeam(teamNumber.toInt()!, context: context)
+            
+            var pitDict: [String:AnyObject] = ["teamNumber": teamNumber.toInt()!,
+                "teamName": teamName,
+                "driveTrain": driveTrain,
+                "stackTotes": (stackTotes == "Yes") ? true : false,
+                "stackerType": stackerType,
+                "heightOfStack": heightOfStack.toInt()!,
+                "stackContainer": (stackContainer == "Yes") ? true : false,
+                "containerLevel": containerLevel.toInt()!,
+                "carryCapacity": carryCapacity.toInt()!,
+                "withContainer": withContainer,
+                "autoNone": autoNone,
+                "autoMobility": autoMobility,
+                "autoTote": autoTote,
+                "autoContainer": autoContainer,
+                "autoStack": autoStack,
+                "autoStepContainer": autoStepContainer,
+                "coop": coop,
+                "noodles": noodles,
+                "strategy": strategy,
+                "additionalNotes": additionalNotes,
+                "uniqueID": Int(NSDate().timeIntervalSince1970)]
+            
+            var newPitTeam = PitTeam.createPitTeam(pitDict, masterTeam: masterTeam, context: context)
+            
             context.save(nil)
             let alertController = UIAlertController(title: "Save Complete!", message: "", preferredStyle: .Alert)
 
