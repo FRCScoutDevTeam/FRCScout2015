@@ -1789,10 +1789,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
 
         resetScoringScreen(true)
     }
-
-<<<<<<< HEAD
-=======
-
+    
 
     // ********************************************** //
     // *********** Multipeer Connectivity *********** //
@@ -1973,4 +1970,5 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
 
 
 }
+
 
