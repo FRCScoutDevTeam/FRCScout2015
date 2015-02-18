@@ -11,7 +11,7 @@ import CoreData
 import MultipeerConnectivity
 
 class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate {
-    
+
     //Sign In View Items
     var grayOutView : UIView!
     var signInView : UIView!
@@ -113,7 +113,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     var containerInsertBtnCenter: CGFloat = 173
 
     var confirmedSwipe : Bool!
-    
+
     //Score Variables
     struct ToteStackStruct {
         var totes = [Bool]()
@@ -123,7 +123,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     struct CoopStackStruct {
         var totes = [Bool]()
     }
-    
+
     var scoutPosition : Int!
     var scoutInitials : String!
     var scoutTeamNum : Int!
@@ -159,13 +159,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
-        
+
         let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
         self.view.addGestureRecognizer(tapDismiss)
-        
+
         //Header UI Items
         instaShareBtn.layer.cornerRadius = 5
         instaShareBtn.enabled = false
@@ -185,7 +185,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         teamNumberTF.alpha = 0
         teamNumberTF.enabled = false
         teamNumTapToEditLbl.alpha = 0
-        
+
         //Auto UI Items
         autoToteAddBtn.layer.cornerRadius = 5
         autoToteSubBtn.layer.cornerRadius = 5
@@ -221,25 +221,25 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
         autoZoneRobot.addGestureRecognizer(robotDrag)
-        
+
         if let swipeConfirm : Bool = NSUserDefaults.standardUserDefaults().objectForKey(SWIPECONFIRMKEY) as? Bool {
             confirmedSwipe = swipeConfirm
         } else {
             confirmedSwipe = false
         }
-        
+
         weekSelected = NSUserDefaults.standardUserDefaults().integerForKey(WEEKSELECTEDKEY) ?? 0
         regionalPicker = UIPickerView()
         regionalPicker.delegate = self
         regionalPicker.dataSource = self
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         if scoutPosition == nil {
             self.showSignInView()
         }
     }
-    
+
     //Shows the Sign In View (should only be called if the scout is not signed in)
     func showSignInView() {
         self.view.addSubview(grayOutView)
@@ -389,7 +389,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         matchNumLbl.textAlignment = .Center
         matchNumLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(matchNumLbl)
-        
+
         weekSelector = UISegmentedControl(items: ["All", "1", "2", "3", "4", "5", "6", "7+"])
         weekSelector.frame = CGRect(x: -42, y: 397, width: 216, height: 30)
         weekSelector.addTarget(self, action: Selector("weekSelectorChanged:"), forControlEvents: UIControlEvents.ValueChanged)
@@ -416,7 +416,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         weekSelectorLbl.text = "Week"
         weekSelectorLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(weekSelectorLbl)
-        
+
         regionalPicker.frame = CGRect(x: initialsTF.frame.origin.x + 20, y: initialsTF.frame.origin.y + initialsTF.frame.height + signInLayoutYDiff + 40, width: 420, height: 216)
         regionalPicker.showsSelectionIndicator = true
         regionalPicker.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
@@ -431,7 +431,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         regionalPickerLbl.text = "Select Your Regional"
         regionalPickerLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(regionalPickerLbl)
-        
+
         let signInSaveBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         signInSaveBtn.frame = CGRect(x: 250, y: regionalPicker.frame.origin.y + regionalPicker.frame.height + 45, width: 80, height: 35)
         signInSaveBtn.layer.cornerRadius = 5
@@ -441,12 +441,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         signInSaveBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         signInSaveBtn.addTarget(self, action: Selector("signInSaveBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(signInSaveBtn)
-        
+
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.signInView.transform = CGAffineTransformIdentity
         })
     }
-    
+
     //All scouting position buttons point to this function and it takes care of changing scout position
     func positionBtnPressed(pressedBtn: UIButton) {
         for btn in scoutPositionBtns {
@@ -468,35 +468,35 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             scoutPosition = find(scoutPositionBtns, pressedBtn)
         }
     }
-    
+
     //Sign in text fields (when return is pressed)
     func initialsTFReturnPressed(sender: AnyObject?) { teamNumTF.becomeFirstResponder() }
     func teamNumTFReturnPressed(sender: AnyObject?) { matchNumTF.becomeFirstResponder() }
     func matchNumTFReturnPressed(sender: AnyObject?) { self.view.resignFirstResponder() }
-    
+
     //Makes there only be one column in the Regional Picker
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     //Tells the Regional Picker how many rows to display
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return allWeekRegionals[weekSelected].count
     }
-    
+
     //Provides the Regional Picker with resizable labels with the regional names
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
         var lblView = UILabel()
         lblView.text = allWeekRegionals[weekSelected][row]
-        
+
         lblView.textAlignment = .Center
         lblView.font = UIFont.systemFontOfSize(20)
         lblView.minimumScaleFactor = 0.2
         lblView.adjustsFontSizeToFitWidth = true
-        
+
         return lblView
     }
-    
+
     //If user changes the week they're viewing on the Sign In View
     func weekSelectorChanged(sender: UISegmentedControl) {
         NSUserDefaults.standardUserDefaults().setInteger(sender.selectedSegmentIndex, forKey: WEEKSELECTEDKEY)
@@ -511,7 +511,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         regionalPicker.reloadAllComponents()
         regionalPicker.selectRow(0, inComponent: 0, animated: true)
     }
-    
+
     //When save button is pressed on Sign In View
     func signInSaveBtnPressed(sender: UIButton){
         self.view.resignFirstResponder()
@@ -574,15 +574,15 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 scoutPosLbl.backgroundColor = .redColor()
                 scoutPosLbl.text = "Red 1"
             }
-            
+
             self.setUpMultipeer()
-            
+
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.signInView.transform = CGAffineTransformMakeScale(0.01, 0.01)
             }, completion: { (completed) -> Void in
                 self.signInView.removeFromSuperview()
                 self.grayOutView.removeFromSuperview()
-                
+
                 self.instaShareBtn.enabled = true
                 self.teamNumberCoverBtn.enabled = true
                 self.teamNumberTF.enabled = false
@@ -601,7 +601,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             })
         }
     }
-    
+
     @IBAction func matchNumCoverBtnPressed(sender: UIButton) {
         matchNumberTF.text = sender.titleForState(.Normal)
         UIView.animateWithDuration(0.25, animations: { () -> Void in
@@ -616,7 +616,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             })
         }
     }
-    
+
     @IBAction func teamNumCoverBtnPressed(sender: UIButton) {
         teamNumberTF.text = ""
         UIView.animateWithDuration(0.25, animations: { () -> Void in
@@ -631,7 +631,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             })
         }
     }
-    
+
 
     //function to display all teleop UI items and hide auto UI
     func showTeleop(){
@@ -694,7 +694,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             }
             self.toppleStackBtn.enabled = true
             self.toppleUndoBtn.enabled = true
-            
+
             self.penaltyAddBtn.enabled = true
             self.penaltySubBtn.enabled = true
 
@@ -716,7 +716,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 }
                 self.containerNoodleScoreLbl.alpha = 1.0
                 self.containerNoodleLbl.alpha = 1.0
-                
+
                 if self.numNoodlesPushedInLandfill == 10 {
                     self.landfillNoodleAddBtn.alpha = 0.7
                     self.landfillNoodleAddBtn.enabled = false
@@ -731,7 +731,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 }
                 self.landfillNoodleLbl.alpha = 1.0
                 self.landfillNoodleScoreLbl.alpha = 1.0
-                
+
                 self.coopTotesLbl.alpha = 1.0
                 self.coopTotesScoreLbl.alpha = 1.0
                 var activeCoopExists = false
@@ -762,7 +762,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 self.coopToteBtmInsertBtn.alpha = 1.0
                 self.toteStackLbl.alpha = 1.0
                 self.toteStackScoreLbl.alpha = 1.0
-                
+
                 var activeToteExists = false
                 for tote in self.currentToteStack.totes {
                     if tote {
@@ -964,9 +964,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
         penaltyValLbl.text = "0"
-        
+
         showAuto()
-        
+
         if !incrementMatch { return }
         let tempMatchNum = matchNum.toInt()!
         matchNum = "\(tempMatchNum + 1)"
@@ -1263,8 +1263,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             landfillNoodleSubBtn.alpha = 0.7
         }
     }
-    
-    
+
+
 
     //adds the currentToteStack to the scored tote stacks
     @IBAction func toteStackAddBtnPress(sender: AnyObject) {
@@ -1348,7 +1348,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                     toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
                 }
             }
-            
+
             if toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
                 toteStackUndoBtn.setTitle("Clear Stack", forState: .Normal)
                 toteStackUndoBtn.enabled = true
@@ -1468,7 +1468,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             toppleUndoBtn.alpha = 1.0
         }
     }
-    
+
     //subtracts from number of stacks knocked over
     @IBAction func toppleUndoBtnPress(sender: AnyObject) {
         if numStacksKnockedOver > 0 {
@@ -1479,9 +1479,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             toppleUndoBtn.alpha = 0.5
         }
     }
-    
-    
-    
+
+
+
     //adds the currentCoopStack to scored coop Stacks
     @IBAction func coopStackAddBtnPress(sender: AnyObject) {
         //determine if there is a new tote in the stack
@@ -1505,7 +1505,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             resetCoopStack()
         }
     }
-    
+
     //remove last scored coop stack
     @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
         if coopTotesUndoBtn.titleForState(.Normal) == "Clear Stack" {
@@ -1530,7 +1530,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         }
 //        resetCoopStack()
     }
-    
+
     //a coop totes in the stack UI has been touched. That coop tote
     //and those below it will be marked as having been there before
     @IBAction func coopTouch(sender: UIButton) {
@@ -1563,7 +1563,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 coopToteBtmInsertBtn.hidden = true
                 coopToteBtmInsertBtn.enabled = false
             }
-            
+
             if coopTotesUndoBtn.titleForState(.Normal) != "Clear Stack" {
                 coopTotesUndoBtn.setTitle("Clear Stack", forState: .Normal)
                 coopTotesUndoBtn.enabled = true
@@ -1658,8 +1658,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             coopTotesUndoBtn.alpha = 1.0
         }
     }
-    
-    
+
+
 
     //adds to number of penalties in match
     @IBAction func penaltyAddBtnPress(sender: AnyObject) {
@@ -1669,7 +1669,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             penaltySubBtn.alpha = 1.0
         }
     }
-    
+
     //subtracts from number of penalties in match
     @IBAction func penaltySubBtnPress(sender: AnyObject) {
         if numPenalties > 0 {
@@ -1681,20 +1681,20 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             penaltySubBtn.alpha = 0.7
         }
     }
-    
-    
+
+
 
     //Hides keyboard for a return press on any UITextField whose delegate is this class
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     //Hides keyboard if the screen is tapped
     func screenTapped(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-    
+
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
         if matchNumberCoverBtn.alpha == 1 {
@@ -1709,7 +1709,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
             return
         }
-        
+
         if teamNumberCoverBtn.alpha == 1 {
             teamNum = teamNumberCoverBtn.titleForState(UIControlState.Normal)!.toInt()
         } else {
@@ -1722,72 +1722,17 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
             return
         }
-        
-        
+
+
         let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
 
-        var regionalData: Regional?
-        var teamData: Team?
-        var request = NSFetchRequest(entityName: "Regional")
-        request.predicate = NSPredicate(format: "name = %@", regionalName)
-        var results = context.executeFetchRequest(request, error: nil) as [Regional]!
-        if (results.count > 0){
-            regionalData = results.first! as Regional!
-            println("Regional Found!")
-        } else {
-            regionalData = NSEntityDescription.insertNewObjectForEntityForName("Regional", inManagedObjectContext: context) as? Regional
-            regionalData?.name = regionalName
-            println("Regional created")
-        }
-
-        var teamRequest = NSFetchRequest(entityName: "Team")
-        teamRequest.predicate = NSPredicate(format: "(teamNumber = \(teamNum)) AND (regional.name = %@)", regionalName)
-        var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
-        if (teamResults?.count > 0) {
-            teamData = teamResults.first
-            println("team found")
-        } else {
-            var newTeam = NSEntityDescription.insertNewObjectForEntityForName("Team", inManagedObjectContext: context) as Team
-            regionalData?.addTeam(newTeam)
-            newTeam.regional = regionalData!
-            newTeam.teamNumber = teamNum
-            newTeam.uniqueID = Int(NSDate().timeIntervalSince1970)
-            teamData = newTeam
-            println("team created")
-        }
-
-        var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
-        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = \(teamNum)")
-        var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
-        if (resultsMasterTeam.count > 0){
-            teamData?.masterTeam = resultsMasterTeam.first! as MasterTeam
-            println("Master Team found")
-        } else {
-            var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
-            teamData?.masterTeam = newMasterTeam
-            newMasterTeam.teamNumber = teamNum
-            newMasterTeam.addTeam(teamData!)
-            println("Master Team Created")
-        }
+        var regionalData = Regional.createRegional(regionalName, context: context)
+        var masterTeam = MasterTeam.createMasterTeam(teamNum, context: context)
+        var teamData = Team.createTeam(teamNum, regional: regionalData, masterTeam: masterTeam, context: context)
         let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
 
-        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
-
-        newMatch.autoContainers = numAutoContainers
-        newMatch.autoTotes = numAutoTotes
-        newMatch.numCoopStacks = numCoopStacks
-        newMatch.numStacks = numStacks
-        newMatch.noodlesInContainer = numNoodlesInContainer
-        newMatch.penalty = numPenalties
-        newMatch.stacksKnockedOver = numStacksKnockedOver
-        newMatch.noodlesInLandfill = numNoodlesPushedInLandfill
-        newMatch.uniqueID =  Int(NSDate().timeIntervalSince1970)
-        //Match number
-        //Match type
-        //Totes
-        //Recording team
-        newMatch.autoDrive = autoDrive
-        newMatch.autoStack = autoStack
+        var toteStackData = [ToteStack]()
+        var coopStackData = [CoopStack]()
         for stack in toteStacks {
             var numTotes = stack.totes.count
             var newToteStack: ToteStack = NSEntityDescription.insertNewObjectForEntityForName("ToteStack", inManagedObjectContext: context) as ToteStack
@@ -1798,7 +1743,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             if(numTotes >= 5) {newToteStack.tote5 = (stack.totes[4]) ? 2:1} else {newToteStack.tote5 = 0}
             if(numTotes >= 6) {newToteStack.tote6 = (stack.totes[5]) ? 2:1} else {newToteStack.tote6 = 0}
             newToteStack.containerLvl = stack.containerLvl
-            newMatch.addToteStack(newToteStack)
+            toteStackData.append(newToteStack)
         }
         for stack in coopStacks {
             var numTotes = stack.totes.count
@@ -1807,12 +1752,31 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             if(numTotes >= 2) {newCoopStack.tote2 = (stack.totes[1]) ? 2:1} else {newCoopStack.tote2 = 0}
             if(numTotes >= 3) {newCoopStack.tote3 = (stack.totes[2]) ? 2:1} else {newCoopStack.tote3 = 0}
             if(numTotes >= 4) {newCoopStack.tote4 = (stack.totes[3]) ? 2:1} else {newCoopStack.tote4 = 0}
-            newMatch.addCoopStack(newCoopStack)
+            coopStackData.append(newCoopStack)
         }
+        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
+        var matchUniqueID =  Int(NSDate().timeIntervalSince1970)
+        var matchDict = ["autoContainers": numAutoContainers,
+                        "autoTotes": numAutoTotes,
+                        "numCoopStacks": numCoopStacks,
+                        "numStacks": numStacks,
+                        "noodlesInContainer": numNoodlesInContainer,
+                        "penalty": numPenalties,
+                        "stacksKnockedOver": numStacksKnockedOver,
+                        "noodlesInLandFill": numNoodlesPushedInLandfill,
+                        "autoDrive": autoDrive,
+                        "autoStack": autoStack,
+                        "toteStacks": NSSet(array: toteStackData),
+                        "coopStacks":NSSet(array: coopStackData),
+                        "uniqueID": matchUniqueID,
+                        "matchNum": matchNum,
+                        "scoutInitials": scoutInitials,
+                        "scoutPosition": scoutPosition]
 
-        teamData?.addMatch(newMatch)
-        teamData = dataCalc.calculateAverages(teamData!)
-        
+        var match = Match.createMatch(matchDict, team: teamData, context: context)
+
+        teamData = dataCalc.calculateAverages(teamData)
+
         var saveErr : NSError?
         if !context.save(&saveErr) {
             println(saveErr!.localizedDescription)
@@ -1822,55 +1786,57 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             alertController.addAction(okAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
-        
+
         resetScoringScreen(true)
     }
-    
-    
-    
+
+<<<<<<< HEAD
+=======
+
+
     // ********************************************** //
     // *********** Multipeer Connectivity *********** //
     // ********************************************** //
-    
+
     let serviceType = "FRCScout"
-    
+
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
     var peerID : MCPeerID!
-    
+
     var instaShareControlView : UIView!
     var hostSwitch : UISwitch!
     var visibilitySwitch : UISwitch!
-    
+
     var isHosting : Bool?
     var isVisible = true
-    
+
     func setUpMultipeer() {
-        
+
         peerID = MCPeerID(displayName: "\(scoutPosLbl.text) - \(scoutTeamNum)")
         session = MCSession(peer: peerID)
         session.delegate = self
-        
+
         browser = MCBrowserViewController(serviceType: serviceType, session: session)
         browser.delegate = self
     }
-    
+
     @IBAction func instaShareBtnPressed(sender: AnyObject) {
         self.view.addSubview(grayOutView)
-        
+
         instaShareControlView = UIView(frame: CGRect(x: (UIScreen.mainScreen().bounds.width - 400)/2, y: 375, width: 400, height: 150))
         instaShareControlView.backgroundColor = .whiteColor()
         instaShareControlView.layer.cornerRadius = 10
         self.view.addSubview(instaShareControlView)
-        
+
         let instaShareTitleLbl = UILabel(frame: CGRect(x: instaShareControlView.frame.width/2 - 150, y: 10, width: 300, height: 20))
         instaShareTitleLbl.text = "Insta-Share Control Panel"
         instaShareTitleLbl.textAlignment = .Center
         instaShareTitleLbl.font = UIFont.boldSystemFontOfSize(19)
         instaShareTitleLbl.textColor = UIColor(red: 13.0/255, green: 165.0/255, blue: 255.0/255, alpha: 1.0)
         instaShareControlView.addSubview(instaShareTitleLbl)
-        
+
         hostSwitch = UISwitch(frame: CGRect(x: 80, y: 70, width: 0, height: 0))
         hostSwitch.setOn(false, animated: false)
         hostSwitch.addTarget(self, action: Selector("hostSwitchChanged:"), forControlEvents: .ValueChanged)
@@ -1881,7 +1847,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         hostSwitchLbl.font = UIFont.systemFontOfSize(14)
         hostSwitchLbl.textColor = UIColor(white: 0.2, alpha: 1.0)
         instaShareControlView.addSubview(hostSwitchLbl)
-        
+
         visibilitySwitch = UISwitch(frame: CGRect(x: 269, y: hostSwitch.frame.origin.y, width: 0, height: 0))
         visibilitySwitch.setOn(false, animated: false)
         visibilitySwitch.addTarget(self, action: Selector("visibilitySwitchChanged:"), forControlEvents: .ValueChanged)
@@ -1892,8 +1858,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         visibilitySwitchLbl.font = UIFont.systemFontOfSize(14)
         visibilitySwitchLbl.textColor = UIColor(white: 0.2, alpha: 1.0)
         instaShareControlView.addSubview(visibilitySwitchLbl)
-        
-        
+
+
         instaShareControlView.transform = CGAffineTransformMakeTranslation(0, -(instaShareControlView.frame.origin.y + instaShareControlView.frame.height))
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.instaShareControlView.transform = CGAffineTransformIdentity
@@ -1908,7 +1874,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.visibilitySwitchChanged(self.visibilitySwitch)
         }
     }
-    
+
     func hostSwitchChanged(sender: UISwitch) {
         isHosting = sender.on
         if sender.on {
@@ -1920,7 +1886,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             isHosting = false
         }
     }
-    
+
     func visibilitySwitchChanged(sender: UISwitch) {
         if sender.on {
             if assistant == nil {
@@ -1940,19 +1906,19 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             isHosting = false
         }
     }
-    
+
     func showBrowser() {
         self.presentViewController(browser, animated: true, completion: nil)
     }
-    
+
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let alertController = UIAlertController(title: "Got data!", message: "Received \(data.length) bits of data from \(peerID.displayName)", preferredStyle: .Alert)
@@ -1961,7 +1927,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
-    
+
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         switch state {
         case .Connected:
@@ -1978,7 +1944,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 alertController.addAction(confirmAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
             })
-            
+
         case .NotConnected:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let alertController = UIAlertController(title: "Disconnected!", message: "You've disconnected from \(peerID.displayName)!", preferredStyle: .Alert)
@@ -1986,15 +1952,15 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 alertController.addAction(confirmAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
             })
-            
+
         default:
             return
         }
     }
-    
-    
-    
-    
+
+
+
+
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
         // Dumb required function
     }
@@ -2004,16 +1970,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
         // Third and final dumb required function
     }
-    
-    
+
+
 }
-
-
-
-
-
-
-
-
-
 

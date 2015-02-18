@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
 		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
+		E12F4B541A94503C00AAE0C6 /* PitTeamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F4B531A94503C00AAE0C6 /* PitTeamExtension.swift */; };
 		E14582321A929CAC00594658 /* MasterTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14582311A929CAC00594658 /* MasterTeam.swift */; };
 		E14582341A929CAC00594658 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14582331A929CAC00594658 /* Match.swift */; };
 		E14582361A929CAC00594658 /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14582351A929CAC00594658 /* PitTeam.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		E12F4B531A94503C00AAE0C6 /* PitTeamExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeamExtension.swift; sourceTree = "<group>"; };
 		E14582311A929CAC00594658 /* MasterTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTeam.swift; sourceTree = "<group>"; };
 		E14582331A929CAC00594658 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		E14582351A929CAC00594658 /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
@@ -81,7 +83,7 @@
 		E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		E1F4BEFB1A608FE90091EA2E /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		E1F4BEFD1A6090090091EA2E /* More.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = More.swift; sourceTree = "<group>"; };
-		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitScouting.swift; sourceTree = "<group>"; };
+		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PitScouting.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCalculator.swift; sourceTree = "<group>"; };
 		E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
 		E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				E1A4D7061A8C4A2600FCF562 /* TeamExtension.swift */,
 				E1A4D7081A8C4FBC00FCF562 /* MasterTeamExtension.swift */,
 				E1A4D7021A8C449500FCF562 /* RegionalExtension.swift */,
+				E12F4B531A94503C00AAE0C6 /* PitTeamExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				E14582381A929CAC00594658 /* Regional.swift in Sources */,
 				28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */,
 				E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */,
+				E12F4B541A94503C00AAE0C6 /* PitTeamExtension.swift in Sources */,
 				E145823E1A929CAD00594658 /* ToteStack.swift in Sources */,
 				E14582341A929CAC00594658 /* Match.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
