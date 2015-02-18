@@ -1686,68 +1686,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         
         let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
 
-        var regionalData: Regional?
-        var teamData: Team?
-        var request = NSFetchRequest(entityName: "Regional")
-        request.predicate = NSPredicate(format: "name = %@", regionalName)
-        var results = context.executeFetchRequest(request, error: nil) as [Regional]!
-        if (results.count > 0){
-            regionalData = results.first! as Regional!
-            println("Regional Found!")
-        } else {
-            regionalData = NSEntityDescription.insertNewObjectForEntityForName("Regional", inManagedObjectContext: context) as? Regional
-            regionalData?.name = regionalName
-            println("Regional created")
-        }
-
-        var teamRequest = NSFetchRequest(entityName: "Team")
-        teamRequest.predicate = NSPredicate(format: "(teamNumber = \(teamNum)) AND (regional.name = %@)", regionalName)
-        var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
-        if (teamResults?.count > 0) {
-            teamData = teamResults.first
-            println("team found")
-        } else {
-            var newTeam = NSEntityDescription.insertNewObjectForEntityForName("Team", inManagedObjectContext: context) as Team
-            regionalData?.addTeam(newTeam)
-            newTeam.regional = regionalData!
-            newTeam.teamNumber = teamNum
-            newTeam.uniqueID = Int(NSDate().timeIntervalSince1970)
-            teamData = newTeam
-            println("team created")
-        }
-
-        var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
-        requestMasterTeam.predicate = NSPredicate(format: "teamNumber = \(teamNum)")
-        var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
-        if (resultsMasterTeam.count > 0){
-            teamData?.masterTeam = resultsMasterTeam.first! as MasterTeam
-            println("Master Team found")
-        } else {
-            var newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as MasterTeam
-            teamData?.masterTeam = newMasterTeam
-            newMasterTeam.teamNumber = teamNum
-            newMasterTeam.addTeam(teamData!)
-            println("Master Team Created")
-        }
+        var regionalData = Regional.createRegional(regionalName, context: context)
+        var masterTeam = MasterTeam.createMasterTeam(teamNum, context: context)
+        var teamData = Team.createTeam(teamNum, regional: regionalData, masterTeam: masterTeam, context: context)
         let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
 
-        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
-
-        newMatch.autoContainers = numAutoContainers
-        newMatch.autoTotes = numAutoTotes
-        newMatch.numCoopStacks = numCoopStacks
-        newMatch.numStacks = numStacks
-        newMatch.noodlesInContainer = numNoodlesInContainer
-        newMatch.penalty = numPenalties
-        newMatch.stacksKnockedOver = numStacksKnockedOver
-        newMatch.noodlesInLandfill = numNoodlesPushedInLandfill
-        newMatch.uniqueID =  Int(NSDate().timeIntervalSince1970)
-        //Match number
-        //Match type
-        //Totes
-        //Recording team
-        newMatch.autoDrive = autoDrive
-        newMatch.autoStack = autoStack
+        var toteStackData = [ToteStack]()
+        var coopStackData = [CoopStack]()
         for stack in toteStacks {
             var numTotes = stack.totes.count
             var newToteStack: ToteStack = NSEntityDescription.insertNewObjectForEntityForName("ToteStack", inManagedObjectContext: context) as ToteStack
@@ -1758,7 +1703,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             if(numTotes >= 5) {newToteStack.tote5 = (stack.totes[4]) ? 2:1} else {newToteStack.tote5 = 0}
             if(numTotes >= 6) {newToteStack.tote6 = (stack.totes[5]) ? 2:1} else {newToteStack.tote6 = 0}
             newToteStack.containerLvl = stack.containerLvl
-            newMatch.addToteStack(newToteStack)
+            toteStackData.append(newToteStack)
         }
         for stack in coopStacks {
             var numTotes = stack.totes.count
@@ -1767,11 +1712,30 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             if(numTotes >= 2) {newCoopStack.tote2 = (stack.totes[1]) ? 2:1} else {newCoopStack.tote2 = 0}
             if(numTotes >= 3) {newCoopStack.tote3 = (stack.totes[2]) ? 2:1} else {newCoopStack.tote3 = 0}
             if(numTotes >= 4) {newCoopStack.tote4 = (stack.totes[3]) ? 2:1} else {newCoopStack.tote4 = 0}
-            newMatch.addCoopStack(newCoopStack)
+            coopStackData.append(newCoopStack)
         }
+        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
+        var matchUniqueID =  Int(NSDate().timeIntervalSince1970)
+        var matchDict = ["autoContainers": numAutoContainers,
+                        "autoTotes": numAutoTotes,
+                        "numCoopStacks": numCoopStacks,
+                        "numStacks": numStacks,
+                        "noodlesInContainer": numNoodlesInContainer,
+                        "penalty": numPenalties,
+                        "stacksKnockedOver": numStacksKnockedOver,
+                        "noodlesInLandFill": numNoodlesPushedInLandfill,
+                        "autoDrive": autoDrive,
+                        "autoStack": autoStack,
+                        "toteStacks": NSSet(array: toteStackData),
+                        "coopStacks":NSSet(array: coopStackData),
+                        "uniqueID": matchUniqueID,
+                        "matchNum": matchNum,
+                        "scoutInitials": scoutInitials,
+                        "scoutPosition": scoutPosition]
+        
+        var match = Match.createMatch(matchDict, team: teamData, context: context)
 
-        teamData?.addMatch(newMatch)
-        teamData = dataCalc.calculateAverages(teamData!)
+        teamData = dataCalc.calculateAverages(teamData)
         
         var saveErr : NSError?
         if !context.save(&saveErr) {
@@ -1786,24 +1750,5 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         resetScoringScreen(true)
     }
     
-    /*func loadSaved() {
-        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let context:NSManagedObjectContext = appDel.managedObjectContext!
-
-        let request = NSFetchRequest(entityName: "Match")
-        request.returnsObjectsAsFaults = false
-
-        var results:NSArray = context.executeFetchRequest(request, error: nil)!
-
-        for res in results{
-
-            var newMatch = res as Match
-            for stack in newMatch.coopStacks {
-
-                var newStack = stack as CoopStack
-                //println("tote1 \(newStack.tote1)")
-            }
-        }
-    }*/
 
 }
