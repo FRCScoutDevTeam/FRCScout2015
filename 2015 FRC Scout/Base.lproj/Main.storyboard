@@ -627,6 +627,18 @@
                                     <action selector="toppleUndoBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="fFY-oq-4Pf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0q6-cR-2o8">
+                                <rect key="frame" x="27" y="50" width="110" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.050009785524549155" green="0.6459425339699103" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Insta-Share!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="instaShareBtnPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="V5k-xz-NHZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -660,6 +672,7 @@
                         <outlet property="coopTotesScoreLbl" destination="ruO-Dp-iXr" id="cfu-vZ-zFb"/>
                         <outlet property="coopTotesUndoBtn" destination="zSV-bb-qKs" id="v2E-ef-a77"/>
                         <outlet property="finishMatchBtn" destination="q3K-u3-tXS" id="43E-Jz-zVR"/>
+                        <outlet property="instaShareBtn" destination="0q6-cR-2o8" id="zXs-Nf-dKA"/>
                         <outlet property="landfillNoodleAddBtn" destination="RCY-HK-fQN" id="EIY-jJ-UOg"/>
                         <outlet property="landfillNoodleLbl" destination="3VK-YQ-zyy" id="7Bz-4E-QsZ"/>
                         <outlet property="landfillNoodleScoreLbl" destination="hco-4e-qt4" id="pg8-8G-yx0"/>
