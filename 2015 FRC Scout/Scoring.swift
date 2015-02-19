@@ -232,6 +232,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         regionalPicker = UIPickerView()
         regionalPicker.delegate = self
         regionalPicker.dataSource = self
+        
+        setUpConnectionUI()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -1803,20 +1805,72 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     var peerID : MCPeerID!
 
     var instaShareControlView : UIView!
-    var hostSwitch : UISwitch!
+    var inviteToPartyBtn : UIButton!
     var visibilitySwitch : UISwitch!
 
-    var isHosting : Bool?
+    var isBrowsing = false
     var isVisible = true
-
+    
+    @IBOutlet weak var red1ConnectedLbl: UILabel!
+    @IBOutlet weak var red2ConnectedLbl: UILabel!
+    @IBOutlet weak var red3ConnectedLbl: UILabel!
+    @IBOutlet weak var blue1ConnectedLbl: UILabel!
+    @IBOutlet weak var blue2ConnectedLbl: UILabel!
+    @IBOutlet weak var blue3ConnectedLbl: UILabel!
+    
+    
+    func setUpConnectionUI() {
+        red1ConnectedLbl.clipsToBounds = true
+        red1ConnectedLbl.layer.cornerRadius = 5
+        red2ConnectedLbl.clipsToBounds = true
+        red2ConnectedLbl.layer.cornerRadius = 5
+        red3ConnectedLbl.clipsToBounds = true
+        red3ConnectedLbl.layer.cornerRadius = 5
+        blue1ConnectedLbl.clipsToBounds = true
+        blue1ConnectedLbl.layer.cornerRadius = 5
+        blue2ConnectedLbl.clipsToBounds = true
+        blue2ConnectedLbl.layer.cornerRadius = 5
+        blue3ConnectedLbl.clipsToBounds = true
+        blue3ConnectedLbl.layer.cornerRadius = 5
+    }
     func setUpMultipeer() {
 
-        peerID = MCPeerID(displayName: "\(scoutPosLbl.text) - \(scoutTeamNum)")
+        peerID = MCPeerID(displayName: "\(scoutPosLbl.text!) - \(scoutTeamNum)")
         session = MCSession(peer: peerID)
         session.delegate = self
 
         browser = MCBrowserViewController(serviceType: serviceType, session: session)
         browser.delegate = self
+        
+        switch scoutPosition {
+            case 0:
+                red1ConnectedLbl.text = "You"
+                red1ConnectedLbl.backgroundColor = .redColor()
+            
+            case 1:
+                red2ConnectedLbl.text = "You"
+                red2ConnectedLbl.backgroundColor = .redColor()
+                
+            case 2:
+                red3ConnectedLbl.text = "You"
+                red3ConnectedLbl.backgroundColor = .redColor()
+                
+            case 3:
+                blue1ConnectedLbl.text = "You"
+                blue1ConnectedLbl.backgroundColor = .blueColor()
+                
+            case 4:
+                blue2ConnectedLbl.text = "You"
+                blue2ConnectedLbl.backgroundColor = .blueColor()
+                
+            case 5:
+                blue3ConnectedLbl.text = "You"
+                blue3ConnectedLbl.backgroundColor = .blueColor()
+                
+            default:
+                break
+        }
+        
     }
 
     @IBAction func instaShareBtnPressed(sender: AnyObject) {
@@ -1827,25 +1881,31 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         instaShareControlView.layer.cornerRadius = 10
         self.view.addSubview(instaShareControlView)
 
-        let instaShareTitleLbl = UILabel(frame: CGRect(x: instaShareControlView.frame.width/2 - 150, y: 10, width: 300, height: 20))
+        let instaShareCloseBtn = UIButton.buttonWithType(.System) as UIButton
+        instaShareCloseBtn.frame = CGRect(x: 336, y: 5, width: 60, height: 20)
+        instaShareCloseBtn.setTitle("Close X", forState: .Normal)
+        instaShareCloseBtn.titleLabel!.font = UIFont.systemFontOfSize(13)
+        instaShareCloseBtn.addTarget(self, action: Selector("instaShareCloseBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
+        instaShareControlView.addSubview(instaShareCloseBtn)
+
+        let instaShareTitleLbl = UILabel(frame: CGRect(x: instaShareControlView.frame.width/2 - 150, y: 20, width: 300, height: 20))
         instaShareTitleLbl.text = "Insta-Share Control Panel"
         instaShareTitleLbl.textAlignment = .Center
         instaShareTitleLbl.font = UIFont.boldSystemFontOfSize(19)
         instaShareTitleLbl.textColor = UIColor(red: 13.0/255, green: 165.0/255, blue: 255.0/255, alpha: 1.0)
         instaShareControlView.addSubview(instaShareTitleLbl)
+        
+        inviteToPartyBtn = UIButton.buttonWithType(.System) as UIButton
+        inviteToPartyBtn.frame = CGRect(x: 45, y: 75, width: 115, height: 31)
+        inviteToPartyBtn.setTitle("Invite to Party", forState: .Normal)
+        inviteToPartyBtn.backgroundColor = UIColor(red: 13.0/255, green: 165.0/255, blue: 255.0/255, alpha: 1.0)
+        inviteToPartyBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        inviteToPartyBtn.layer.cornerRadius = 5
+        inviteToPartyBtn.titleLabel!.font = UIFont.boldSystemFontOfSize(16)
+        inviteToPartyBtn.addTarget(self, action: Selector("inviteToPartyBtnPressed:"), forControlEvents: .TouchUpInside)
+        instaShareControlView.addSubview(inviteToPartyBtn)
 
-        hostSwitch = UISwitch(frame: CGRect(x: 80, y: 70, width: 0, height: 0))
-        hostSwitch.setOn(false, animated: false)
-        hostSwitch.addTarget(self, action: Selector("hostSwitchChanged:"), forControlEvents: .ValueChanged)
-        instaShareControlView.addSubview(hostSwitch)
-        let hostSwitchLbl = UILabel(frame: CGRect(x: hostSwitch.frame.origin.x, y: hostSwitch.frame.origin.y - 17, width: hostSwitch.frame.width, height: 15))
-        hostSwitchLbl.text = "Host"
-        hostSwitchLbl.textAlignment = .Center
-        hostSwitchLbl.font = UIFont.systemFontOfSize(14)
-        hostSwitchLbl.textColor = UIColor(white: 0.2, alpha: 1.0)
-        instaShareControlView.addSubview(hostSwitchLbl)
-
-        visibilitySwitch = UISwitch(frame: CGRect(x: 269, y: hostSwitch.frame.origin.y, width: 0, height: 0))
+        visibilitySwitch = UISwitch(frame: CGRect(x: 269, y: inviteToPartyBtn.frame.origin.y, width: 0, height: 0))
         visibilitySwitch.setOn(false, animated: false)
         visibilitySwitch.addTarget(self, action: Selector("visibilitySwitchChanged:"), forControlEvents: .ValueChanged)
         instaShareControlView.addSubview(visibilitySwitch)
@@ -1861,67 +1921,65 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.instaShareControlView.transform = CGAffineTransformIdentity
         }) { (completed) -> Void in
-            if self.isHosting != nil {
-                self.hostSwitch.setOn(self.isHosting!, animated: true)
-                if self.isHosting! {
-                    // Invite More Button
-                }
-            }
             self.visibilitySwitch.setOn(self.isVisible, animated: true)
             self.visibilitySwitchChanged(self.visibilitySwitch)
+            self.inviteToPartyBtn.enabled = self.isVisible
         }
     }
-
-    func hostSwitchChanged(sender: UISwitch) {
-        isHosting = sender.on
-        if sender.on {
-            self.presentViewController(browser, animated: true, completion: nil)
-            // Enable and unhide Invite More Button
-            isHosting = true
-        } else {
-            // Disable and hide Invite More Button
-            isHosting = false
+    
+    
+    
+    func instaShareCloseBtnPressed(sender: UIButton) {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.instaShareControlView.transform = CGAffineTransformMakeTranslation(0, -(self.instaShareControlView.frame.origin.y + self.instaShareControlView.frame.height))
+        }) { (completed) -> Void in
+            self.instaShareControlView.removeFromSuperview()
+            self.grayOutView.removeFromSuperview()
         }
+    }
+    
+    func inviteToPartyBtnPressed(sender: UIButton) {
+        self.presentViewController(browser, animated: true, completion: nil)
+        isBrowsing = true
     }
 
     func visibilitySwitchChanged(sender: UISwitch) {
+        isVisible = sender.on
+        inviteToPartyBtn.enabled = sender.on
         if sender.on {
             if assistant == nil {
                 assistant = MCAdvertiserAssistant(serviceType: serviceType, discoveryInfo: nil, session: session)
                 assistant.start()
-                hostSwitch.enabled = true
             }
+            inviteToPartyBtn.alpha = 1.0
         } else {
             if assistant != nil {
                 session.disconnect()
                 assistant.stop()
                 assistant = nil
             }
-            hostSwitch.setOn(false, animated: true)
-            self.hostSwitchChanged(hostSwitch)
-            hostSwitch.enabled = false
-            isHosting = false
+            inviteToPartyBtn.alpha = 0.5
         }
-    }
-
-    func showBrowser() {
-        self.presentViewController(browser, animated: true, completion: nil)
     }
 
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        isBrowsing = false
     }
 
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        isBrowsing = false
     }
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let alertController = UIAlertController(title: "Got data!", message: "Received \(data.length) bits of data from \(peerID.displayName)", preferredStyle: .Alert)
-            let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
-            alertController.addAction(confirmAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            if !self.isBrowsing {
+                let alertController = UIAlertController(title: "Got data!", message: "Received \(data.length) bits of data from \(peerID.displayName)", preferredStyle: .Alert)
+                let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
+                alertController.addAction(confirmAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         })
     }
 
@@ -1929,25 +1987,51 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         switch state {
         case .Connected:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let alertController = UIAlertController(title: "Connected!", message: "You've connected to \(peerID.displayName)!", preferredStyle: .Alert)
-                let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
-                alertController.addAction(confirmAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            })
-        case .Connecting:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let alertController = UIAlertController(title: "Connecting...", message: "You're connecting to \(peerID.displayName)!", preferredStyle: .Alert)
-                let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
-                alertController.addAction(confirmAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                if peerID.displayName.rangeOfString(self.scoutPosLbl.text!) != nil {
+                    if self.isBrowsing {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    let duplicateAlertController = UIAlertController(title: "Uh oh!", message: "You just connected to another \(self.scoutPosLbl.text!)! \nOne of you needs to disconnect from the party.", preferredStyle: .Alert)
+                    let leaveAction = UIAlertAction(title: "I'll Leave", style: .Default, handler: { (action) -> Void in
+                        self.visibilitySwitch.setOn(false, animated: true)
+                        self.visibilitySwitchChanged(self.visibilitySwitch)
+                    })
+                    duplicateAlertController.addAction(leaveAction)
+                    let stayAction = UIAlertAction(title: "I'm Staying", style: .Cancel, handler: nil)
+                    duplicateAlertController.addAction(stayAction)
+                    self.presentViewController(duplicateAlertController, animated: true, completion: nil)
+                    return
+                }
+                if !self.isBrowsing {
+                    let connectedAlertController = UIAlertController(title: "Connected!", message: "You've connected to \(peerID.displayName)!", preferredStyle: .Alert)
+                    let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
+                    connectedAlertController.addAction(confirmAction)
+                    self.presentViewController(connectedAlertController, animated: true, completion: nil)
+                }
+                if peerID.displayName.rangeOfString("Red 1") != nil { self.red1ConnectedLbl.backgroundColor = .redColor() }
+                else if peerID.displayName.rangeOfString("Red 2") != nil { self.red2ConnectedLbl.backgroundColor = .redColor() }
+                else if peerID.displayName.rangeOfString("Red 3") != nil { self.red3ConnectedLbl.backgroundColor = .redColor() }
+                else if peerID.displayName.rangeOfString("Blue 1") != nil { self.blue1ConnectedLbl.backgroundColor = .blueColor() }
+                else if peerID.displayName.rangeOfString("Blue 2") != nil { self.blue2ConnectedLbl.backgroundColor = .blueColor() }
+                else if peerID.displayName.rangeOfString("Blue 3") != nil { self.blue3ConnectedLbl.backgroundColor = .blueColor() }
             })
 
         case .NotConnected:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let alertController = UIAlertController(title: "Disconnected!", message: "You've disconnected from \(peerID.displayName)!", preferredStyle: .Alert)
-                let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
-                alertController.addAction(confirmAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                if !self.isBrowsing {
+                    let notConnectedAlertController = UIAlertController(title: "Disconnected!", message: "You've disconnected from \(peerID.displayName)!", preferredStyle: .Alert)
+                    let confirmAction = UIAlertAction(title: "Aww man! Ok...", style: .Cancel, handler: nil)
+                    notConnectedAlertController.addAction(confirmAction)
+                    self.presentViewController(notConnectedAlertController, animated: true, completion: nil)
+                }
+                if peerID.displayName.rangeOfString(self.scoutPosLbl.text!) == nil {
+                    if peerID.displayName.rangeOfString("Red 1") != nil { self.red1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Red 2") != nil { self.red2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Red 3") != nil { self.red3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Blue 1") != nil { self.blue1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Blue 2") != nil { self.blue2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Blue 3") != nil { self.blue3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                }
             })
 
         default:
