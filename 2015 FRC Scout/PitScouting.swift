@@ -465,10 +465,10 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             context.save(nil)
             let alertController = UIAlertController(title: "Save Complete!", message: "", preferredStyle: .Alert)
 
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
             alertController.addAction(defaultAction)
 
-            presentViewController(alertController, animated: true, completion: nil)
+//            presentViewController(alertController, animated: true, completion: nil)
             resetPitScouting()
         }
 
