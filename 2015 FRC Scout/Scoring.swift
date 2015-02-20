@@ -3,7 +3,7 @@
 //  2015 FRC Scout
 //
 //  Created by David Swed on 1/9/15.
-//  Copyright (c) 2015 David Swed. All rights reserved.
+//  Copyright (c) 2015 David Swed. All rights reserved
 //
 
 import UIKit
