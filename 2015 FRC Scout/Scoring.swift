@@ -953,6 +953,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
     func resetScoringScreen(incrementMatch: Bool){
         //Variables
         numStacks = 0
+        numCoopTotes = 0
         numCoopStacks = 0
         numNoodlesInContainer = 0
         numNoodlesPushedInLandfill = 0
