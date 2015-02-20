@@ -34,7 +34,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="7Ko-4i-4ns" userLabel="MatchNumTF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" placeholder="Match #" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="7Ko-4i-4ns" userLabel="MatchNumTF">
                                 <rect key="frame" x="229" y="126" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -55,7 +55,7 @@
                                     <action selector="matchNumCoverBtnPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Edw-0C-FU0"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="hZO-YL-DS0" userLabel="TeamNumTF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team #" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="hZO-YL-DS0" userLabel="TeamNumTF">
                                 <rect key="frame" x="446" y="126" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -627,6 +627,66 @@
                                     <action selector="toppleUndoBtnPress:" destination="9pv-A4-QxB" eventType="touchUpInside" id="fFY-oq-4Pf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0q6-cR-2o8">
+                                <rect key="frame" x="27" y="50" width="110" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.050009785524549155" green="0.6459425339699103" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Insta-Share!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="instaShareBtnPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="V5k-xz-NHZ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3bP-y2-7zz">
+                                <rect key="frame" x="54" y="909" width="70" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VBy-RP-37j">
+                                <rect key="frame" x="132" y="909" width="70" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uwN-43-g0F">
+                                <rect key="frame" x="210" y="909" width="70" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blue 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FX6-Zv-fXT">
+                                <rect key="frame" x="489" y="909" width="70" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blue 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OVR-bb-QHP">
+                                <rect key="frame" x="567" y="909" width="70" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blue 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PYT-7D-G0D">
+                                <rect key="frame" x="645" y="909" width="70" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -644,6 +704,9 @@
                         <outlet property="autoZoneLbl" destination="8ZF-jS-UPF" id="0TY-xQ-zCo"/>
                         <outlet property="autoZoneLine" destination="S0F-4l-AcF" id="vFo-7D-2YV"/>
                         <outlet property="autoZoneRobot" destination="Ch0-ed-4On" id="Ss9-an-rAE"/>
+                        <outlet property="blue1ConnectedLbl" destination="FX6-Zv-fXT" id="bxB-AG-niT"/>
+                        <outlet property="blue2ConnectedLbl" destination="OVR-bb-QHP" id="IGJ-St-3na"/>
+                        <outlet property="blue3ConnectedLbl" destination="PYT-7D-G0D" id="R5K-V0-0ug"/>
                         <outlet property="containerInsertBtn" destination="fwd-Sk-3N3" id="S2D-JX-yBB"/>
                         <outlet property="containerNoodleAddBtn" destination="eZZ-uT-1hW" id="yZL-46-d3T"/>
                         <outlet property="containerNoodleLbl" destination="bTS-5N-oof" id="TVi-4s-JLV"/>
@@ -660,6 +723,7 @@
                         <outlet property="coopTotesScoreLbl" destination="ruO-Dp-iXr" id="cfu-vZ-zFb"/>
                         <outlet property="coopTotesUndoBtn" destination="zSV-bb-qKs" id="v2E-ef-a77"/>
                         <outlet property="finishMatchBtn" destination="q3K-u3-tXS" id="43E-Jz-zVR"/>
+                        <outlet property="instaShareBtn" destination="0q6-cR-2o8" id="zXs-Nf-dKA"/>
                         <outlet property="landfillNoodleAddBtn" destination="RCY-HK-fQN" id="EIY-jJ-UOg"/>
                         <outlet property="landfillNoodleLbl" destination="3VK-YQ-zyy" id="7Bz-4E-QsZ"/>
                         <outlet property="landfillNoodleScoreLbl" destination="hco-4e-qt4" id="pg8-8G-yx0"/>
@@ -673,6 +737,9 @@
                         <outlet property="penaltyLbl" destination="W9E-Qq-vc8" id="JRS-5D-HL0"/>
                         <outlet property="penaltySubBtn" destination="dBh-fv-eo6" id="cwW-TG-AnP"/>
                         <outlet property="penaltyValLbl" destination="pbV-3R-bni" id="5tD-bU-HAC"/>
+                        <outlet property="red1ConnectedLbl" destination="3bP-y2-7zz" id="azN-70-h83"/>
+                        <outlet property="red2ConnectedLbl" destination="VBy-RP-37j" id="IyI-1k-5oy"/>
+                        <outlet property="red3ConnectedLbl" destination="uwN-43-g0F" id="nos-7R-2BG"/>
                         <outlet property="scoutPosLbl" destination="FVo-fo-8hd" id="dmB-Nq-is7"/>
                         <outlet property="swipeGesture" destination="qDc-pV-yu1" id="a0F-vL-RNO"/>
                         <outlet property="teamNumHeaderLbl" destination="Tnk-vf-9IE" id="vel-QG-TOk"/>

@@ -53,6 +53,7 @@ extension Match {
             match?.uniqueID = matchDict["uniqueID"] as NSNumber
             match?.scoutInitials = matchDict["scoutInitials"] as String
             match?.scoutPosition = matchDict["scoutPosition"] as NSNumber
+            match?.notes = matchDict["notes"] as String
             println("match created")
         }
         

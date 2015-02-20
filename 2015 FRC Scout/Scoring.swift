@@ -8,12 +8,13 @@
 
 import UIKit
 import CoreData
+import MultipeerConnectivity
 
-class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
-    
+class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MCBrowserViewControllerDelegate, MCSessionDelegate {
+
     //Sign In View Items
     var grayOutView : UIView!
-    var signInView : UIView!
+    var signInView = UIView()
     var initialsTF : UITextField!
     var teamNumTF : UITextField!
     var matchNumTF : UITextField!
@@ -28,6 +29,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     var weekSelected : Int!
 
     //UI header Items
+    @IBOutlet weak var instaShareBtn: UIButton!
     @IBOutlet weak var scoutPosLbl: UILabel!
     @IBOutlet weak var matchNumHeaderLbl: UILabel!
     @IBOutlet weak var matchNumberCoverBtn: UIButton!
@@ -92,7 +94,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     @IBOutlet weak var penaltyValLbl: UILabel!
     @IBOutlet weak var penaltyAddBtn: UIButton!
     @IBOutlet weak var penaltySubBtn: UIButton!
-
+    
+    var postMatchNotesView : UIView!
+    var postMatchNotesTextView : UITextView!
+    var tempNotes : String?
 
     @IBOutlet weak var finishMatchBtn: UIButton!
 
@@ -112,7 +117,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     var containerInsertBtnCenter: CGFloat = 173
 
     var confirmedSwipe : Bool!
-    
+
     //Score Variables
     struct ToteStackStruct {
         var totes = [Bool]()
@@ -122,7 +127,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
     struct CoopStackStruct {
         var totes = [Bool]()
     }
-    
+
     var scoutPosition : Int!
     var scoutInitials : String!
     var scoutTeamNum : Int!
@@ -158,23 +163,33 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
+        grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
+
         let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
         self.view.addGestureRecognizer(tapDismiss)
-        
+
         //Header UI Items
+        instaShareBtn.layer.cornerRadius = 5
+        instaShareBtn.enabled = false
+        instaShareBtn.alpha = 0
         scoutPosLbl.layer.cornerRadius = 5
         scoutPosLbl.clipsToBounds = true
         scoutPosLbl.alpha = 0
         matchNumHeaderLbl.alpha = 0
         matchNumberCoverBtn.alpha = 0
+        matchNumberCoverBtn.enabled = false
         matchNumberTF.alpha = 0
+        matchNumberTF.enabled = false
         matchNumTapToEditLbl.alpha = 0
         teamNumHeaderLbl.alpha = 0
         teamNumberCoverBtn.alpha = 0
+        teamNumberCoverBtn.enabled = false
         teamNumberTF.alpha = 0
+        teamNumberTF.enabled = false
         teamNumTapToEditLbl.alpha = 0
-        
+
         //Auto UI Items
         autoToteAddBtn.layer.cornerRadius = 5
         autoToteSubBtn.layer.cornerRadius = 5
@@ -210,29 +225,29 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         robotDrag.maximumNumberOfTouches = 1
         robotDrag.minimumNumberOfTouches = 1
         autoZoneRobot.addGestureRecognizer(robotDrag)
-        
+
         if let swipeConfirm : Bool = NSUserDefaults.standardUserDefaults().objectForKey(SWIPECONFIRMKEY) as? Bool {
             confirmedSwipe = swipeConfirm
         } else {
             confirmedSwipe = false
         }
-        
+
         weekSelected = NSUserDefaults.standardUserDefaults().integerForKey(WEEKSELECTEDKEY) ?? 0
         regionalPicker = UIPickerView()
         regionalPicker.delegate = self
         regionalPicker.dataSource = self
+        
+        setUpConnectionUI()
     }
-    
+
     override func viewDidAppear(animated: Bool) {
-        if scoutPosition == nil {
+        if scoutPosition == nil && !signInView.isDescendantOfView(self.view) {
             self.showSignInView()
         }
     }
-    
+
     //Shows the Sign In View (should only be called if the scout is not signed in)
     func showSignInView() {
-        grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
-        grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
         self.view.addSubview(grayOutView)
 
         signInView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 630))
@@ -380,7 +395,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         matchNumLbl.textAlignment = .Center
         matchNumLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(matchNumLbl)
-        
+
         weekSelector = UISegmentedControl(items: ["All", "1", "2", "3", "4", "5", "6", "7+"])
         weekSelector.frame = CGRect(x: -42, y: 397, width: 216, height: 30)
         weekSelector.addTarget(self, action: Selector("weekSelectorChanged:"), forControlEvents: UIControlEvents.ValueChanged)
@@ -407,7 +422,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         weekSelectorLbl.text = "Week"
         weekSelectorLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(weekSelectorLbl)
-        
+
         regionalPicker.frame = CGRect(x: initialsTF.frame.origin.x + 20, y: initialsTF.frame.origin.y + initialsTF.frame.height + signInLayoutYDiff + 40, width: 420, height: 216)
         regionalPicker.showsSelectionIndicator = true
         regionalPicker.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
@@ -422,7 +437,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         regionalPickerLbl.text = "Select Your Regional"
         regionalPickerLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(regionalPickerLbl)
-        
+
         let signInSaveBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         signInSaveBtn.frame = CGRect(x: 250, y: regionalPicker.frame.origin.y + regionalPicker.frame.height + 45, width: 80, height: 35)
         signInSaveBtn.layer.cornerRadius = 5
@@ -432,12 +447,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         signInSaveBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         signInSaveBtn.addTarget(self, action: Selector("signInSaveBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
         signInView.addSubview(signInSaveBtn)
-        
+
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.signInView.transform = CGAffineTransformIdentity
         })
     }
-    
+
     //All scouting position buttons point to this function and it takes care of changing scout position
     func positionBtnPressed(pressedBtn: UIButton) {
         for btn in scoutPositionBtns {
@@ -459,35 +474,35 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             scoutPosition = find(scoutPositionBtns, pressedBtn)
         }
     }
-    
+
     //Sign in text fields (when return is pressed)
     func initialsTFReturnPressed(sender: AnyObject?) { teamNumTF.becomeFirstResponder() }
     func teamNumTFReturnPressed(sender: AnyObject?) { matchNumTF.becomeFirstResponder() }
     func matchNumTFReturnPressed(sender: AnyObject?) { self.view.resignFirstResponder() }
-    
+
     //Makes there only be one column in the Regional Picker
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     //Tells the Regional Picker how many rows to display
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return allWeekRegionals[weekSelected].count
     }
-    
+
     //Provides the Regional Picker with resizable labels with the regional names
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
         var lblView = UILabel()
         lblView.text = allWeekRegionals[weekSelected][row]
-        
+
         lblView.textAlignment = .Center
         lblView.font = UIFont.systemFontOfSize(20)
         lblView.minimumScaleFactor = 0.2
         lblView.adjustsFontSizeToFitWidth = true
-        
+
         return lblView
     }
-    
+
     //If user changes the week they're viewing on the Sign In View
     func weekSelectorChanged(sender: UISegmentedControl) {
         NSUserDefaults.standardUserDefaults().setInteger(sender.selectedSegmentIndex, forKey: WEEKSELECTEDKEY)
@@ -502,7 +517,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         regionalPicker.reloadAllComponents()
         regionalPicker.selectRow(0, inComponent: 0, animated: true)
     }
-    
+
     //When save button is pressed on Sign In View
     func signInSaveBtnPressed(sender: UIButton){
         self.view.resignFirstResponder()
@@ -540,6 +555,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             scoutTeamNum = teamNumTF.text.toInt()!
             matchNum = matchNumTF.text
             matchNumberCoverBtn.setTitle(matchNumTF.text, forState: .Normal)
+            
             regionalName = allWeekRegionals[weekSelected][regionalPicker.selectedRowInComponent(0)]
             NSUserDefaults.standardUserDefaults().setObject(regionalName, forKey: REGIONALSELECTEDKEY)
             switch scoutPosition {
@@ -565,16 +581,34 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 scoutPosLbl.backgroundColor = .redColor()
                 scoutPosLbl.text = "Red 1"
             }
-            
+
+            self.setUpMultipeer()
+
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.signInView.transform = CGAffineTransformMakeScale(0.01, 0.01)
             }, completion: { (completed) -> Void in
                 self.signInView.removeFromSuperview()
                 self.grayOutView.removeFromSuperview()
+
+                self.instaShareBtn.enabled = true
+                
+                // FIX FOR TEAM NUMBER //
+                self.teamNumberCoverBtn.enabled = false
+                self.teamNumberTF.enabled = true
+                // YEAH, LIKE HERE //
+                
+                self.matchNumberCoverBtn.enabled = true
+                self.matchNumberTF.enabled = false
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.instaShareBtn.alpha = 1.0
                     self.scoutPosLbl.alpha = 1.0
                     self.teamNumHeaderLbl.alpha = 1.0
-                    self.teamNumberCoverBtn.alpha = 1.0
+                    
+                    // FIX FOR TEAM NUMBER //
+                    self.teamNumberCoverBtn.alpha = 0
+                    self.teamNumberTF.alpha = 1.0
+                    // YEAH, LIKE HERE //
+                    
                     self.teamNumTapToEditLbl.alpha = 1.0
                     self.matchNumHeaderLbl.alpha = 1.0
                     self.matchNumberCoverBtn.alpha = 1.0
@@ -583,7 +617,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             })
         }
     }
-    
+
     @IBAction func matchNumCoverBtnPressed(sender: UIButton) {
         matchNumberTF.text = sender.titleForState(.Normal)
         UIView.animateWithDuration(0.25, animations: { () -> Void in
@@ -598,9 +632,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             })
         }
     }
-    
+
     @IBAction func teamNumCoverBtnPressed(sender: UIButton) {
-        teamNumberTF.text = sender.titleForState(.Normal)
+        teamNumberTF.text = ""
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.teamNumberCoverBtn.alpha = 0
         }) { (completed) -> Void in
@@ -613,7 +647,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             })
         }
     }
-    
+
 
     //function to display all teleop UI items and hide auto UI
     func showTeleop(){
@@ -676,7 +710,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             }
             self.toppleStackBtn.enabled = true
             self.toppleUndoBtn.enabled = true
-            
+
             self.penaltyAddBtn.enabled = true
             self.penaltySubBtn.enabled = true
 
@@ -698,7 +732,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 }
                 self.containerNoodleScoreLbl.alpha = 1.0
                 self.containerNoodleLbl.alpha = 1.0
-                
+
                 if self.numNoodlesPushedInLandfill == 10 {
                     self.landfillNoodleAddBtn.alpha = 0.7
                     self.landfillNoodleAddBtn.enabled = false
@@ -713,7 +747,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 }
                 self.landfillNoodleLbl.alpha = 1.0
                 self.landfillNoodleScoreLbl.alpha = 1.0
-                
+
                 self.coopTotesLbl.alpha = 1.0
                 self.coopTotesScoreLbl.alpha = 1.0
                 var activeCoopExists = false
@@ -744,7 +778,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 self.coopToteBtmInsertBtn.alpha = 1.0
                 self.toteStackLbl.alpha = 1.0
                 self.toteStackScoreLbl.alpha = 1.0
-                
+
                 var activeToteExists = false
                 for tote in self.currentToteStack.totes {
                     if tote {
@@ -889,7 +923,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                     } else {
                         self.autoToteSubBtn.alpha = 1.0
                     }
-                    if self.numAutoTotes == 3 {
+                    if self.numAutoTotes == 3 || self.autoStack {
                         self.autoToteAddBtn.alpha = 0.7
                         self.autoToteAddBtn.enabled = false
                     } else {
@@ -930,6 +964,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         autoDrive = false
         autoStack = false
         numPenalties = 0
+        tempNotes = nil
 
         //Auto Items
         autoToteScoreLbl.text = "0"
@@ -946,10 +981,17 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
         penaltyValLbl.text = "0"
-        
+
         showAuto()
-        
+
         if !incrementMatch { return }
+        
+        // TEAM NUMBER FIX FROM SCHEDULE GOES BELOW HERE //
+        teamNumberCoverBtn.alpha = 0
+        teamNumberCoverBtn.enabled = false
+        teamNumberTF.text = ""
+        // TEAM NUMBER FIX FROM SCHEDULE GOES ABOVE HERE //
+        
         let tempMatchNum = matchNum.toInt()!
         matchNum = "\(tempMatchNum + 1)"
         matchNumberCoverBtn.setTitle(matchNum, forState: .Normal)
@@ -1115,10 +1157,16 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             //set the auto score to zero
             numAutoTotes = 0
             autoToteScoreLbl.text = "0"
+            autoToteAddBtn.enabled = false
+            autoToteAddBtn.alpha = 0.7
+            autoToteSubBtn.enabled = false
+            autoToteSubBtn.alpha = 0.7
             autoStackBtn.setBackgroundImage(UIImage(named: "ToteStack"), forState: .Normal)
         } else {
             autoStack = false
             autoStackBtn.setBackgroundImage(UIImage(named: "ToteStackOutline"), forState: .Normal)
+            autoToteAddBtn.enabled = true
+            autoToteAddBtn.alpha = 1.0
         }
     }
 
@@ -1239,8 +1287,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             landfillNoodleSubBtn.alpha = 0.7
         }
     }
-    
-    
+
+
 
     //adds the currentToteStack to the scored tote stacks
     @IBAction func toteStackAddBtnPress(sender: AnyObject) {
@@ -1317,14 +1365,18 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             for var i = 0; i < currentToteStack.totes.count; ++i{
                 if (currentToteStack.totes[i] == false){
                     toteBtns[i].alpha = 1.0
-                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
+                    if scoutPosition < 3 {
+                        toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
+                    } else {
+                        toteBtns[i].setBackgroundImage(UIImage(named: "ToteBlue"), forState: .Normal)
+                    }
                 }
                 else {
                     toteBtns[i].alpha = 1.0
                     toteBtns[i].setBackgroundImage(UIImage(named: "ToteGray"), forState: .Normal)
                 }
             }
-            
+
             if toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
                 toteStackUndoBtn.setTitle("Clear Stack", forState: .Normal)
                 toteStackUndoBtn.enabled = true
@@ -1360,7 +1412,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         var numTotes = currentToteStack.totes.count
         //shows bottom tote insert button and moves top tote insert button,
         //hides insert buttons if there's 6 totes
-        if (currentToteStack.totes.count<6){
+        if (currentToteStack.totes.count > 1 && currentToteStack.totes.count < 6){
             toteInsertBtn.frame.origin.y = toteInsertBtnLocations[numTotes]
             if(bottomToteStacking){
                 toteBtmInsertBtn.enabled = true
@@ -1373,8 +1425,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 toteInsertBtn.hidden = false
                 toteInsertBtn.enabled = true
             }
-        }
-        else {
+        } else if currentToteStack.totes.count == 1 {
+            toteInsertBtn.frame.origin.y = toteInsertBtnLocations[numTotes]
+            toteBtmInsertBtn.enabled = true
+            toteBtmInsertBtn.hidden = false
+            toteInsertBtn.enabled = true
+            toteInsertBtn.hidden = false
+        } else {
             toteInsertBtn.hidden = true
             toteInsertBtn.enabled = false
             toteBtmInsertBtn.enabled = false
@@ -1393,7 +1450,11 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             toteBtns[i].enabled = true
             if (currentToteStack.totes[i] == false){
                 toteBtns[i].alpha = 1.0
-                toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
+                if scoutPosition < 3 {
+                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteRed"), forState: .Normal)
+                } else {
+                    toteBtns[i].setBackgroundImage(UIImage(named: "ToteBlue"), forState: .Normal)
+                }
             }
             else {
                 toteBtns[i].alpha = 1.0
@@ -1423,6 +1484,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             }
         }
         toteStackAddBtn.enabled = true
+        toteStackAddBtn.alpha = 1.0
+        if toteStackUndoBtn.titleForState(.Normal) != "Clear Stack" {
+            toteStackUndoBtn.setTitle("Clear Stack", forState: .Normal)
+            toteStackUndoBtn.enabled = true
+            toteStackUndoBtn.alpha = 1.0
+        }
     }
 
     //adds to number of stacks knocked over
@@ -1433,7 +1500,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             toppleUndoBtn.alpha = 1.0
         }
     }
-    
+
     //subtracts from number of stacks knocked over
     @IBAction func toppleUndoBtnPress(sender: AnyObject) {
         if numStacksKnockedOver > 0 {
@@ -1444,9 +1511,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             toppleUndoBtn.alpha = 0.5
         }
     }
-    
-    
-    
+
+
+
     //adds the currentCoopStack to scored coop Stacks
     @IBAction func coopStackAddBtnPress(sender: AnyObject) {
         //determine if there is a new tote in the stack
@@ -1470,7 +1537,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             resetCoopStack()
         }
     }
-    
+
     //remove last scored coop stack
     @IBAction func coopStackUndoBtnPress(sender: AnyObject) {
         if coopTotesUndoBtn.titleForState(.Normal) == "Clear Stack" {
@@ -1495,7 +1562,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         }
 //        resetCoopStack()
     }
-    
+
     //a coop totes in the stack UI has been touched. That coop tote
     //and those below it will be marked as having been there before
     @IBAction func coopTouch(sender: UIButton) {
@@ -1528,7 +1595,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 coopToteBtmInsertBtn.hidden = true
                 coopToteBtmInsertBtn.enabled = false
             }
-            
+
             if coopTotesUndoBtn.titleForState(.Normal) != "Clear Stack" {
                 coopTotesUndoBtn.setTitle("Clear Stack", forState: .Normal)
                 coopTotesUndoBtn.enabled = true
@@ -1557,15 +1624,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
         if(fromBottom){
             currentCoopStack.totes.insert(true, atIndex: 0)
             bottomCoopStacking = true
-            println("Bottom")
         } else {
             currentCoopStack.totes.append(true)
-            println("Top")
         }
         //determines number of totes in the stack
         var numTotes = currentCoopStack.totes.count
 
-        if (numTotes<4){    //moves top tote insert button and shows bottom insert button
+        if (numTotes > 1 && numTotes < 4){    //moves top tote insert button and shows bottom insert button
             coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[numTotes]
             if(bottomCoopStacking){
                 coopToteBtmInsertBtn.hidden = false
@@ -1578,8 +1643,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
                 coopToteInsertBtn.hidden = false
                 coopToteInsertBtn.enabled = true
             }
-        }
-        else {      //if at the top of the stack, hide the insert buttons
+        } else if numTotes == 1 {
+            coopToteInsertBtn.frame.origin.y = coopInsertBtnLocations[numTotes]
+            coopToteBtmInsertBtn.hidden = false
+            coopToteBtmInsertBtn.enabled = true
+            coopToteInsertBtn.hidden = false
+            coopToteInsertBtn.enabled = true
+        } else {      //if at the top of the stack, hide the insert buttons
             coopToteInsertBtn.hidden = true
             coopToteInsertBtn.enabled = false
             coopToteBtmInsertBtn.hidden = true
@@ -1618,8 +1688,8 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             coopTotesUndoBtn.alpha = 1.0
         }
     }
-    
-    
+
+
 
     //adds to number of penalties in match
     @IBAction func penaltyAddBtnPress(sender: AnyObject) {
@@ -1629,7 +1699,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             penaltySubBtn.alpha = 1.0
         }
     }
-    
+
     //subtracts from number of penalties in match
     @IBAction func penaltySubBtnPress(sender: AnyObject) {
         if numPenalties > 0 {
@@ -1641,20 +1711,20 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             penaltySubBtn.alpha = 0.7
         }
     }
-    
-    
+
+
 
     //Hides keyboard for a return press on any UITextField whose delegate is this class
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     //Hides keyboard if the screen is tapped
     func screenTapped(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-    
+
     //Saves match data
     @IBAction func saveMatchButtonPress(sender: AnyObject) {
         if matchNumberCoverBtn.alpha == 1 {
@@ -1669,7 +1739,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
             return
         }
-        
+
         if teamNumberCoverBtn.alpha == 1 {
             teamNum = teamNumberCoverBtn.titleForState(UIControlState.Normal)!.toInt()
         } else {
@@ -1682,15 +1752,114 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
             return
         }
-        
-        
-        let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
 
+        self.showPostMatchNotes()
+    }
+    
+    func showPostMatchNotes() {
+        self.view.addSubview(grayOutView)
+        
+        postMatchNotesView = UIView(frame: CGRect(x: UIScreen.mainScreen().bounds.width/2 - 175, y: 400, width: 350, height: 230))
+        postMatchNotesView.backgroundColor = .whiteColor()
+        postMatchNotesView.layer.cornerRadius = 10
+        
+        let dismissNotesViewBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        dismissNotesViewBtn.frame = CGRect(x: postMatchNotesView.frame.width - 60, y: 3, width: 50, height: 25)
+        dismissNotesViewBtn.setTitle("Close X", forState: UIControlState.Normal)
+        dismissNotesViewBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
+        dismissNotesViewBtn.addTarget(self, action: Selector("dismissPostMatchNotes:"), forControlEvents: .TouchUpInside)
+        postMatchNotesView.addSubview(dismissNotesViewBtn)
+        
+        let postMatchNotesViewTitleLbl = UILabel(frame: CGRect(x: postMatchNotesView.frame.width/2 - 100, y: 15, width: 200, height: 25))
+        postMatchNotesViewTitleLbl.text = "Add Some Notes!"
+        postMatchNotesViewTitleLbl.font = UIFont.boldSystemFontOfSize(19)
+        postMatchNotesViewTitleLbl.textAlignment = .Center
+        postMatchNotesView.addSubview(postMatchNotesViewTitleLbl)
+        
+        postMatchNotesTextView = UITextView(frame: CGRect(x: 40, y: 60, width: 270, height: 100))
+        postMatchNotesTextView.textAlignment = .Center
+        postMatchNotesTextView.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).CGColor
+        postMatchNotesTextView.layer.borderWidth = 1
+        postMatchNotesTextView.layer.cornerRadius = 8
+        postMatchNotesTextView.font = UIFont.systemFontOfSize(14)
+        postMatchNotesTextView.text = "Add notes here"
+        postMatchNotesTextView.textColor = UIColor.lightGrayColor()
+        postMatchNotesTextView.delegate = self
+        postMatchNotesView.addSubview(postMatchNotesTextView)
+        if tempNotes != nil {
+            postMatchNotesTextView.text = tempNotes
+            postMatchNotesTextView.textColor = .blackColor()
+        }
+        
+        let saveMatchBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        saveMatchBtn.frame = CGRect(x: postMatchNotesView.frame.width/2 - 55, y: 185, width: 110, height: 30)
+        saveMatchBtn.backgroundColor = UIColor(red: 13.0/255, green: 165.0/255, blue: 255.0/255, alpha: 1.0)
+        saveMatchBtn.setTitle("Save Match", forState: UIControlState.Normal)
+        saveMatchBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        saveMatchBtn.titleLabel!.font = UIFont.boldSystemFontOfSize(16)
+        saveMatchBtn.addTarget(self, action: Selector("saveMatchToCoreData"), forControlEvents: .TouchUpInside)
+        saveMatchBtn.layer.cornerRadius = 5
+        saveMatchBtn.tag = 5
+        postMatchNotesView.addSubview(saveMatchBtn)
+        
+        postMatchNotesView.transform = CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.height - postMatchNotesView.frame.origin.y)
+        self.view.addSubview(postMatchNotesView)
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.postMatchNotesView.transform = CGAffineTransformIdentity
+        }) { (completed) -> Void in
+            self.postMatchNotesTextView.becomeFirstResponder()
+            return
+        }
+    }
+    
+    func dismissPostMatchNotes(andResetScoring: AnyObject?){
+        var resetScoring : Bool?
+        if let boolType : Bool = andResetScoring as? Bool{
+            resetScoring = boolType
+        }
+        
+        if postMatchNotesTextView.textColor == UIColor.blackColor() {
+            tempNotes = postMatchNotesTextView.text
+        } else {
+            tempNotes = nil
+        }
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.postMatchNotesView.transform = CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.height - self.postMatchNotesView.frame.origin.y)
+        }) { (completed) -> Void in
+            self.postMatchNotesView.removeFromSuperview()
+            self.grayOutView.removeFromSuperview()
+            if resetScoring == true {
+                self.resetScoringScreen(true)
+            }
+        }
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView == postMatchNotesTextView {
+            if postMatchNotesTextView.text == "Add notes here" && postMatchNotesTextView.textColor == UIColor.lightGrayColor() {
+                postMatchNotesTextView.text = ""
+                postMatchNotesTextView.textColor = UIColor.blackColor()
+            }
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView == postMatchNotesTextView {
+            if postMatchNotesTextView.text == "" {
+                postMatchNotesTextView.text = "Add notes here"
+                postMatchNotesTextView.textColor = UIColor.lightGrayColor()
+            }
+        }
+    }
+    
+    func saveMatchToCoreData() {
+        let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+        
         var regionalData = Regional.createRegional(regionalName, context: context)
         var masterTeam = MasterTeam.createMasterTeam(teamNum, context: context)
         var teamData = Team.createTeam(teamNum, regional: regionalData, masterTeam: masterTeam, context: context)
-        let ent = NSEntityDescription.entityForName("Match", inManagedObjectContext: context)
-
+        
         var toteStackData = [ToteStack]()
         var coopStackData = [CoopStack]()
         for stack in toteStacks {
@@ -1714,32 +1883,94 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             if(numTotes >= 4) {newCoopStack.tote4 = (stack.totes[3]) ? 2:1} else {newCoopStack.tote4 = 0}
             coopStackData.append(newCoopStack)
         }
-        var newMatch = Match(entity: ent!, insertIntoManagedObjectContext: context) as Match
         var matchUniqueID =  Int(NSDate().timeIntervalSince1970)
-        var matchDict = ["autoContainers": numAutoContainers,
-                        "autoTotes": numAutoTotes,
-                        "numCoopStacks": numCoopStacks,
-                        "numStacks": numStacks,
-                        "noodlesInContainer": numNoodlesInContainer,
-                        "penalty": numPenalties,
-                        "stacksKnockedOver": numStacksKnockedOver,
-                        "noodlesInLandFill": numNoodlesPushedInLandfill,
-                        "autoDrive": autoDrive,
-                        "autoStack": autoStack,
-                        "toteStacks": NSSet(array: toteStackData),
-                        "coopStacks":NSSet(array: coopStackData),
-                        "uniqueID": matchUniqueID,
-                        "matchNum": matchNum,
-                        "scoutInitials": scoutInitials,
-                        "scoutPosition": scoutPosition]
+        var matchDict = [
+            "autoContainers": numAutoContainers,
+            "autoTotes": numAutoTotes,
+            "numCoopStacks": numCoopStacks,
+            "numStacks": numStacks,
+            "noodlesInContainer": numNoodlesInContainer,
+            "penalty": numPenalties,
+            "stacksKnockedOver": numStacksKnockedOver,
+            "noodlesInLandFill": numNoodlesPushedInLandfill,
+            "autoDrive": autoDrive,
+            "autoStack": autoStack,
+            "toteStacks": NSSet(array: toteStackData),
+            "coopStacks": NSSet(array: coopStackData),
+            "uniqueID": matchUniqueID,
+            "matchNum": matchNum,
+            "scoutInitials": scoutInitials,
+            "scoutPosition": scoutPosition,
+            "notes": tempNotes ?? ""]
         
         var match = Match.createMatch(matchDict, team: teamData, context: context)
-
+        
         teamData = dataCalc.calculateAverages(teamData)
+        
+        
+        if session.connectedPeers.count > 0 {
+            var sendToteStacks = Array<Array<Int>>()
+            for var i = 0; i < toteStacks.count; ++i {
+                let stack = toteStacks[i]
+                let numTotes = stack.totes.count
+                var toteStack = [Int](count: 7, repeatedValue: 0)
+                if(numTotes >= 1) {toteStack[0] = (stack.totes[0]) ? 2:1} else {toteStack[0] = 0}
+                if(numTotes >= 2) {toteStack[1] = (stack.totes[1]) ? 2:1} else {toteStack[1] = 0}
+                if(numTotes >= 3) {toteStack[2] = (stack.totes[2]) ? 2:1} else {toteStack[2] = 0}
+                if(numTotes >= 4) {toteStack[3] = (stack.totes[3]) ? 2:1} else {toteStack[3] = 0}
+                if(numTotes >= 5) {toteStack[4] = (stack.totes[4]) ? 2:1} else {toteStack[4] = 0}
+                if(numTotes >= 6) {toteStack[5] = (stack.totes[5]) ? 2:1} else {toteStack[5] = 0}
+                toteStack[6] = stack.containerLvl
+                sendToteStacks.append(toteStack)
+            }
+            
+            var sendCoopStacks = Array<Array<Int>>()
+            for var i = 0; i < coopStacks.count; ++i {
+                let stack = coopStacks[i]
+                let numTotes = stack.totes.count
+                var coopStack = [Int](count: 4, repeatedValue: 0)
+                if(numTotes >= 1) {coopStack[0] = (stack.totes[0]) ? 2:1} else {coopStack[0] = 0}
+                if(numTotes >= 2) {coopStack[1] = (stack.totes[1]) ? 2:1} else {coopStack[1] = 0}
+                if(numTotes >= 3) {coopStack[2] = (stack.totes[2]) ? 2:1} else {coopStack[2] = 0}
+                if(numTotes >= 4) {coopStack[3] = (stack.totes[3]) ? 2:1} else {coopStack[3] = 0}
+                sendCoopStacks.append(coopStack)
+            }
+            
+            var sendMatchDict = [
+                "autoContainers": numAutoContainers,
+                "autoTotes": numAutoTotes,
+                "numCoopStacks": numCoopStacks,
+                "numStacks": numStacks,
+                "noodlesInContainer": numNoodlesInContainer,
+                "penalty": numPenalties,
+                "stacksKnockedOver": numStacksKnockedOver,
+                "noodlesInLandFill": numNoodlesPushedInLandfill,
+                "autoDrive": autoDrive,
+                "autoStack": autoStack,
+                "toteStacks": sendToteStacks,
+                "coopStacks": sendCoopStacks,
+                "uniqueID": matchUniqueID,
+                "matchNum": matchNum,
+                "scoutInitials": scoutInitials,
+                "scoutPosition": scoutPosition,
+                "notes": tempNotes ?? ""]
+            
+            var instaShareDict = [
+                "regionalName": regionalName,
+                "masterTeamNum": teamNum,
+                "matchDict" : sendMatchDict
+            ]
+            
+            var instaShareData = NSKeyedArchiver.archivedDataWithRootObject(instaShareDict)
+            
+            var sendErr : NSError?
+            session.sendData(instaShareData, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &sendErr)
+        }
         
         var saveErr : NSError?
         if !context.save(&saveErr) {
             println(saveErr!.localizedDescription)
+            return
         } else {
             var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
@@ -1747,8 +1978,292 @@ class Scoring: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UI
             self.presentViewController(alertController, animated: true, completion: nil)
         }
         
-        resetScoringScreen(true)
+        dismissPostMatchNotes(true)
     }
     
 
+    // ********************************************** //
+    // *********** Multipeer Connectivity *********** //
+    // ********************************************** //
+
+    let serviceType = "FRCScout"
+
+    var browser : MCBrowserViewController!
+    var assistant : MCAdvertiserAssistant!
+    var session : MCSession!
+    var peerID : MCPeerID!
+
+    var instaShareControlView : UIView!
+    var inviteToPartyBtn : UIButton!
+    var visibilitySwitch : UISwitch!
+
+    var isBrowsing = false
+    var isVisible = true
+    
+    @IBOutlet weak var red1ConnectedLbl: UILabel!
+    @IBOutlet weak var red2ConnectedLbl: UILabel!
+    @IBOutlet weak var red3ConnectedLbl: UILabel!
+    @IBOutlet weak var blue1ConnectedLbl: UILabel!
+    @IBOutlet weak var blue2ConnectedLbl: UILabel!
+    @IBOutlet weak var blue3ConnectedLbl: UILabel!
+    
+    
+    func setUpConnectionUI() {
+        red1ConnectedLbl.clipsToBounds = true
+        red1ConnectedLbl.layer.cornerRadius = 5
+        red2ConnectedLbl.clipsToBounds = true
+        red2ConnectedLbl.layer.cornerRadius = 5
+        red3ConnectedLbl.clipsToBounds = true
+        red3ConnectedLbl.layer.cornerRadius = 5
+        blue1ConnectedLbl.clipsToBounds = true
+        blue1ConnectedLbl.layer.cornerRadius = 5
+        blue2ConnectedLbl.clipsToBounds = true
+        blue2ConnectedLbl.layer.cornerRadius = 5
+        blue3ConnectedLbl.clipsToBounds = true
+        blue3ConnectedLbl.layer.cornerRadius = 5
+    }
+    func setUpMultipeer() {
+
+        peerID = MCPeerID(displayName: "\(scoutPosLbl.text!) - \(scoutTeamNum)")
+        session = MCSession(peer: peerID)
+        session.delegate = self
+
+        browser = MCBrowserViewController(serviceType: serviceType, session: session)
+        browser.delegate = self
+        
+        if red1ConnectedLbl.text == "You" {
+            red1ConnectedLbl.text = "Red 1"
+            red1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        }
+        if red2ConnectedLbl.text == "You" {
+            red2ConnectedLbl.text = "Red 2"
+            red2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        }
+        if red3ConnectedLbl.text == "You" {
+            red3ConnectedLbl.text = "Red 3"
+            red3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        }
+        if blue1ConnectedLbl.text == "You" {
+            blue1ConnectedLbl.text = "Blue 1"
+            blue1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        }
+        if blue2ConnectedLbl.text == "You" {
+            blue2ConnectedLbl.text = "Blue 2"
+            blue2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        }
+        if blue3ConnectedLbl.text == "You" {
+            blue3ConnectedLbl.text = "Blue 3"
+            blue3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        }
+        
+        switch scoutPosition {
+            case 0:
+                red1ConnectedLbl.text = "You"
+                red1ConnectedLbl.backgroundColor = .redColor()
+            
+            case 1:
+                red2ConnectedLbl.text = "You"
+                red2ConnectedLbl.backgroundColor = .redColor()
+                
+            case 2:
+                red3ConnectedLbl.text = "You"
+                red3ConnectedLbl.backgroundColor = .redColor()
+                
+            case 3:
+                blue1ConnectedLbl.text = "You"
+                blue1ConnectedLbl.backgroundColor = .blueColor()
+                
+            case 4:
+                blue2ConnectedLbl.text = "You"
+                blue2ConnectedLbl.backgroundColor = .blueColor()
+                
+            case 5:
+                blue3ConnectedLbl.text = "You"
+                blue3ConnectedLbl.backgroundColor = .blueColor()
+                
+            default:
+                break
+        }
+        
+    }
+
+    @IBAction func instaShareBtnPressed(sender: AnyObject) {
+        self.view.addSubview(grayOutView)
+
+        instaShareControlView = UIView(frame: CGRect(x: (UIScreen.mainScreen().bounds.width - 400)/2, y: 375, width: 400, height: 150))
+        instaShareControlView.backgroundColor = .whiteColor()
+        instaShareControlView.layer.cornerRadius = 10
+        self.view.addSubview(instaShareControlView)
+
+        let instaShareCloseBtn = UIButton.buttonWithType(.System) as UIButton
+        instaShareCloseBtn.frame = CGRect(x: 336, y: 5, width: 60, height: 20)
+        instaShareCloseBtn.setTitle("Close X", forState: .Normal)
+        instaShareCloseBtn.titleLabel!.font = UIFont.systemFontOfSize(13)
+        instaShareCloseBtn.addTarget(self, action: Selector("instaShareCloseBtnPressed:"), forControlEvents: UIControlEvents.TouchUpInside)
+        instaShareControlView.addSubview(instaShareCloseBtn)
+
+        let instaShareTitleLbl = UILabel(frame: CGRect(x: instaShareControlView.frame.width/2 - 150, y: 20, width: 300, height: 20))
+        instaShareTitleLbl.text = "Insta-Share Control Panel"
+        instaShareTitleLbl.textAlignment = .Center
+        instaShareTitleLbl.font = UIFont.boldSystemFontOfSize(19)
+        instaShareTitleLbl.textColor = UIColor(red: 13.0/255, green: 165.0/255, blue: 255.0/255, alpha: 1.0)
+        instaShareControlView.addSubview(instaShareTitleLbl)
+        
+        inviteToPartyBtn = UIButton.buttonWithType(.System) as UIButton
+        inviteToPartyBtn.frame = CGRect(x: 45, y: 75, width: 115, height: 31)
+        inviteToPartyBtn.setTitle("Invite to Party", forState: .Normal)
+        inviteToPartyBtn.backgroundColor = UIColor(red: 13.0/255, green: 165.0/255, blue: 255.0/255, alpha: 1.0)
+        inviteToPartyBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        inviteToPartyBtn.layer.cornerRadius = 5
+        inviteToPartyBtn.titleLabel!.font = UIFont.boldSystemFontOfSize(16)
+        inviteToPartyBtn.addTarget(self, action: Selector("inviteToPartyBtnPressed:"), forControlEvents: .TouchUpInside)
+        instaShareControlView.addSubview(inviteToPartyBtn)
+
+        visibilitySwitch = UISwitch(frame: CGRect(x: 269, y: inviteToPartyBtn.frame.origin.y, width: 0, height: 0))
+        visibilitySwitch.setOn(false, animated: false)
+        visibilitySwitch.addTarget(self, action: Selector("visibilitySwitchChanged:"), forControlEvents: .ValueChanged)
+        instaShareControlView.addSubview(visibilitySwitch)
+        let visibilitySwitchLbl = UILabel(frame: CGRect(x: visibilitySwitch.frame.origin.x - 5, y: visibilitySwitch.frame.origin.y - 17, width: visibilitySwitch.frame.width + 10, height: 15))
+        visibilitySwitchLbl.text = "Visibility"
+        visibilitySwitchLbl.textAlignment = .Center
+        visibilitySwitchLbl.font = UIFont.systemFontOfSize(14)
+        visibilitySwitchLbl.textColor = UIColor(white: 0.2, alpha: 1.0)
+        instaShareControlView.addSubview(visibilitySwitchLbl)
+
+
+        instaShareControlView.transform = CGAffineTransformMakeTranslation(0, -(instaShareControlView.frame.origin.y + instaShareControlView.frame.height))
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.instaShareControlView.transform = CGAffineTransformIdentity
+        }) { (completed) -> Void in
+            self.visibilitySwitch.setOn(self.isVisible, animated: true)
+            self.visibilitySwitchChanged(self.visibilitySwitch)
+            self.inviteToPartyBtn.enabled = self.isVisible
+        }
+    }
+    
+    
+    
+    func instaShareCloseBtnPressed(sender: UIButton) {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.instaShareControlView.transform = CGAffineTransformMakeTranslation(0, -(self.instaShareControlView.frame.origin.y + self.instaShareControlView.frame.height))
+        }) { (completed) -> Void in
+            self.instaShareControlView.removeFromSuperview()
+            self.grayOutView.removeFromSuperview()
+        }
+    }
+    
+    func inviteToPartyBtnPressed(sender: UIButton) {
+        self.presentViewController(browser, animated: true, completion: nil)
+        isBrowsing = true
+    }
+
+    func visibilitySwitchChanged(sender: UISwitch) {
+        isVisible = sender.on
+        inviteToPartyBtn.enabled = sender.on
+        if sender.on {
+            if assistant == nil {
+                assistant = MCAdvertiserAssistant(serviceType: serviceType, discoveryInfo: nil, session: session)
+                assistant.start()
+            }
+            inviteToPartyBtn.alpha = 1.0
+        } else {
+            if assistant != nil {
+                session.disconnect()
+                assistant.stop()
+                assistant = nil
+            }
+            inviteToPartyBtn.alpha = 0.5
+        }
+    }
+
+    func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        isBrowsing = false
+    }
+
+    func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        isBrowsing = false
+    }
+
+    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            println("SUCCESS!! RECEIVED \(data.length) BITS OF DATA!!!")
+            let receivedMatchDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as [String: AnyObject]
+            println(receivedMatchDict)
+        })
+    }
+
+    func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
+        switch state {
+        case .Connected:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if peerID.displayName.rangeOfString(self.scoutPosLbl.text!) != nil {
+                    if self.isBrowsing {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    let duplicateAlertController = UIAlertController(title: "Uh oh!", message: "You just connected to another \(self.scoutPosLbl.text!)! \nOne of you needs to disconnect from the party.", preferredStyle: .Alert)
+                    let leaveAction = UIAlertAction(title: "I'll Leave", style: .Default, handler: { (action) -> Void in
+                        self.visibilitySwitch.setOn(false, animated: true)
+                        self.visibilitySwitchChanged(self.visibilitySwitch)
+                    })
+                    duplicateAlertController.addAction(leaveAction)
+                    let stayAction = UIAlertAction(title: "I'm Staying", style: .Cancel, handler: nil)
+                    duplicateAlertController.addAction(stayAction)
+                    self.presentViewController(duplicateAlertController, animated: true, completion: nil)
+                    return
+                }
+                if !self.isBrowsing {
+                    let connectedAlertController = UIAlertController(title: "Connected!", message: "You've connected to \(peerID.displayName)!", preferredStyle: .Alert)
+                    let confirmAction = UIAlertAction(title: "Cool", style: .Cancel, handler: nil)
+                    connectedAlertController.addAction(confirmAction)
+                    self.presentViewController(connectedAlertController, animated: true, completion: nil)
+                }
+                if peerID.displayName.rangeOfString("Red 1") != nil { self.red1ConnectedLbl.backgroundColor = .redColor() }
+                else if peerID.displayName.rangeOfString("Red 2") != nil { self.red2ConnectedLbl.backgroundColor = .redColor() }
+                else if peerID.displayName.rangeOfString("Red 3") != nil { self.red3ConnectedLbl.backgroundColor = .redColor() }
+                else if peerID.displayName.rangeOfString("Blue 1") != nil { self.blue1ConnectedLbl.backgroundColor = .blueColor() }
+                else if peerID.displayName.rangeOfString("Blue 2") != nil { self.blue2ConnectedLbl.backgroundColor = .blueColor() }
+                else if peerID.displayName.rangeOfString("Blue 3") != nil { self.blue3ConnectedLbl.backgroundColor = .blueColor() }
+            })
+
+        case .NotConnected:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if !self.isBrowsing {
+                    let notConnectedAlertController = UIAlertController(title: "Disconnected!", message: "You've disconnected from \(peerID.displayName)!", preferredStyle: .Alert)
+                    let confirmAction = UIAlertAction(title: "Aww man! Ok...", style: .Cancel, handler: nil)
+                    notConnectedAlertController.addAction(confirmAction)
+                    self.presentViewController(notConnectedAlertController, animated: true, completion: nil)
+                }
+                if peerID.displayName.rangeOfString(self.scoutPosLbl.text!) == nil {
+                    if peerID.displayName.rangeOfString("Red 1") != nil { self.red1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Red 2") != nil { self.red2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Red 3") != nil { self.red3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Blue 1") != nil { self.blue1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Blue 2") != nil { self.blue2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    else if peerID.displayName.rangeOfString("Blue 3") != nil { self.blue3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                }
+            })
+
+        default:
+            return
+        }
+    }
+
+
+
+
+    func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
+        // Dumb required function
+    }
+    func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
+        // Another dumb required function
+    }
+    func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
+        // Third and final dumb required function
+    }
+
+
 }
+
+
