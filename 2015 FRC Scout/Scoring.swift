@@ -30,6 +30,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
 
     //UI header Items
     @IBOutlet weak var instaShareBtn: UIButton!
+    @IBOutlet weak var changeScoutInfoBtn: UIButton!
     @IBOutlet weak var scoutPosLbl: UILabel!
     @IBOutlet weak var matchNumHeaderLbl: UILabel!
     @IBOutlet weak var matchNumberCoverBtn: UIButton!
@@ -174,6 +175,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         instaShareBtn.layer.cornerRadius = 5
         instaShareBtn.enabled = false
         instaShareBtn.alpha = 0
+        changeScoutInfoBtn.layer.cornerRadius = 5
+        changeScoutInfoBtn.enabled = false
+        changeScoutInfoBtn.alpha = 0
         scoutPosLbl.layer.cornerRadius = 5
         scoutPosLbl.clipsToBounds = true
         scoutPosLbl.alpha = 0
@@ -276,6 +280,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         if !contains(scoutPositionBtns, red1Button){
             scoutPositionBtns.insert(red1Button, atIndex: 0)
         }
+        if scoutPosition != nil && scoutPosition == 0 {
+            red1Button.backgroundColor = UIColor.redColor()
+            red1Button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        }
 
         let red2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         red2Button.frame = CGRect(x: red1Button.frame.origin.x + red1Button.frame.width + signInLayoutXDiff, y: red1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -289,6 +297,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         signInView.addSubview(red2Button)
         if !contains(scoutPositionBtns, red2Button){
             scoutPositionBtns.insert(red2Button, atIndex: 1)
+        }
+        if scoutPosition != nil && scoutPosition == 1 {
+            red2Button.backgroundColor = UIColor.redColor()
+            red2Button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         }
 
         let red3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -304,6 +316,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         if !contains(scoutPositionBtns, red3Button){
             scoutPositionBtns.insert(red3Button, atIndex: 2)
         }
+        if scoutPosition != nil && scoutPosition == 2 {
+            red3Button.backgroundColor = UIColor.redColor()
+            red3Button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        }
 
         let blue1Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         blue1Button.frame = CGRect(x: red1Button.frame.origin.x, y: red1Button.frame.origin.y + red1Button.frame.height + signInLayoutYDiff, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -317,6 +333,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         signInView.addSubview(blue1Button)
         if !contains(scoutPositionBtns, blue1Button){
             scoutPositionBtns.insert(blue1Button, atIndex: 3)
+        }
+        if scoutPosition != nil && scoutPosition == 3 {
+            blue1Button.backgroundColor = UIColor.blueColor()
+            blue1Button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         }
 
         let blue2Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -332,6 +352,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         if !contains(scoutPositionBtns, blue2Button){
             scoutPositionBtns.insert(blue2Button, atIndex: 4)
         }
+        if scoutPosition != nil && scoutPosition == 4 {
+            blue2Button.backgroundColor = UIColor.blueColor()
+            blue2Button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        }
 
         let blue3Button = UIButton.buttonWithType(UIButtonType.System) as UIButton
         blue3Button.frame = CGRect(x: blue2Button.frame.origin.x + blue2Button.frame.width + signInLayoutXDiff, y: blue1Button.frame.origin.y, width: signInLayoutWidth, height: signInLayoutHeight)
@@ -346,6 +370,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         if !contains(scoutPositionBtns, blue3Button){
             scoutPositionBtns.insert(blue3Button, atIndex: 5)
         }
+        if scoutPosition != nil && scoutPosition == 5 {
+            blue3Button.backgroundColor = UIColor.blueColor()
+            blue3Button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        }
 
         initialsTF = UITextField(frame: CGRect(x: 80, y: blue1Button.frame.origin.y + blue1Button.frame.height + 50, width: signInLayoutWidth + 10, height: 35))
         initialsTF.font = UIFont.systemFontOfSize(15)
@@ -357,6 +385,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         initialsTF.returnKeyType = .Next
         initialsTF.addTarget(self, action: Selector("initialsTFReturnPressed:"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
         signInView.addSubview(initialsTF)
+        if scoutInitials != nil { initialsTF.text = scoutInitials }
         let initialsLbl = UILabel(frame: CGRect(x: initialsTF.frame.origin.x, y: initialsTF.frame.origin.y - 16, width: initialsTF.frame.width, height: 15))
         initialsLbl.font = UIFont.systemFontOfSize(14)
         initialsLbl.text = "YOUR 3 Initials"
@@ -373,13 +402,14 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         teamNumTF.returnKeyType = .Next
         teamNumTF.addTarget(self, action: Selector("teamNumTFReturnPressed:"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
         signInView.addSubview(teamNumTF)
+        if scoutTeamNum != nil { teamNumTF.text = "\(scoutTeamNum)" }
         let teamNumLbl = UILabel(frame: CGRect(x: teamNumTF.frame.origin.x, y: teamNumTF.frame.origin.y - 16, width: teamNumTF.frame.width, height: 15))
         teamNumLbl.font = UIFont.systemFontOfSize(14)
         teamNumLbl.text = "YOUR Team #"
         teamNumLbl.textAlignment = .Center
         teamNumLbl.adjustsFontSizeToFitWidth = true
         signInView.addSubview(teamNumLbl)
-
+        
         matchNumTF = UITextField(frame: CGRect(x: teamNumTF.frame.origin.x + teamNumTF.frame.width + signInLayoutXDiff - 10, y: initialsTF.frame.origin.y, width: signInLayoutWidth + 10, height: 35))
         matchNumTF.font = UIFont.systemFontOfSize(15)
         matchNumTF.textAlignment = .Center
@@ -389,6 +419,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         matchNumTF.returnKeyType = .Done
         matchNumTF.addTarget(self, action: Selector("matchNumTFReturnPressed:"), forControlEvents: UIControlEvents.EditingDidEndOnExit)
         signInView.addSubview(matchNumTF)
+        if matchNum != nil { matchNumTF.text = matchNum }
         let matchNumLbl = UILabel(frame: CGRect(x: matchNumTF.frame.origin.x, y: matchNumTF.frame.origin.y - 16, width: matchNumTF.frame.width, height: 15))
         matchNumLbl.font = UIFont.systemFontOfSize(14)
         matchNumLbl.text = "Current Match #"
@@ -451,6 +482,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.signInView.transform = CGAffineTransformIdentity
         })
+    }
+    
+    @IBAction func changeScoutInfoBtnPressed(sender: AnyObject) {
+        showSignInView()
     }
 
     //All scouting position buttons point to this function and it takes care of changing scout position
@@ -551,46 +586,58 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             alertController.addAction(confirmAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            scoutInitials = initialsTF.text
-            scoutTeamNum = teamNumTF.text.toInt()!
-            matchNum = matchNumTF.text
-            matchNumberCoverBtn.setTitle(matchNumTF.text, forState: .Normal)
-            
-            regionalName = allWeekRegionals[weekSelected][regionalPicker.selectedRowInComponent(0)]
-            NSUserDefaults.standardUserDefaults().setObject(regionalName, forKey: REGIONALSELECTEDKEY)
-            switch scoutPosition {
-            case 0:
-                scoutPosLbl.backgroundColor = .redColor()
-                scoutPosLbl.text = "Red 1"
-            case 1:
-                scoutPosLbl.backgroundColor = .redColor()
-                scoutPosLbl.text = "Red 2"
-            case 2:
-                scoutPosLbl.backgroundColor = .redColor()
-                scoutPosLbl.text = "Red 3"
-            case 3:
-                scoutPosLbl.backgroundColor = .blueColor()
-                scoutPosLbl.text = "Blue 1"
-            case 4:
-                scoutPosLbl.backgroundColor = .blueColor()
-                scoutPosLbl.text = "Blue 2"
-            case 5:
-                scoutPosLbl.backgroundColor = .blueColor()
-                scoutPosLbl.text = "Blue 3"
-            default:
-                scoutPosLbl.backgroundColor = .redColor()
-                scoutPosLbl.text = "Red 1"
+            if self.peerID != nil && self.peerID.displayName.rangeOfString(scoutPositions[scoutPosition]) == nil && self.assistant != nil {
+                let connectedConflictAlert = UIAlertController(title: "Hey, whatch out!", message: "By changing your scouting position, you will disconnect from your scouting party!", preferredStyle: .Alert)
+                let doItAction = UIAlertAction(title: "I want this", style: .Default, handler: { (doitAction) -> Void in
+                    self.mcSession.disconnect()
+                    self.assistant.stop()
+                    self.assistant = nil
+                    self.isVisible = false
+                    self.inviteToPartyBtn.enabled = false
+                    self.inviteToPartyBtn.alpha = 0.5
+                    if self.scoutPosition != 0 { self.red1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    if self.scoutPosition != 1 { self.red2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    if self.scoutPosition != 2 { self.red3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    if self.scoutPosition != 3 { self.blue1ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    if self.scoutPosition != 4 { self.blue2ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    if self.scoutPosition != 5 { self.blue3ConnectedLbl.backgroundColor = UIColor(white: 0.8, alpha: 1.0) }
+                    self.closeAndSaveSignInView()
+                })
+                connectedConflictAlert.addAction(doItAction)
+                let ratherNotAction = UIAlertAction(title: "I'd rather not", style: .Cancel, handler: nil)
+                connectedConflictAlert.addAction(ratherNotAction)
+                self.presentViewController(connectedConflictAlert, animated: true, completion: nil)
+            } else {
+                self.closeAndSaveSignInView()
             }
-
-            self.setUpMultipeer()
-
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.signInView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+            
+        }
+    }
+    func closeAndSaveSignInView() {
+        scoutInitials = initialsTF.text
+        scoutTeamNum = teamNumTF.text.toInt()!
+        matchNum = matchNumTF.text
+        matchNumberCoverBtn.setTitle(matchNumTF.text, forState: .Normal)
+        
+        regionalName = allWeekRegionals[weekSelected][regionalPicker.selectedRowInComponent(0)]
+        NSUserDefaults.standardUserDefaults().setObject(regionalName, forKey: REGIONALSELECTEDKEY)
+        scoutPosLbl.text = scoutPositions[scoutPosition]
+        if scoutPosition < 3 {
+            scoutPosLbl.backgroundColor = .redColor()
+        } else {
+            scoutPosLbl.backgroundColor = .blueColor()
+        }
+        
+        self.setUpMultipeer()
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.signInView.transform = CGAffineTransformMakeScale(0.01, 0.01)
             }, completion: { (completed) -> Void in
                 self.signInView.removeFromSuperview()
                 self.grayOutView.removeFromSuperview()
-
+                
                 self.instaShareBtn.enabled = true
+                self.changeScoutInfoBtn.enabled = true
                 
                 // FIX FOR TEAM NUMBER //
                 self.teamNumberCoverBtn.enabled = false
@@ -601,6 +648,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
                 self.matchNumberTF.enabled = false
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.instaShareBtn.alpha = 1.0
+                    self.changeScoutInfoBtn.alpha = 1.0
                     self.scoutPosLbl.alpha = 1.0
                     self.teamNumHeaderLbl.alpha = 1.0
                     
@@ -614,8 +662,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
                     self.matchNumberCoverBtn.alpha = 1.0
                     self.matchNumTapToEditLbl.alpha = 1.0
                 })
-            })
-        }
+        })
     }
 
     @IBAction func matchNumCoverBtnPressed(sender: UIButton) {
@@ -981,6 +1028,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         landfillNoodleScoreLbl.text = "0"
         coopTotesScoreLbl.text = "0"
         toteStackScoreLbl.text = "0"
+        toppleLbl.text = "0"
         penaltyValLbl.text = "0"
 
         showAuto()
@@ -1909,7 +1957,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         teamData = dataCalc.calculateAverages(teamData)
         
         
-        if session.connectedPeers.count > 0 {
+        if mcSession.connectedPeers.count > 0 {
             var sendToteStacks = Array<Array<Int>>()
             for var i = 0; i < toteStacks.count; ++i {
                 let stack = toteStacks[i]
@@ -1965,7 +2013,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             var instaShareData = NSKeyedArchiver.archivedDataWithRootObject(instaShareDict)
             
             var sendErr : NSError?
-            session.sendData(instaShareData, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &sendErr)
+            mcSession.sendData(instaShareData, toPeers: mcSession.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &sendErr)
         }
         
         var saveErr : NSError?
@@ -1990,7 +2038,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
 
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
-    var session : MCSession!
+    var mcSession : MCSession!
     var peerID : MCPeerID!
 
     var instaShareControlView : UIView!
@@ -2025,10 +2073,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
     func setUpMultipeer() {
 
         peerID = MCPeerID(displayName: "\(scoutPosLbl.text!) - \(scoutTeamNum)")
-        session = MCSession(peer: peerID)
-        session.delegate = self
+        mcSession = MCSession(peer: peerID)
+        mcSession.delegate = self
 
-        browser = MCBrowserViewController(serviceType: serviceType, session: session)
+        browser = MCBrowserViewController(serviceType: serviceType, session: mcSession)
         browser.delegate = self
         
         if red1ConnectedLbl.text == "You" {
@@ -2162,13 +2210,13 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         inviteToPartyBtn.enabled = sender.on
         if sender.on {
             if assistant == nil {
-                assistant = MCAdvertiserAssistant(serviceType: serviceType, discoveryInfo: nil, session: session)
+                assistant = MCAdvertiserAssistant(serviceType: serviceType, discoveryInfo: nil, session: mcSession)
                 assistant.start()
             }
             inviteToPartyBtn.alpha = 1.0
         } else {
             if assistant != nil {
-                session.disconnect()
+                mcSession.disconnect()
                 assistant.stop()
                 assistant = nil
             }
@@ -2225,23 +2273,23 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             }
             
             var matchDict = [
-                "autoContainers": receivedMatchDict["autoContainers"] as Int,
-                "autoTotes": receivedMatchDict["autoTotes"] as Int,
-                "numCoopStacks": receivedMatchDict["numCoopStacks"] as Int,
-                "numStacks": receivedMatchDict["numStacks"] as Int,
-                "noodlesInContainer": receivedMatchDict["noodlesInContainer"] as Int,
-                "penalty": receivedMatchDict["penalty"] as Int,
-                "stacksKnockedOver": receivedMatchDict["stacksKnockedOver"] as Int,
-                "noodlesInLandFill": receivedMatchDict["noodlesInLandFill"] as Int,
-                "autoDrive": receivedMatchDict["autoDrive"] as Int,
-                "autoStack": receivedMatchDict["autoStack"] as Bool,
+                "autoContainers": matchDataDict["autoContainers"] as Int,
+                "autoTotes": matchDataDict["autoTotes"] as Int,
+                "numCoopStacks": matchDataDict["numCoopStacks"] as Int,
+                "numStacks": matchDataDict["numStacks"] as Int,
+                "noodlesInContainer": matchDataDict["noodlesInContainer"] as Int,
+                "penalty": matchDataDict["penalty"] as Int,
+                "stacksKnockedOver": matchDataDict["stacksKnockedOver"] as Int,
+                "noodlesInLandFill": matchDataDict["noodlesInLandFill"] as Int,
+                "autoDrive": matchDataDict["autoDrive"] as Int,
+                "autoStack": matchDataDict["autoStack"] as Bool,
                 "toteStacks": NSSet(array: toteStackData),
                 "coopStacks": NSSet(array: coopStackData),
-                "uniqueID": receivedMatchDict["uniqueID"] as Int,
-                "matchNum": receivedMatchDict["matchNum"] as String,
-                "scoutInitials": receivedMatchDict["scoutInitials"] as String,
-                "scoutPosition": receivedMatchDict["scoutPosition"] as Int,
-                "notes": receivedMatchDict["notes"] as String]
+                "uniqueID": matchDataDict["uniqueID"] as Int,
+                "matchNum": matchDataDict["matchNum"] as String,
+                "scoutInitials": matchDataDict["scoutInitials"] as String,
+                "scoutPosition": matchDataDict["scoutPosition"] as Int,
+                "notes": matchDataDict["notes"] as String]
             
             var match = Match.createMatch(matchDict, team: teamData, context: context)
             
@@ -2297,6 +2345,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
 
         case .NotConnected:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                println("Disconnected")
                 if !self.isBrowsing {
                     let notConnectedAlertController = UIAlertController(title: "Disconnected!", message: "You've disconnected from \(peerID.displayName)!", preferredStyle: .Alert)
                     let confirmAction = UIAlertAction(title: "Aww man! Ok...", style: .Cancel, handler: nil)
@@ -2317,10 +2366,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             return
         }
     }
+    
 
-
-
-
+    // Dumb required functions
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
         // Dumb required function
     }

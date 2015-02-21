@@ -12,14 +12,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FVo-fo-8hd" userLabel="ScoutPositionLbl">
-                                <rect key="frame" x="311" y="41" width="146" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Match Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jvp-ln-Te4" userLabel="MatchNumberLbl">
                                 <rect key="frame" x="220" y="101" width="115" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -628,7 +620,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0q6-cR-2o8">
-                                <rect key="frame" x="27" y="50" width="110" height="30"/>
+                                <rect key="frame" x="30" y="50" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.050009785524549155" green="0.6459425339699103" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Insta-Share!">
@@ -637,6 +629,18 @@
                                 </state>
                                 <connections>
                                     <action selector="instaShareBtnPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="V5k-xz-NHZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iNV-jB-a2D">
+                                <rect key="frame" x="596" y="50" width="143" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.050009785520000002" green="0.64594253400000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Change Scout Info">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeScoutInfoBtnPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Noi-1n-G7k"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="3bP-y2-7zz">
@@ -687,6 +691,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FVo-fo-8hd" userLabel="ScoutPositionLbl">
+                                <rect key="frame" x="311" y="41" width="146" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -707,6 +719,7 @@
                         <outlet property="blue1ConnectedLbl" destination="FX6-Zv-fXT" id="bxB-AG-niT"/>
                         <outlet property="blue2ConnectedLbl" destination="OVR-bb-QHP" id="IGJ-St-3na"/>
                         <outlet property="blue3ConnectedLbl" destination="PYT-7D-G0D" id="R5K-V0-0ug"/>
+                        <outlet property="changeScoutInfoBtn" destination="iNV-jB-a2D" id="Box-MQ-Hq9"/>
                         <outlet property="containerInsertBtn" destination="fwd-Sk-3N3" id="S2D-JX-yBB"/>
                         <outlet property="containerNoodleAddBtn" destination="eZZ-uT-1hW" id="yZL-46-d3T"/>
                         <outlet property="containerNoodleLbl" destination="bTS-5N-oof" id="TVi-4s-JLV"/>
