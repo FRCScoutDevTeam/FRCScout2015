@@ -7,10 +7,29 @@
 //
 
 import Foundation
+import CoreData
 
 extension MasterTeam {
-    func addTeam(value:Team) {
+    func addTeam(value:Team ) {
         var regionalTeams = self.mutableSetValueForKey("regionalTeams");
         regionalTeams.addObject(value)
+    }
+    
+    class func createMasterTeam(teamNumber: NSNumber, context: NSManagedObjectContext) -> MasterTeam {
+        var newMasterTeam : MasterTeam?
+        var requestMasterTeam = NSFetchRequest(entityName: "MasterTeam")
+        requestMasterTeam.predicate = NSPredicate(format: "teamNumber=\(teamNumber)")
+        var resultsMasterTeam = context.executeFetchRequest(requestMasterTeam, error: nil) as [MasterTeam]!
+        if (resultsMasterTeam.count > 0){
+            newMasterTeam = resultsMasterTeam.first! as MasterTeam
+            println("Master Team found")
+        } else {
+            newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as? MasterTeam
+            newMasterTeam?.teamNumber = teamNumber
+            newMasterTeam?.uniqueID = Int(NSDate().timeIntervalSince1970)
+            println("Master Team Created")
+        }
+        
+        return newMasterTeam!
     }
 }

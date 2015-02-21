@@ -9,6 +9,16 @@
 import UIKit
 
 let SWIPECONFIRMKEY = "SwipeConfrimed"
+let WEEKSELECTEDKEY = "WeekSelected"
+let REGIONALSELECTEDKEY = "RegionalSelected"
+
+let scoutPositions = [
+    "Red 1",
+    "Red 2",
+    "Red 3",
+    "Blue 1",
+    "Blue 2",
+    "Blue 3"]
 
 let week1Regionals = [
     "South Florida Regional",
@@ -244,5 +254,5 @@ let allRegionalsArray = [
     "Mid-Atlantic Robotics District Championship",
     "FIRST Championship"]
 
-
+let allWeekRegionals = [allRegionalsArray, week1Regionals, week2Regionals, week3Regionals, week4Regionals, week5Regionals, week6Regionals, week7Reginals]
 

@@ -9,7 +9,8 @@
         <relationship name="match" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="coopStacks" inverseEntity="Match" syncable="YES"/>
     </entity>
     <entity name="MasterTeam" representedClassName="MasterTeam" syncable="YES">
-        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="pitTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PitTeam" inverseName="masterTeam" inverseEntity="PitTeam" syncable="YES"/>
         <relationship name="regionalTeams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="masterTeam" inverseEntity="Team" syncable="YES"/>
     </entity>
@@ -26,11 +27,13 @@
         <attribute name="numCoopStacks" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="numStacks" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="penalty" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="recordingTeam" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordingTeam" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="scoutInitials" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scoutPosition" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="stacksKnockedOver" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="coopStacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoopStack" inverseName="match" inverseEntity="CoopStack" syncable="YES"/>
-        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="matches" inverseEntity="Team" syncable="YES"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="matches" inverseEntity="Team" syncable="YES"/>
         <relationship name="toteStacks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToteStack" inverseName="match" inverseEntity="ToteStack" syncable="YES"/>
     </entity>
     <entity name="PitTeam" representedClassName="PitTeam" syncable="YES">
@@ -41,24 +44,25 @@
         <attribute name="autoStack" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="autoStepContainer" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="autoTote" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="carryCapacity" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="containerLevel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="carryCapacity" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="containerLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="coop" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="driveTrain" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="heightOfStack" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="heightOfStack" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="noodles" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="stackContainer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stackContainer" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="stackerType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="stackTotes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stackTotes" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="strategy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="withContainer" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="masterTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MasterTeam" inverseName="pitTeam" inverseEntity="MasterTeam" syncable="YES"/>
     </entity>
     <entity name="Regional" representedClassName="Regional" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="firstPickList" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Team" inverseName="regionalFirstPickList" inverseEntity="Team" syncable="YES"/>
         <relationship name="secondPickList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="regionalSecondPickList" inverseEntity="Team" syncable="YES"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="regional" inverseEntity="Team" syncable="YES"/>
@@ -66,12 +70,17 @@
     <entity name="Team" representedClassName="Team" syncable="YES">
         <attribute name="autoStrength" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="containerAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="teamNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coopStackAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="noodlesInContainerAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="noodlesInLandFillAvg" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="penaltyAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="stacksKnockedOverAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="teamNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="teleAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="toteAvg" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="masterTeam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MasterTeam" inverseName="regionalTeams" inverseEntity="MasterTeam" syncable="YES"/>
-        <relationship name="matches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Match" inverseName="newRelationship" inverseEntity="Match" syncable="YES"/>
+        <relationship name="matches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Match" inverseName="team" inverseEntity="Match" syncable="YES"/>
         <relationship name="regional" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Regional" inverseName="teams" inverseEntity="Regional" syncable="YES"/>
         <relationship name="regionalFirstPickList" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="Regional" inverseName="firstPickList" inverseEntity="Regional" syncable="YES"/>
         <relationship name="regionalSecondPickList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Regional" inverseName="secondPickList" inverseEntity="Regional" syncable="YES"/>
@@ -89,11 +98,11 @@
     </entity>
     <elements>
         <element name="CoopStack" positionX="232" positionY="98" width="128" height="133"/>
-        <element name="MasterTeam" positionX="-279" positionY="-171" width="128" height="88"/>
-        <element name="Match" positionX="-173" positionY="62" width="128" height="313"/>
-        <element name="PitTeam" positionX="-90" positionY="-331" width="128" height="373"/>
-        <element name="Regional" positionX="-639" positionY="-4" width="128" height="103"/>
-        <element name="Team" positionX="-351" positionY="-27" width="128" height="208"/>
+        <element name="MasterTeam" positionX="-279" positionY="-171" width="128" height="105"/>
+        <element name="Match" positionX="-173" positionY="62" width="128" height="343"/>
+        <element name="PitTeam" positionX="-90" positionY="-331" width="128" height="375"/>
+        <element name="Regional" positionX="-639" positionY="-4" width="128" height="118"/>
+        <element name="Team" positionX="-351" positionY="-27" width="128" height="285"/>
         <element name="ToteStack" positionX="72" positionY="-61" width="128" height="178"/>
     </elements>
 </model>

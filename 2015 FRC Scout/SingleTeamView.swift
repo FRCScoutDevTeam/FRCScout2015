@@ -13,6 +13,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     //info to pass through seque
     var teamNumber = String()
     var regional = String()
+    var uniqueID = Int32()
     var matches = [Match]()
     
     @IBOutlet weak var titleBar: UINavigationItem!
