@@ -12,6 +12,14 @@ let SWIPECONFIRMKEY = "SwipeConfrimed"
 let WEEKSELECTEDKEY = "WeekSelected"
 let REGIONALSELECTEDKEY = "RegionalSelected"
 
+let scoutPositions = [
+    "Red 1",
+    "Red 2",
+    "Red 3",
+    "Blue 1",
+    "Blue 2",
+    "Blue 3"]
+
 let week1Regionals = [
     "South Florida Regional",
     "Lake Superior Regional",
