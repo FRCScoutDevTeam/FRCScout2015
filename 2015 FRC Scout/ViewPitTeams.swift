@@ -9,10 +9,11 @@
 import UIKit
 import CoreData
 
-class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource,NSFetchedResultsControllerDelegate {
+class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource,NSFetchedResultsControllerDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var teamSearchTxt: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     var data = [PitTeam]()
     
     //views
@@ -46,7 +47,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         a `nil` `sectionNameKeyPath` generates a single section */
         let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
-        self._fetchedResultsController = aFetchedResultsController
+        _fetchedResultsController = aFetchedResultsController
         
         // perform initial model fetch
         var e: NSError?
@@ -64,6 +65,15 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         tableView.layer.borderWidth = 2
         tableView.layer.cornerRadius = 5
         tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
+        
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        self.view.addGestureRecognizer(tapDismiss)
+        
+    }
+    
+    //Hides keyboard if the screen is tapped
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -213,14 +223,18 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         super.didReceiveMemoryWarning()
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        
+        return true
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        self.view.endEditing(true)
-    }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         //return data.count
@@ -280,6 +294,25 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText == ""){
+            _fetchedResultsController?.fetchRequest.predicate = NSPredicate(value: true)
+        } else if((searchText.toInt()) != nil) {
+             _fetchedResultsController?.fetchRequest.predicate = NSPredicate(format: "teamNumber contains %@", searchText)
+        } else {
+            _fetchedResultsController?.fetchRequest.predicate = NSPredicate(format: "teamName contains %@", searchText)
+        }
+        
+        _fetchedResultsController?.performFetch(nil)
+        tableView.reloadData()
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        return true
+    }
+    
+    
     
     
 }

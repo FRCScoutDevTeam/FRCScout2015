@@ -1543,6 +1543,14 @@
                                 <rect key="frame" x="8" y="111" width="753" height="859"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search Teams by Number" id="okf-xc-L8k">
+                                    <rect key="frame" x="0.0" y="0.0" width="753" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="uyl-gp-2SF" id="937-UD-Mqw"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="TeamCell" rowHeight="79" id="Gnh-OJ-S2c" customClass="TeamListCell" customModule="FRC_Scout" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="753" height="44"/>
@@ -1873,31 +1881,23 @@
         <!--View Pit Teams-->
         <scene sceneID="uig-gj-KH1">
             <objects>
-                <viewController id="2ca-wP-ZKX" customClass="ViewPitTeams" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2ca-wP-ZKX" customClass="ViewPitTeams" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iMq-vB-kVt">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Teams by Name or Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KDX-QI-geU" userLabel="SearchTeamsLbl">
-                                <rect key="frame" x="270" y="74" width="228" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Search" textAlignment="center" minimumFontSize="17" id="tgu-j4-WbE" userLabel="TeamSearch">
-                                <rect key="frame" x="325" y="103" width="119" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="2ca-wP-ZKX" id="xJc-71-FRd"/>
-                                </connections>
-                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="97" sectionHeaderHeight="22" sectionFooterHeight="22" id="Tus-JB-uLY">
-                                <rect key="frame" x="16" y="146" width="736" height="817"/>
+                                <rect key="frame" x="16" y="71" width="736" height="892"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search Teams by Name or Number" id="x6P-JU-Wrf">
+                                    <rect key="frame" x="0.0" y="0.0" width="736" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="2ca-wP-ZKX" id="FsQ-Wy-hgR"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="97" id="MFo-xI-N7P" userLabel="PitTeamCell" customClass="PitTeamCell" customModule="FRC_Scout" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="736" height="44"/>
@@ -1920,7 +1920,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="F3A-tD-tkc" userLabel="RobotPic">
-                                                    <rect key="frame" x="0.0" y="0.0" width="3028" height="470"/>
+                                                    <rect key="frame" x="0.0" y="-19" width="3764" height="566"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -1937,20 +1937,13 @@
                                     <outlet property="delegate" destination="2ca-wP-ZKX" id="hLk-En-zbu"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⬅ Coming Soon to an iPad near you!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rjk-cs-b6b">
-                                <rect key="frame" x="466" y="107" width="291" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="XqN-1w-dGl"/>
                     <connections>
+                        <outlet property="searchBar" destination="x6P-JU-Wrf" id="OIK-G8-sDm"/>
                         <outlet property="tableView" destination="Tus-JB-uLY" id="Imq-PY-4uh"/>
-                        <outlet property="teamSearchTxt" destination="tgu-j4-WbE" id="JdJ-Oc-nWn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4es-YF-bzf" userLabel="First Responder" sceneMemberID="firstResponder"/>

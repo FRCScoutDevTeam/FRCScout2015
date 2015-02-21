@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate {
     //Items
     @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
@@ -62,8 +62,17 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         tableView.layer.borderWidth = 2
         tableView.layer.cornerRadius = 5
         tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
-        // Do any additional setup after loading the view.
+
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        self.view.addGestureRecognizer(tapDismiss)
+        
     }
+    
+    //Hides keyboard if the screen is tapped
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
 
@@ -157,9 +166,26 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
             }
     }
     
+    
+    
     /* called last
     tells `UITableView` updates are complete */
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText == ""){
+            _fetchedResultsController?.fetchRequest.predicate = NSPredicate(value: true)
+        } else if((searchText.toInt()) != nil) {
+            _fetchedResultsController?.fetchRequest.predicate = NSPredicate(format: "teamNumber contains %@", searchText)
+        } 
+        
+        _fetchedResultsController?.performFetch(nil)
+        tableView.reloadData()
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        return true
     }
 }
