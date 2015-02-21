@@ -21,7 +21,7 @@ extension Team {
         var teamRequest = NSFetchRequest(entityName: "Team")
         teamRequest.predicate = NSPredicate(format: "(teamNumber = \(teamNumber)) AND (regional.name = %@)", regional.name)
         var teamResults = context.executeFetchRequest(teamRequest, error: nil) as [Team]!
-        if (teamResults?.count > 0) {
+        if (teamResults.count > 0) {
             team = teamResults.first
             println("team found")
         } else {
@@ -32,7 +32,13 @@ extension Team {
             team?.uniqueID = Int(NSDate().timeIntervalSince1970)
             regional.addTeam(team!)
             masterTeam.addTeam(team!)
-            println("team created")
+            
+            var error: NSError? = nil
+            if !context.save(&error) {
+                println("Saving error \(error), \(error?.userInfo)")
+            } else {
+                println("Saved a Team with number: \(team!.teamNumber)")
+            }
         }
         
         return team!

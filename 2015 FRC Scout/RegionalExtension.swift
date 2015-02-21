@@ -27,7 +27,13 @@ extension Regional {
             regional = NSEntityDescription.insertNewObjectForEntityForName("Regional", inManagedObjectContext: context) as? Regional
             regional?.name = name
             regional?.uniqueID = Int(NSDate().timeIntervalSince1970)
-            println("Regional created")
+            
+            var error: NSError? = nil
+            if !context.save(&error) {
+                println("Saving error \(error), \(error?.userInfo)")
+            } else {
+                println("Saved a Regional with name: \(regional!.name)")
+            }
         }
         
         return regional!

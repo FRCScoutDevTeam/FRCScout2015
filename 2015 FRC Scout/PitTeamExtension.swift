@@ -43,6 +43,7 @@ extension PitTeam {
             pitTeam!.strategy = pitDict["strategy"] as  String
             pitTeam!.additionalNotes = pitDict["additionalNotes"] as String
             pitTeam!.uniqueID = pitDict["uniqueID"] as NSNumber
+            pitTeam!.picture = pitDict["picture"] as NSData
             println("created pit team")
         }
         
