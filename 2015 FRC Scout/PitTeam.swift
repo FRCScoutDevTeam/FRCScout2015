@@ -2,13 +2,12 @@
 //  PitTeam.swift
 //  FRC Scout
 //
-//  Created by David Swed on 2/16/15.
+//  Created by Louie Bertoncin on 2/21/15.
 //  Copyright (c) 2015 David Swed. All rights reserved.
 //
 
 import Foundation
 import CoreData
-
 
 @objc(PitTeam)
 class PitTeam: NSManagedObject {
@@ -26,6 +25,7 @@ class PitTeam: NSManagedObject {
     @NSManaged var driveTrain: String
     @NSManaged var heightOfStack: NSNumber
     @NSManaged var noodles: String
+    @NSManaged var picture: NSData
     @NSManaged var stackContainer: NSNumber
     @NSManaged var stackerType: String
     @NSManaged var stackTotes: NSNumber
