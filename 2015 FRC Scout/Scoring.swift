@@ -1970,7 +1970,6 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         var saveErr : NSError?
         if !context.save(&saveErr) {
             println(saveErr!.localizedDescription)
-            return
         } else {
             var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
@@ -2188,9 +2187,77 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
 
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+            
             println("SUCCESS!! RECEIVED \(data.length) BITS OF DATA!!!")
             let receivedMatchDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as [String: AnyObject]
             println(receivedMatchDict)
+            let matchDataDict = receivedMatchDict["matchDict"] as [String: AnyObject]
+            let receivedMatchNum = matchDataDict["matchNum"] as String
+            
+            var regionalData = Regional.createRegional(receivedMatchDict["regionalName"] as String, context: context)
+            var masterTeam = MasterTeam.createMasterTeam(receivedMatchDict["masterTeamNum"] as Int, context: context)
+            var teamData = Team.createTeam(receivedMatchDict["masterTeamNum"] as Int, regional: regionalData, masterTeam: masterTeam, context: context)
+            
+            let receivedToteStacks = matchDataDict["toteStacks"] as [[Int]]
+            let receivedCoopStacks = matchDataDict["coopStacks"] as [[Int]]
+            var toteStackData = [ToteStack]()
+            var coopStackData = [CoopStack]()
+            for stack in receivedToteStacks {
+                var newToteStack: ToteStack = NSEntityDescription.insertNewObjectForEntityForName("ToteStack", inManagedObjectContext: context) as ToteStack
+                newToteStack.tote1 = stack[0]
+                newToteStack.tote2 = stack[1]
+                newToteStack.tote3 = stack[2]
+                newToteStack.tote4 = stack[3]
+                newToteStack.tote5 = stack[4]
+                newToteStack.tote6 = stack[5]
+                newToteStack.containerLvl = stack[6]
+                toteStackData.append(newToteStack)
+            }
+            for stack in receivedCoopStacks {
+                var newCoopStack: CoopStack = NSEntityDescription.insertNewObjectForEntityForName("CoopStack", inManagedObjectContext: context) as CoopStack
+                newCoopStack.tote1 = stack[0]
+                newCoopStack.tote2 = stack[1]
+                newCoopStack.tote3 = stack[2]
+                newCoopStack.tote4 = stack[3]
+                coopStackData.append(newCoopStack)
+            }
+            
+            var matchDict = [
+                "autoContainers": receivedMatchDict["autoContainers"] as Int,
+                "autoTotes": receivedMatchDict["autoTotes"] as Int,
+                "numCoopStacks": receivedMatchDict["numCoopStacks"] as Int,
+                "numStacks": receivedMatchDict["numStacks"] as Int,
+                "noodlesInContainer": receivedMatchDict["noodlesInContainer"] as Int,
+                "penalty": receivedMatchDict["penalty"] as Int,
+                "stacksKnockedOver": receivedMatchDict["stacksKnockedOver"] as Int,
+                "noodlesInLandFill": receivedMatchDict["noodlesInLandFill"] as Int,
+                "autoDrive": receivedMatchDict["autoDrive"] as Int,
+                "autoStack": receivedMatchDict["autoStack"] as Bool,
+                "toteStacks": NSSet(array: toteStackData),
+                "coopStacks": NSSet(array: coopStackData),
+                "uniqueID": receivedMatchDict["uniqueID"] as Int,
+                "matchNum": receivedMatchDict["matchNum"] as String,
+                "scoutInitials": receivedMatchDict["scoutInitials"] as String,
+                "scoutPosition": receivedMatchDict["scoutPosition"] as Int,
+                "notes": receivedMatchDict["notes"] as String]
+            
+            var match = Match.createMatch(matchDict, team: teamData, context: context)
+            
+            teamData = dataCalc.calculateAverages(teamData)
+            
+            var saveErr : NSError?
+            if !context.save(&saveErr) {
+                println(saveErr!.localizedDescription)
+            } else {
+                if peerID.displayName.rangeOfString("Red 1") != nil { self.red1ConnectedLbl.text = "Red 1: \(receivedMatchNum)" }
+                else if peerID.displayName.rangeOfString("Red 2") != nil { self.red2ConnectedLbl.text = "Red 2: \(receivedMatchNum)" }
+                else if peerID.displayName.rangeOfString("Red 3") != nil { self.red3ConnectedLbl.text = "Red 3: \(receivedMatchNum)" }
+                else if peerID.displayName.rangeOfString("Blue 1") != nil { self.blue1ConnectedLbl.text = "Blue 1: \(receivedMatchNum)" }
+                else if peerID.displayName.rangeOfString("Blue 2") != nil { self.blue2ConnectedLbl.text = "Blue 2: \(receivedMatchNum)" }
+                else if peerID.displayName.rangeOfString("Blue 3") != nil { self.blue3ConnectedLbl.text = "Blue 3: \(receivedMatchNum)" }
+            }
+            
         })
     }
 
