@@ -40,8 +40,9 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func viewDidAppear(animated: Bool) {
-        titleBar.title = teamNumber
+        titleBar.title = "Team " + teamNumber
         loadData()
+        //tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,6 +50,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func loadData(){
+        matches = [Match]()
         let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
         
@@ -142,7 +144,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //MatchNumber
         var matchNumberLbl = UILabel(frame: CGRect(x: detailViewWidth*0.5 - 50, y: 5, width: 100, height: 40))
-        matchNumberLbl.text = "Match " //add match number
+        matchNumberLbl.text = "Match " + match.matchNum
         matchNumberLbl.font = UIFont(name: "Futura-CondensedExtraBold", size: 35)
         matchNumberLbl.textAlignment = NSTextAlignment.Center
         detailView.addSubview(matchNumberLbl)
@@ -284,6 +286,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.teleScoreLbl.text = "\(matchData.teleScore)"
         cell.toteScoreLbl.text = "\(matchData.numTotes)"
         cell.containerScoreLbl.text = "\(matchData.numContainers)"
+        cell.matchNumber.text = match.matchNum
         
         //code to display stacks
         var imageCodes = [String]()
