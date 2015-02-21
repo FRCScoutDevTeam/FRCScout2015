@@ -110,10 +110,13 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         cell.teamNumberLbl.text = "\(team.teamNumber)"
         cell.teamNumberLbl.text = "\(team.teamNumber)"
         cell.rankLbl.text = "#"+String(indexPath.row+1)
-        cell.autoAvgScoreLbl.text = "\(team.autoStrength)"
-        cell.teleAvgScoreLbl.text = "\(team.teleAvg)"
-        cell.containerScoreLbl.text = "\(team.containerAvg)"
-        cell.toteScoreLbl.text = "\(team.toteAvg)"
+        var formatter = NSNumberFormatter()
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 0
+        cell.autoAvgScoreLbl.text = formatter.stringFromNumber(team.autoStrength)
+        cell.teleAvgScoreLbl.text = formatter.stringFromNumber(team.teleAvg)
+        cell.containerScoreLbl.text = formatter.stringFromNumber(team.containerAvg)
+        cell.toteScoreLbl.text = formatter.stringFromNumber(team.toteAvg)
         cell.regional = team.regional.name
         cell.uniqueID = team.uniqueID.intValue
         println(team.uniqueID)

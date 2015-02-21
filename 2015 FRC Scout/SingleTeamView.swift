@@ -74,11 +74,13 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         else {
             teamNameLbl.text = "No Pit Scouting Name"
         }
-        
-        autoStrengthScoreLbl.text = "\(team.autoStrength)"
-        teleScoreLbl.text = "\(team.teleAvg)"
-        toteScoreLbl.text = "\(team.toteAvg)"
-        containerScoreLbl.text = "\(team.containerAvg)"
+        var formatter = NSNumberFormatter()
+        formatter.maximumFractionDigits = 1
+        formatter.minimumFractionDigits = 0
+        autoStrengthScoreLbl.text = formatter.stringFromNumber(team.autoStrength)
+        teleScoreLbl.text = formatter.stringFromNumber(team.teleAvg)
+        toteScoreLbl.text = formatter.stringFromNumber(team.toteAvg)
+        containerScoreLbl.text = formatter.stringFromNumber(team.containerAvg)
         
         
     }
@@ -296,7 +298,6 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
             if(stack.containerLvl as Int > 0){
                 code += "c"
             }
-            println(code)
             imageCodes.append(code)
         }
         
