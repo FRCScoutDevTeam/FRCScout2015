@@ -3,7 +3,7 @@
 //  2015 FRC Scout
 //
 //  Created by David Swed on 1/9/15.
-//  Copyright (c) 2015 David Swed. All rights reserved.
+//  Copyright (c) 2015 David Swed. All rights reserved
 //
 
 import UIKit
@@ -953,6 +953,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
     func resetScoringScreen(incrementMatch: Bool){
         //Variables
         numStacks = 0
+        numCoopTotes = 0
         numCoopStacks = 0
         numNoodlesInContainer = 0
         numNoodlesPushedInLandfill = 0
