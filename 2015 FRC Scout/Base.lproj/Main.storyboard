@@ -1959,7 +1959,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dRI-wD-eo9">
-                                <rect key="frame" x="325" y="192" width="118" height="30"/>
+                                <rect key="frame" x="325" y="369" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.082081786989623096" green="0.49483580859026266" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Change Regional">
@@ -1970,12 +1970,25 @@
                                     <action selector="changeRegionalPress:" destination="6qW-fn-bB1" eventType="touchUpInside" id="v7D-fo-8I3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xh0-gG-HN4">
+                                <rect key="frame" x="325" y="233" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.082081786990000002" green="0.49483580859999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Share Matches">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareBtnPress:" destination="6qW-fn-bB1" eventType="touchUpInside" id="neO-zx-13R"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="More" image="More" id="ZZt-pX-F55"/>
                     <connections>
                         <outlet property="changeRegionalBtn" destination="dRI-wD-eo9" id="hKD-dw-4Vs"/>
+                        <outlet property="shareMatchesBtn" destination="Xh0-gG-HN4" id="jth-ru-yAh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="czT-n3-xMU" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -22,9 +22,13 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let signInLayoutYDiff : CGFloat = 15
     var weekSelected : Int!
 
+    //share matches view items
+    var shareView = UIView()
+    var shareFrame = CGRect(x: 94, y: 130, width: 580, height: 400)
+    
     
     @IBOutlet weak var changeRegionalBtn: UIButton!
-    
+    @IBOutlet weak var shareMatchesBtn: UIButton!
     var regionalName : String!
 
     override func viewDidLoad() {
@@ -46,6 +50,43 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func shareBtnPress(sender: AnyObject) {
+        var shareFrame = CGRect(x: 94, y: 130, width: 580, height: 400)
+        var cX1: CGFloat = shareFrame.width * 0.3   //center x of the first column of items
+        var xC2: CGFloat = shareFrame.width * 0.7   //center x of the second column of items
+        var yStart: CGFloat = shareFrame.height * 0.1   //starting height of first row
+        self.view.addSubview(grayOutView)
+        shareView = UIView(frame: shareFrame)
+        shareView.backgroundColor = .whiteColor()
+        shareView.layer.cornerRadius = 10
+        self.view.addSubview(shareView)
+        self.view.bringSubviewToFront(regionalView)
+        
+        var closeBtn = UIButton(frame: CGRect(x: shareView.layer.frame.width - 60, y: 5, width: 50, height:20))
+        closeBtn.addTarget(nil, action: Selector("closeShareView"), forControlEvents: UIControlEvents.TouchUpInside)
+        closeBtn.setTitle("Close X", forState: UIControlState.Normal)
+        closeBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+        closeBtn.setTitleColor(UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1),forState: UIControlState.Normal)
+        closeBtn.titleLabel?.textAlignment = NSTextAlignment.Center
+        shareView.addSubview(closeBtn)
+        
+        let shareLbl = UILabel(frame: CGRect(x: shareView.frame.origin.x, y: shareView.frame.origin.y + 30, width: 100, height: 18))
+        shareLbl.font = UIFont.systemFontOfSize(15)
+        shareLbl.textAlignment = .Center
+        shareLbl.text = "Share Matches"
+        shareLbl.adjustsFontSizeToFitWidth = true
+        shareView.addSubview(shareLbl)
+    }
+    
+    func closeShareView(){
+        for view:AnyObject in shareView.subviews {
+            view.removeFromSuperview()
+        }
+        shareView.removeFromSuperview()
+        grayOutView.removeFromSuperview()
+    }
+    
 
     @IBAction func changeRegionalPress(sender: AnyObject) {
         self.view.addSubview(grayOutView)
