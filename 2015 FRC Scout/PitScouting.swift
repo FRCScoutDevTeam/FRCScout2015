@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var frameView: UIView!
     //UI Items
@@ -111,11 +111,53 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     var textViewOriginalHeight: CGFloat = CGFloat()
     var textViewIsSelected = false
+    
+    //If UI is filled out from data
+    var usingLoadedTeam = false
 
-    //Variable to tell if editing preexisting data
-    var editingOldData = false
-
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let tapToDismiss = UITapGestureRecognizer(target: self, action: Selector("tappedToDismiss:"))
+        self.view.addGestureRecognizer(tapToDismiss)
+        
+        captureImageButton.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).CGColor
+        captureImageButton.layer.borderWidth = 2
+        captureImageButton.layer.cornerRadius = 5
+        
+        // Do any additional setup after loading the view.
+        buttons = [dropCenterBtn,fourWheelDriveBtn,mecanumBtn,swerveCrabBtn,stackTotesYesBtn,stackTotesNoBtn,bottomStackerButton,topStackerBtn, nABtn,stackContainerYesBtn,stackContainerNoBtn,carryContainerBtn,autoNoneBtn,mobilityBtn,moveToteBtn,moveContainerBtn,stackTotesBtn,stepContainersBtn,coopNoneBtn,placerBtn,stackerBtn,noodlesNoneBtn,intoContainerBtn,intoLandFillBtn,feederBtn,totePlacerBtn,containerPlacerBtn,toteAndContainerBtn,saveBtn]
+        
+        textFields = [teamNumberTxt,teamNameTxt,otherDriveTrainTxt,heightOfStackTxt,containerLvlTxt,carryCapacityTxt]
+        
+        resetPitScouting()
+        
+        
+        textViewOriginalHeight = additionalNotesTxt.frame.origin.y
+        
+        self.frameView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
+    }
+    func tappedToDismiss(sender: UITapGestureRecognizer) { self.view.endEditing(true) }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Keyboard stuff.
+        var center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    @IBAction func teamNumberChanged(sender: AnyObject) {
+        if usingLoadedTeam {
+            resetPitScouting()
+        }
+    }
     func textFieldShouldEndEditing(textField: UITextField) -> Bool{
         switch textField{
         case teamNumberTxt:
@@ -140,9 +182,24 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         return true
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == teamNumberTxt {
+            teamNameTxt.becomeFirstResponder()
+        } else {
+            self.view.endEditing(true)
+        }
+        return true
+    }
 
     func displayLoadedData(loadedData: PitTeam) {
         resetPitScouting()
+        
+        if let image = UIImage(data: loadedData.picture) {
+            captureImageButton.setTitle(nil, forState: .Normal)
+            captureImageButton.setBackgroundImage(image, forState: .Normal)
+            captureImageButton.layer.borderColor = UIColor.clearColor().CGColor
+        }
 
         teamNumber = "\(loadedData.teamNumber)"
         teamName = loadedData.teamName
@@ -196,6 +253,8 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
         teamNameTxt.text = teamName
         teamNumberTxt.text = teamNumber
+        
+        usingLoadedTeam = true
     }
 
     func checkForTeam() {
@@ -206,11 +265,72 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         var results:NSArray = context.executeFetchRequest(request, error: nil)!
         if(results.count > 0){
             displayLoadedData(results[0] as PitTeam)
-            editingOldData = true
         }
-        else {
-            editingOldData = false
+    }
+    
+    @IBAction func captureImageBtnPress(sender: UIButton) {
+        let pictureController = UIAlertController(title: nil, message: "Choose how you'd like to capture an image", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        pictureController.addAction(cancelAction)
+        if captureImageButton.backgroundImageForState(.Normal) != nil {
+            let deleteAction = UIAlertAction(title: "Delete Current Picture", style: .Destructive, handler: { (action) -> Void in
+                self.captureImageButton.setBackgroundImage(nil, forState: .Normal)
+                self.captureImageButton.setTitle("+", forState: .Normal)
+                self.captureImageButton.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).CGColor
+            })
+            pictureController.addAction(deleteAction)
         }
+        let chooseImageAction = UIAlertAction(title: "Choose from Library", style: .Default) { (action) -> Void in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+            imagePicker.allowsEditing = false
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        pictureController.addAction(chooseImageAction)
+        let takePictureAction = UIAlertAction(title: "Take a Picture", style: .Default) { (action) -> Void in
+            let imagePicker = UIImagePickerController()
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+            imagePicker.delegate = self
+            
+            imagePicker.allowsEditing = true
+            
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        pictureController.addAction(takePictureAction)
+        if let popoverController = pictureController.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
+        self.presentViewController(pictureController, animated: true, completion: nil)
+    }
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+        var resizedImage = image
+        
+        let imageSize = resizedImage.size
+        let width = imageSize.width
+        let height = imageSize.height
+        
+        if (width != height) {
+            let newDimension = min(width, height)
+            let widthOffset = (width - newDimension) / 2
+            let heightOffset = (height - newDimension) / 2
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: newDimension, height: newDimension), false, 0.0)
+            resizedImage.drawAtPoint(CGPoint(x: -widthOffset, y: -heightOffset), blendMode: kCGBlendModeCopy, alpha: 1.0)
+            resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        }
+        
+        captureImageButton.setTitle(nil, forState: .Normal)
+        captureImageButton.setBackgroundImage(resizedImage, forState: .Normal)
+        
+        captureImageButton.layer.borderColor = UIColor.clearColor().CGColor
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func scoutButtonPress(sender: UIButton){
@@ -433,12 +553,19 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBAction func saveBtnPress(sender: AnyObject) {
         if(checkData()) {
-            let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-            let context:NSManagedObjectContext = appDel.managedObjectContext!
+            if captureImageButton.backgroundImageForState(.Normal) != nil {
+                UIGraphicsBeginImageContext(CGSize(width: 320, height: 320))
+                captureImageButton.backgroundImageForState(.Normal)!.drawInRect(CGRect(x: 0, y: 0, width: 320, height: 320))
+                captureImageButton.setBackgroundImage(UIGraphicsGetImageFromCurrentImageContext(), forState: .Normal)
+                UIGraphicsEndImageContext()
+            }
+            
+            let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
             
             var masterTeam = MasterTeam.createMasterTeam(teamNumber.toInt()!, context: context)
             
-            var pitDict: [String:AnyObject] = ["teamNumber": teamNumber.toInt()!,
+            var pitDict: [String:AnyObject] = [
+                "teamNumber": teamNumber.toInt()!,
                 "teamName": teamName,
                 "driveTrain": driveTrain,
                 "stackTotes": (stackTotes == "Yes") ? true : false,
@@ -458,7 +585,8 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
                 "noodles": noodles,
                 "strategy": strategy,
                 "additionalNotes": additionalNotes,
-                "uniqueID": Int(NSDate().timeIntervalSince1970)]
+                "uniqueID": Int(NSDate().timeIntervalSince1970),
+                "picture": UIImagePNGRepresentation(captureImageButton.backgroundImageForState(.Normal))]
             
             var newPitTeam = PitTeam.createPitTeam(pitDict, masterTeam: masterTeam, context: context)
             
@@ -472,23 +600,6 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             resetPitScouting()
         }
 
-    }
-
-    func loadSaved() {
-        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let context:NSManagedObjectContext = appDel.managedObjectContext!
-
-        let request = NSFetchRequest(entityName: "PitTeam")
-        request.returnsObjectsAsFaults = false
-
-        var results:NSArray = context.executeFetchRequest(request, error: nil)!
-
-        for res in results{
-
-            var newPitTeam = res as PitTeam
-            println(newPitTeam.driveTrain)
-
-        }
     }
 
     func checkData() -> Bool{
@@ -554,7 +665,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     func createInputAlert(message: String){
         let alertController = UIAlertController(title: "Input Error!", message: message, preferredStyle: .Alert)
 
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
         alertController.addAction(defaultAction)
 
         presentViewController(alertController, animated: true, completion: nil)
@@ -599,58 +710,11 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         additionalNotesTxt.text = "Additional Notes"
         additionalNotesTxt.textColor = UIColor.lightGrayColor()
 
-
-    }
-
-
-    override func viewDidLoad() {
-
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        buttons = [dropCenterBtn,fourWheelDriveBtn,mecanumBtn,swerveCrabBtn,stackTotesYesBtn,stackTotesNoBtn,bottomStackerButton,topStackerBtn, nABtn,stackContainerYesBtn,stackContainerNoBtn,carryContainerBtn,autoNoneBtn,mobilityBtn,moveToteBtn,moveContainerBtn,stackTotesBtn,stepContainersBtn,coopNoneBtn,placerBtn,stackerBtn,noodlesNoneBtn,intoContainerBtn,intoLandFillBtn,feederBtn,totePlacerBtn,containerPlacerBtn,toteAndContainerBtn,saveBtn]
-
-        textFields = [teamNumberTxt,teamNameTxt,otherDriveTrainTxt,heightOfStackTxt,containerLvlTxt,carryCapacityTxt]
-
-        resetPitScouting()
-
-
-        textViewOriginalHeight = additionalNotesTxt.frame.origin.y
-
-        self.frameView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
-
-
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        resetPitScouting()
-        editingOldData = false
-        // Keyboard stuff.
-        var center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        self.view.endEditing(true)
+        captureImageButton.setBackgroundImage(nil, forState: .Normal)
+        captureImageButton.setTitle("+", forState: .Normal)
+        captureImageButton.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).CGColor
+        
+        usingLoadedTeam = false
     }
 
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {

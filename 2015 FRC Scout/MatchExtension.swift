@@ -33,8 +33,8 @@ extension Match {
         var requestMatch = NSFetchRequest(entityName: "Match")
         requestMatch.predicate = NSPredicate(format: "(team.teamNumber = %@) AND (matchNum = %@) AND (team.regional.name = %@)", team.teamNumber,matchDict["matchNum"] as String,team.regional.name)
         var matchResults = context.executeFetchRequest(requestMatch, error: nil) as [Match]!
-        if(matchResults?.count > 0){
-            match = matchResults?.first
+        if(matchResults.count > 0){
+            match = matchResults.first
             println("pre existing match found")
         } else {
             match = NSEntityDescription.insertNewObjectForEntityForName("Match", inManagedObjectContext: context) as? Match
@@ -55,12 +55,20 @@ extension Match {
             match?.scoutInitials = matchDict["scoutInitials"] as String
             match?.scoutPosition = matchDict["scoutPosition"] as NSNumber
             match?.notes = matchDict["notes"] as String
-            println("match created")
+            match?.team = team
+            
+            var error: NSError? = nil
+            if !context.save(&error) {
+                println("Saving error \(error), \(error?.userInfo)")
+            } else {
+                println("Saved a Match with number: \(match!.matchNum)")
+            }
+            
         }
         
         
         
-        match?.team = team
+        
         team.addMatch(match!)
         team = dataCalc.calculateAverages(team)
         
