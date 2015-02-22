@@ -553,6 +553,13 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
 
     @IBAction func saveBtnPress(sender: AnyObject) {
         if(checkData()) {
+            if captureImageButton.backgroundImageForState(.Normal) != nil {
+                UIGraphicsBeginImageContext(CGSize(width: 320, height: 320))
+                captureImageButton.backgroundImageForState(.Normal)!.drawInRect(CGRect(x: 0, y: 0, width: 320, height: 320))
+                captureImageButton.setBackgroundImage(UIGraphicsGetImageFromCurrentImageContext(), forState: .Normal)
+                UIGraphicsEndImageContext()
+            }
+            
             let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
             
             var masterTeam = MasterTeam.createMasterTeam(teamNumber.toInt()!, context: context)
