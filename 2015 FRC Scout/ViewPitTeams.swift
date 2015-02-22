@@ -11,7 +11,6 @@ import CoreData
 
 class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource,NSFetchedResultsControllerDelegate, UISearchBarDelegate {
 
-    @IBOutlet weak var teamSearchTxt: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     var data = [PitTeam]()

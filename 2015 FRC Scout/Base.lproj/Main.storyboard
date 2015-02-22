@@ -1958,35 +1958,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pretend something really cool is here. Before long, there really will be something, I promise." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AF5-r2-1JJ">
-                                <rect key="frame" x="110" y="136" width="549" height="136"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dRI-wD-eo9">
+                                <rect key="frame" x="325" y="192" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Happy Cow" id="J7P-A4-G74">
-                                <rect key="frame" x="314" y="467" width="140" height="175"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In the meantime, here's an exceptionally happy cow to entertain you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rLM-hA-NGP">
-                                <rect key="frame" x="221" y="650" width="327" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please don't forget to send feedback to dev.frcscout@gmail.com!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dH6-W0-4F1">
-                                <rect key="frame" x="125" y="900" width="518" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.003052264948" green="0.78571428570000001" blue="0.0091250037379999992" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" red="0.082081786989623096" green="0.49483580859026266" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Change Regional">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeRegionalPress:" destination="6qW-fn-bB1" eventType="touchUpInside" id="v7D-fo-8I3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="More" image="More" id="ZZt-pX-F55"/>
+                    <connections>
+                        <outlet property="changeRegionalBtn" destination="dRI-wD-eo9" id="hKD-dw-4Vs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="czT-n3-xMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2060,7 +2050,6 @@
         <image name="GreenMinusUp" width="200" height="100"/>
         <image name="GreenPlusDown" width="200" height="100"/>
         <image name="GreenPlusUp" width="200" height="100"/>
-        <image name="Happy Cow" width="140" height="175"/>
         <image name="More" width="30" height="17"/>
         <image name="PitScouting" width="30" height="30"/>
         <image name="RedMinusDown" width="200" height="100"/>
