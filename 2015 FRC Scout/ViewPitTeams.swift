@@ -222,11 +222,6 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         super.didReceiveMemoryWarning()
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        
-        
-        return true
-    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
