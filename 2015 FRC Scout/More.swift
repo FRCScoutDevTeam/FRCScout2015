@@ -39,12 +39,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     
     @IBOutlet weak var changeRegionalBtn: UIButton!
     @IBOutlet weak var shareMatchesBtn: UIButton!
+    @IBOutlet weak var deleteAllMatchesBtn: UIButton!
     var regionalName : String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        changeRegionalBtn.layer.cornerRadius = 5
-        shareMatchesBtn.layer.cornerRadius = 5
+        changeRegionalBtn.layer.cornerRadius = 10
+        shareMatchesBtn.layer.cornerRadius = 10
+        deleteAllMatchesBtn.layer.cornerRadius = 10
         
         grayOutView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height))
         grayOutView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
@@ -89,8 +91,6 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         shareView = UIView(frame: shareFrame)
         shareView.backgroundColor = .whiteColor()
         shareView.layer.cornerRadius = 10
-        self.view.addSubview(shareView)
-        self.view.bringSubviewToFront(regionalView)
         
         var closeBtn = UIButton(frame: CGRect(x: shareView.layer.frame.width - 60, y: 5, width: 50, height:20))
         closeBtn.addTarget(nil, action: Selector("closeShareView"), forControlEvents: UIControlEvents.TouchUpInside)
@@ -204,6 +204,13 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         shareBtn?.enabled = false
         shareView.addSubview(shareBtn!)
         
+        shareView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        self.view.addSubview(shareView)
+        self.view.bringSubviewToFront(shareView)
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.shareView.transform = CGAffineTransformIdentity
+        })
+        
     }
     
     func InviteToParty() {
@@ -259,31 +266,23 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     }
     
     func closeShareView(){
-        for view:AnyObject in shareView.subviews {
-            view.removeFromSuperview()
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.shareView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        }) { (completed) -> Void in
+            self.shareView.removeFromSuperview()
+            self.grayOutView.removeFromSuperview()
         }
-        shareView.removeFromSuperview()
-        grayOutView.removeFromSuperview()
     }
     
 
     @IBAction func changeRegionalPress(sender: AnyObject) {
         self.view.addSubview(grayOutView)
-        regionalView = UIView(frame: CGRect(x: 94, y: 130, width: 580, height: 400))
+        regionalView = UIView(frame: CGRect(x: 94, y: 180, width: 580, height: 400))
         regionalView.backgroundColor = .whiteColor()
         regionalView.layer.cornerRadius = 10
-        //regionalView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        self.view.addSubview(regionalView)
-        self.view.bringSubviewToFront(regionalView)
-        
-        /*let changeRegionalTitleLbl = UILabel(frame: CGRect(x: 240, y: 20, width: 100, height: 28))
-        changeRegionalTitleLbl.textAlignment = .Center
-        changeRegionalTitleLbl.text = "Sign In"
-        changeRegionalTitleLbl.font = UIFont.boldSystemFontOfSize(25)
-        regionalView.addSubview(changeRegionalTitleLbl)*/
         
         weekSelector = UISegmentedControl(items: ["All", "1", "2", "3", "4", "5", "6", "7+"])
-        weekSelector.frame = CGRect(x: -52, y: 170, width: 216, height: 30)
+        weekSelector.frame = CGRect(x: -52, y: 172, width: 216, height: 30)
         weekSelector.addTarget(self, action: Selector("weekSelectorChanged:"), forControlEvents: UIControlEvents.ValueChanged)
         regionalView.addSubview(weekSelector)
         weekSelector.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2.0))
@@ -302,7 +301,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             weekSelected = 0
             NSUserDefaults.standardUserDefaults().setInteger(0, forKey: WEEKSELECTEDKEY)
         }
-        let weekSelectorLbl = UILabel(frame: CGRect(x: -42, y: 30, width: 36, height: 18))
+        let weekSelectorLbl = UILabel(frame: CGRect(x: 39, y: 60, width: 36, height: 18))
         weekSelectorLbl.font = UIFont.systemFontOfSize(15)
         weekSelectorLbl.textAlignment = .Center
         weekSelectorLbl.text = "Week"
@@ -334,14 +333,21 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         regionalChangeSaveBtn.addTarget(self, action: Selector("regionalSaveBtnPressed"), forControlEvents: UIControlEvents.TouchUpInside)
         regionalView.addSubview(regionalChangeSaveBtn)
         
-        var closeBtn = UIButton(frame: CGRect(x: regionalView.layer.frame.width - 60, y: 5, width: 50, height:20))
-        //var closeBtn = UIButton(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
+        var closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.frame = CGRect(x: regionalView.layer.frame.width - 60, y: 5, width: 50, height:20)
         closeBtn.addTarget(nil, action: Selector("closeRegionalView"), forControlEvents: UIControlEvents.TouchUpInside)
         closeBtn.setTitle("Close X", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
         closeBtn.setTitleColor(UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1),forState: UIControlState.Normal)
         closeBtn.titleLabel?.textAlignment = NSTextAlignment.Center
         regionalView.addSubview(closeBtn)
+        
+        regionalView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        self.view.addSubview(regionalView)
+        self.view.bringSubviewToFront(regionalView)
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.regionalView.transform = CGAffineTransformIdentity
+        })
     }
     
     func weekSelectorChanged(sender: UISegmentedControl) {
@@ -365,11 +371,12 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     }
     
     func closeRegionalView(){
-        for view:AnyObject in regionalView.subviews {
-            view.removeFromSuperview()
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.regionalView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        }) { (completed) -> Void in
+            self.regionalView.removeFromSuperview()
+            self.grayOutView.removeFromSuperview()
         }
-        regionalView.removeFromSuperview()
-        grayOutView.removeFromSuperview()
     }
     
     //Makes there only be one column in the Regional Picker
