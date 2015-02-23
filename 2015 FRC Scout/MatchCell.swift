@@ -16,6 +16,7 @@ class MatchCell: UITableViewCell {
     @IBOutlet weak var containerScoreLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        autoScoreLbl.textColor = AUTOCOLOR
         self.selectionStyle = .None
         // Initialization code
     }
