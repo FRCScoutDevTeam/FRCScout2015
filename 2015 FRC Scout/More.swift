@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
@@ -407,6 +408,32 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         return true
     }
     
+    @IBAction func deleteMatchesPressed(sender: AnyObject) {
+        let alertController = UIAlertController(title: "All Match Data will be lost", message: "Are you Sure?", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            return
+        }
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            var appDel: AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
+            let context: NSManagedObjectContext = appDel.managedObjectContext!
+            var entities = ["Team","PitTeam","MasterTeam","Regional"]
+            for i in entities {
+                var request = NSFetchRequest(entityName: i)
+                var results:NSArray = context.executeFetchRequest(request, error: nil)!
+                if (results.count > 0){
+                    for res in results {
+                        context.deleteObject(res as NSManagedObject)
+                    }
+                }
+            }
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 
 
 }
