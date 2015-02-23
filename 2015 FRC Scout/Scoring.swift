@@ -1952,9 +1952,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             "scoutPosition": scoutPosition,
             "notes": tempNotes ?? ""]
         
-        var match = Match.createMatch(matchDict, team: teamData, context: context)
+        var match = Match.createMatch(matchDict, m_team: teamData, context: context)
         
-        teamData = dataCalc.calculateAverages(teamData)
+        //teamData = dataCalc.calculateAverages(teamData)
         
         
         if mcSession.connectedPeers.count > 0 {
@@ -2291,9 +2291,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
                 "scoutPosition": matchDataDict["scoutPosition"] as Int,
                 "notes": matchDataDict["notes"] as String]
             
-            var match = Match.createMatch(matchDict, team: teamData, context: context)
+            var match = Match.createMatch(matchDict, m_team: teamData, context: context)
             
-            teamData = dataCalc.calculateAverages(teamData)
+            //teamData = dataCalc.calculateAverages(teamData)
             
             var saveErr : NSError?
             if !context.save(&saveErr) {

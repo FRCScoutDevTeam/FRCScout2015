@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Scoring-->
@@ -1541,6 +1541,14 @@
                                 <rect key="frame" x="8" y="111" width="753" height="859"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search Teams by Number" id="okf-xc-L8k">
+                                    <rect key="frame" x="0.0" y="0.0" width="753" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="uyl-gp-2SF" id="937-UD-Mqw"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="TeamCell" rowHeight="79" id="Gnh-OJ-S2c" customClass="TeamListCell" customModule="FRC_Scout" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="753" height="44"/>
@@ -1577,7 +1585,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="##" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xlM-aQ-aYE">
-                                                    <rect key="frame" x="321" y="28" width="28" height="21"/>
+                                                    <rect key="frame" x="321" y="28" width="33" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.64356455176767668" green="0.41605785668538259" blue="0.084768994209200574" alpha="1" colorSpace="calibratedRGB"/>
@@ -1591,14 +1599,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="##" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nav-pF-qGE">
-                                                    <rect key="frame" x="453" y="28" width="31" height="21"/>
+                                                    <rect key="frame" x="453" y="28" width="38" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.64356455176767668" green="0.41605785668538259" blue="0.084768994209200574" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="##" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JWq-D5-40e">
-                                                    <rect key="frame" x="560" y="28" width="32" height="21"/>
+                                                    <rect key="frame" x="560" y="28" width="47" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.64356455176767668" green="0.41605785668538259" blue="0.084768994209200574" alpha="1" colorSpace="calibratedRGB"/>
@@ -1871,31 +1879,23 @@
         <!--View Pit Teams-->
         <scene sceneID="uig-gj-KH1">
             <objects>
-                <viewController id="2ca-wP-ZKX" customClass="ViewPitTeams" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2ca-wP-ZKX" customClass="ViewPitTeams" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iMq-vB-kVt">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Teams by Name or Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KDX-QI-geU" userLabel="SearchTeamsLbl">
-                                <rect key="frame" x="270" y="74" width="228" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Search" textAlignment="center" minimumFontSize="17" id="tgu-j4-WbE" userLabel="TeamSearch">
-                                <rect key="frame" x="325" y="103" width="119" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="2ca-wP-ZKX" id="xJc-71-FRd"/>
-                                </connections>
-                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="97" sectionHeaderHeight="22" sectionFooterHeight="22" id="Tus-JB-uLY">
-                                <rect key="frame" x="16" y="146" width="736" height="817"/>
+                                <rect key="frame" x="16" y="71" width="736" height="892"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Search Teams by Name or Number" id="x6P-JU-Wrf">
+                                    <rect key="frame" x="0.0" y="0.0" width="736" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="2ca-wP-ZKX" id="FsQ-Wy-hgR"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="97" id="MFo-xI-N7P" userLabel="PitTeamCell" customClass="PitTeamCell" customModule="FRC_Scout" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="736" height="44"/>
@@ -1935,20 +1935,13 @@
                                     <outlet property="delegate" destination="2ca-wP-ZKX" id="hLk-En-zbu"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⬅ Coming Soon to an iPad near you!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rjk-cs-b6b">
-                                <rect key="frame" x="466" y="107" width="291" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="XqN-1w-dGl"/>
                     <connections>
+                        <outlet property="searchBar" destination="x6P-JU-Wrf" id="OIK-G8-sDm"/>
                         <outlet property="tableView" destination="Tus-JB-uLY" id="Imq-PY-4uh"/>
-                        <outlet property="teamSearchTxt" destination="tgu-j4-WbE" id="JdJ-Oc-nWn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4es-YF-bzf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1963,35 +1956,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pretend something really cool is here. Before long, there really will be something, I promise." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AF5-r2-1JJ">
-                                <rect key="frame" x="110" y="136" width="549" height="136"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dRI-wD-eo9">
+                                <rect key="frame" x="307" y="362" width="154" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Happy Cow" id="J7P-A4-G74">
-                                <rect key="frame" x="314" y="467" width="140" height="175"/>
+                                <color key="backgroundColor" red="0.082081786989623096" green="0.49483580859026266" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Change Regional">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeRegionalPress:" destination="6qW-fn-bB1" eventType="touchUpInside" id="v7D-fo-8I3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xh0-gG-HN4">
+                                <rect key="frame" x="307" y="226" width="154" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In the meantime, here's an exceptionally happy cow to entertain you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rLM-hA-NGP">
-                                <rect key="frame" x="221" y="650" width="327" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please don't forget to send feedback to dev.frcscout@gmail.com!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dH6-W0-4F1">
-                                <rect key="frame" x="125" y="900" width="518" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.003052264948" green="0.78571428570000001" blue="0.0091250037379999992" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" red="0.082081786990000002" green="0.49483580859999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Share Matches">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareBtnPress:" destination="6qW-fn-bB1" eventType="touchUpInside" id="neO-zx-13R"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="More" image="More" id="ZZt-pX-F55"/>
+                    <connections>
+                        <outlet property="changeRegionalBtn" destination="dRI-wD-eo9" id="hKD-dw-4Vs"/>
+                        <outlet property="shareMatchesBtn" destination="Xh0-gG-HN4" id="jth-ru-yAh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="czT-n3-xMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2065,7 +2063,6 @@
         <image name="GreenMinusUp" width="200" height="100"/>
         <image name="GreenPlusDown" width="200" height="100"/>
         <image name="GreenPlusUp" width="200" height="100"/>
-        <image name="Happy Cow" width="140" height="175"/>
         <image name="More" width="30" height="17"/>
         <image name="PitScouting" width="30" height="30"/>
         <image name="RedMinusDown" width="200" height="100"/>

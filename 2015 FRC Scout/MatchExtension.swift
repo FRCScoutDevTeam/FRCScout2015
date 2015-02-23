@@ -27,8 +27,9 @@ extension Match {
         stacks.removeObject(value)
     }
     
-    class func createMatch(matchDict:[String:AnyObject], team: Team, context: NSManagedObjectContext) -> Match {
+    class func createMatch(matchDict:[String:AnyObject], m_team: Team, context: NSManagedObjectContext) -> Match {
         var match : Match?
+        var team = m_team
         var requestMatch = NSFetchRequest(entityName: "Match")
         requestMatch.predicate = NSPredicate(format: "(team.teamNumber = %@) AND (matchNum = %@) AND (team.regional.name = %@)", team.teamNumber,matchDict["matchNum"] as String,team.regional.name)
         var matchResults = context.executeFetchRequest(requestMatch, error: nil) as [Match]!
@@ -69,6 +70,7 @@ extension Match {
         
         
         team.addMatch(match!)
+        team = dataCalc.calculateAverages(team)
         
         return match!
     }
