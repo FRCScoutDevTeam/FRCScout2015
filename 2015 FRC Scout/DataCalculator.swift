@@ -17,6 +17,7 @@ class DataCalculator: NSObject{
     
     
     func calculateAverages (team: Team) -> Team {
+        println("calculating averages")
         var t_Team = team
         
         var matchCount = t_Team.matches.count
