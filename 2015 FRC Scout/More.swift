@@ -37,6 +37,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     var shareBtn : UIButton!
     var nameTxt : UITextField!
     var numberTxt : UITextField!
+    var progressIndicator : UIProgressView!
     
     
     @IBOutlet weak var changeRegionalBtn: UIButton!
@@ -214,9 +215,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         shareBtn.layer.cornerRadius = 5
         shareBtn.addTarget(self, action: Selector("share"), forControlEvents: .TouchUpInside)
         shareBtn.backgroundColor = UIColor(red: 0.1, green: 0.3, blue: 0.9, alpha: 1.0)
-        shareBtn.alpha = 1.0
-        shareBtn.enabled = true
+//        shareBtn.alpha = 0.5
+//        shareBtn.enabled = false
         shareView.addSubview(shareBtn)
+        
+        progressIndicator = UIProgressView(progressViewStyle: UIProgressViewStyle.Bar)
+        progressIndicator.frame = CGRect(x: shareView.frame.width/2 - 150, y: shareBtn.frame.origin.y + 30, width: 300, height: 2)
+        progressIndicator.alpha = 0
+        shareView.addSubview(progressIndicator)
         
         if countElements(nameTxt.text) > 0 && numberTxt.text.toInt() != nil && numberTxt.text.toInt() > 0 {
             self.enableShareUI(true, isVisibleEnabled: true)
@@ -234,9 +240,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                 self.visibleSwitch.setOn(true, animated: true)
                 self.visibleSwitched(self.visibleSwitch)
             }
-            self.shareBtn.enabled = true
         }
-        
     }
     
     func inviteToParty() {
@@ -324,27 +328,23 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     func share() {
         let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
         
-        var dictToSend = [String: AnyObject]()
-        var regionalsDict = [String: [String: [String: [String: AnyObject]]]]()
-        var pitTeamsDict = [String: AnyObject]()
+        var dictToSend = NSMutableDictionary()
+        var regionalsDict = NSMutableDictionary()
+        var pitTeamsDict = NSMutableDictionary()
         
         var regionalRequest = NSFetchRequest(entityName: "Regional")
         var regionalRequestErr : NSError?
         let regionalResults = context.executeFetchRequest(regionalRequest, error: &regionalRequestErr) as [Regional]
         if regionalRequestErr != nil { println(regionalRequestErr!.localizedDescription); return }
         for regional in regionalResults {
-            var regionalDict = [String: [String: [String: AnyObject]]]()
-            regionalsDict.updateValue(regionalDict, forKey: regional.name)
+            regionalsDict[regional.name] = NSMutableDictionary()
             
             for team in regional.teams.allObjects as [Team] {
                 println("TEAM NUMBER: \(team.teamNumber)")
-                var teamDict = [String: [String: AnyObject]]()
-                regionalDict.updateValue(teamDict, forKey: "\(team.teamNumber)")
-                
-                println(regionalDict)
+                (regionalsDict[regional.name] as NSMutableDictionary)[team.teamNumber] = NSMutableDictionary()
                 
                 for match in team.matches.allObjects as [Match] {
-                    var toteStacks = Array<Array<Int>>()
+                    var toteStacks = Array<Array<NSNumber>>()
                     for totestack in match.toteStacks.allObjects as [ToteStack] {
                         var convertedStack = [Int](count: 7, repeatedValue: 0)
                         convertedStack[0] = totestack.tote1.integerValue
@@ -357,7 +357,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                         toteStacks.append(convertedStack)
                     }
                     
-                    var coopStacks = Array<Array<Int>>()
+                    var coopStacks = Array<Array<NSNumber>>()
                     for coopstack in match.coopStacks.allObjects as [CoopStack] {
                         var convertedStack = [Int](count: 4, repeatedValue: 0)
                         convertedStack[0] = coopstack.tote1.integerValue
@@ -367,27 +367,27 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                         coopStacks.append(convertedStack)
                     }
                     
-                    var matchDict : [String: AnyObject] = [
-                        "autoContainers": match.autoContainers.integerValue,
-                        "autoTotes": match.autoTotes.integerValue,
-                        "numCoopStacks": match.numCoopStacks.integerValue,
-                        "numStacks": match.numStacks.integerValue,
-                        "noodlesInContainer": match.noodlesInContainer.integerValue,
-                        "penalty": match.penalty.integerValue,
-                        "stacksKnockedOver": match.stacksKnockedOver.integerValue,
-                        "noodlesInLandFill": match.noodlesInLandfill.integerValue,
-                        "autoDrive": match.autoDrive.boolValue,
-                        "autoStack": match.autoStack.boolValue,
-                        "toteStacks": toteStacks,
-                        "coopStacks": coopStacks,
-                        "uniqueID": match.uniqueID.integerValue,
+                    var matchDict : NSDictionary = [
+                        "autoContainers": match.autoContainers,
+                        "autoTotes": match.autoTotes,
+                        "numCoopStacks": match.numCoopStacks,
+                        "numStacks": match.numStacks,
+                        "noodlesInContainer": match.noodlesInContainer,
+                        "penalty": match.penalty,
+                        "stacksKnockedOver": match.stacksKnockedOver,
+                        "noodlesInLandFill": match.noodlesInLandfill,
+                        "autoDrive": match.autoDrive,
+                        "autoStack": match.autoStack,
+                        "toteStacks": toteStacks as NSArray,
+                        "coopStacks": coopStacks as NSArray,
+                        "uniqueID": match.uniqueID,
                         "matchNum": match.matchNum,
                         "scoutInitials": match.scoutInitials,
-                        "scoutPosition": match.scoutPosition.integerValue,
+                        "scoutPosition": match.scoutPosition,
                         "notes": match.notes ?? ""
                     ]
                     
-                    teamDict.updateValue(matchDict, forKey: match.matchNum)
+                    ((regionalsDict[regional.name] as NSMutableDictionary)[team.teamNumber] as NSMutableDictionary)[match.matchNum] = matchDict
                 }
             }
         }
@@ -397,48 +397,100 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         let pitTeamsResults = context.executeFetchRequest(pitTeamsRequest, error: &pitTeamsRequestErr)
         if pitTeamsRequestErr != nil { println(pitTeamsRequestErr!.localizedDescription); return }
         for pitTeam in pitTeamsResults as [PitTeam] {
-            var pitTeamDict : [String : AnyObject] = [
-                "teamNumber": pitTeam.teamNumber.integerValue,
+            var pitTeamDict : NSDictionary = [
+                "teamNumber": pitTeam.teamNumber,
                 "teamName": pitTeam.teamName,
                 "driveTrain": pitTeam.driveTrain,
-                "stackTotes": pitTeam.stackTotes.boolValue,
+                "stackTotes": pitTeam.stackTotes,
                 "stackerType": pitTeam.stackerType,
-                "heightOfStack": pitTeam.heightOfStack.integerValue,
-                "stackContainer": pitTeam.stackContainer.boolValue,
-                "containerLevel": pitTeam.containerLevel.integerValue,
-                "carryCapacity": pitTeam.carryCapacity.integerValue,
-                "withContainer": pitTeam.withContainer.boolValue,
-                "autoNone": pitTeam.autoNone.boolValue,
-                "autoMobility": pitTeam.autoMobility.boolValue,
-                "autoTote": pitTeam.autoTote.boolValue,
-                "autoContainer": pitTeam.autoContainer.boolValue,
-                "autoStack": pitTeam.autoStack.boolValue,
-                "autoStepContainer": pitTeam.autoStepContainer.boolValue,
+                "heightOfStack": pitTeam.heightOfStack,
+                "stackContainer": pitTeam.stackContainer,
+                "containerLevel": pitTeam.containerLevel,
+                "carryCapacity": pitTeam.carryCapacity,
+                "withContainer": pitTeam.withContainer,
+                "autoNone": pitTeam.autoNone,
+                "autoMobility": pitTeam.autoMobility,
+                "autoTote": pitTeam.autoTote,
+                "autoContainer": pitTeam.autoContainer,
+                "autoStack": pitTeam.autoStack,
+                "autoStepContainer": pitTeam.autoStepContainer,
                 "coop": pitTeam.coop,
                 "noodles": pitTeam.noodles,
                 "strategy": pitTeam.strategy,
                 "additionalNotes": pitTeam.additionalNotes,
-                "uniqueID": pitTeam.uniqueID.integerValue,
+                "uniqueID": pitTeam.uniqueID,
                 "picture": pitTeam.picture
             ]
-            pitTeamsDict.updateValue(pitTeamDict, forKey: "\(pitTeam.teamNumber)")
+            pitTeamsDict["\(pitTeam.teamNumber)"] = pitTeamDict
         }
         
-        dictToSend.updateValue(regionalsDict, forKey: "Regionals")
-//        dictToSend.updateValue(pitTeamsDict, forKey: "Pit Teams")
+        dictToSend["Regionals"] = regionalsDict
+        dictToSend["PitTeams"] = pitTeamsDict
         
-        func getFileURL(fileName: String) -> NSURL {
-            let manager = NSFileManager.defaultManager()
-            let dirURL = manager.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false, error: nil)
-            return dirURL!.URLByAppendingPathComponent(fileName)
+        let paths = NSFileManager.defaultManager().URLsForDirectory
+        let documentsDirectory = paths.objectAtIndex(0) as String
+        let path = documentsDirectory.stringByAppendingPathComponent("sendData")
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            NSFileManager.defaultManager().removeItemAtPath(path, error: nil)
         }
         
-        let filePath = getFileURL("sendData.dat").path!
+        let sendData = NSKeyedArchiver.archivedDataWithRootObject(dictToSend)
+        if sendData.length == 0 {
+            println("Send Data is empty")
+            return
+        } else {
+            println(sendData.length)
+        }
         
-        println(dictToSend)
+        var writeErr : NSError?
+        if !sendData.writeToFile(path, options: nil, error: &writeErr) {
+            println(writeErr!.localizedDescription)
+            return
+        }
         
-        NSKeyedArchiver.archiveRootObject(dictToSend, toFile: filePath)
+        for peer in mcSession.connectedPeers as [MCPeerID] {
+            self.sendDataFromUrl(path, peer: peer)
+        }
+    }
+    
+    func sendDataFromUrl(url: NSURL, peer: MCPeerID) {
+        progressIndicator.alpha = 1.0
         
+        if mcSession == nil {
+            println("Session is nil")
+        }
+        let testData = NSData(contentsOfURL: url)
+        let testDict = NSKeyedUnarchiver.unarchiveObjectWithData(testData!) as NSDictionary
+        println(testDict)
+        
+        var progress : NSProgress = mcSession!.sendResourceAtURL(url, withName: "sendData", toPeer: peer) { (sendError) -> Void in
+            if sendError != nil {
+                println(sendError)
+            } else {
+                println("Sent all data to \(peer.displayName)!")
+            }
+        }
+        
+        progress.addObserver(self, forKeyPath: kProgressCancelledKeyPath, options: NSKeyValueObservingOptions.New, context: nil)
+        progress.addObserver(self, forKeyPath: kProgressCompletedUnitCountKeyPath, options: NSKeyValueObservingOptions.New, context: nil)
+        progressIndicator.tintColor = .greenColor()
+        progressIndicator.progress = Float(progress.fractionCompleted)
+    }
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        var progress : NSProgress = object as NSProgress
+        switch keyPath {
+        case kProgressCancelledKeyPath:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.progressIndicator.progress = 0
+            })
+        case kProgressCompletedUnitCountKeyPath:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.progressIndicator.progress = Float(progress.fractionCompleted)
+            })
+        default:
+            return
+        }
     }
     
     func closeShareView(){
@@ -461,6 +513,11 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     var mcSession : MCSession!
     var peerID : MCPeerID!
     
+    var kProgressCancelledKeyPath = "cancelled";
+    
+    var kProgressCompletedUnitCountKeyPath = "completedUnitCount";
+
+    
     var isBrowsing = false
     
     func setUpMultipeer(){
@@ -479,14 +536,6 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         isBrowsing = false
-    }
-    
-    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
-            
-            println("SUCCESS!! RECEIVED \(data.length) BITS OF DATA!!!")
-        })
     }
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
@@ -514,7 +563,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                 }
                 if self.mcSession.connectedPeers.count == 0 {
                     self.shareBtn.alpha = 0.5
-//                    self.shareBtn.enabled = false
+                    self.shareBtn.enabled = false
                 }
             })
             
@@ -523,13 +572,37 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         }
     }
     
-    
-    // Dumb required functions
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
-        // Dumb required function
+        progress.addObserver(self, forKeyPath: kProgressCancelledKeyPath, options: NSKeyValueObservingOptions.New, context: nil)
+        progress.addObserver(self, forKeyPath: kProgressCompletedUnitCountKeyPath, options: NSKeyValueObservingOptions.New, context: nil)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.progressIndicator.alpha = 1.0
+            self.progressIndicator.tintColor = UIColor(red: 51.0/255.0, green:153.0/255.0, blue:255.0/255.0, alpha:1.0)
+        })
     }
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        // Another dumb required function
+        let manager = NSFileManager.defaultManager()
+        let dirURL = manager.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)
+        let receivedDataURL = dirURL!.URLByAppendingPathComponent("receivedData")
+        
+        var moveErr: NSError?
+        manager.moveItemAtURL(localURL, toURL: receivedDataURL, error: &moveErr)
+        if moveErr != nil {
+            println(moveErr!.localizedDescription)
+        }
+    }
+    func updateCoreDataFromTransfer() {
+        let manager = NSFileManager.defaultManager()
+        let dirURL = manager.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)
+        let receivedDataURL = dirURL!.URLByAppendingPathComponent("receivedData")
+        
+        let receivedDataDict = NSDictionary(contentsOfURL: receivedDataURL)
+        println("RECEIVED DATA: \(receivedDataDict)")
+    }
+    
+    // Dumb required functions
+    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
+        println("SUCCESS!! RECEIVED \(data.length) BITS OF DATA!!!")
     }
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
         // Third and final dumb required function
