@@ -2,7 +2,7 @@
 //  Match.swift
 //  FRC Scout
 //
-//  Created by Louie Bertoncin on 2/21/15.
+//  Created by David Swed on 2/22/15.
 //  Copyright (c) 2015 David Swed. All rights reserved.
 //
 
