@@ -18,6 +18,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var titleBar: UINavigationItem!
     @IBOutlet weak var teamNameLbl: UILabel!
+    @IBOutlet weak var teamPicView: UIImageView!
     @IBOutlet weak var autoStrengthScoreLbl: UILabel!
     @IBOutlet weak var teleScoreLbl: UILabel!
     @IBOutlet weak var toteScoreLbl: UILabel!
@@ -73,6 +74,9 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         if(pitTeamResults.count > 0){
             var pitTeam = pitTeamResults[0] as PitTeam
             teamNameLbl.text = pitTeam.teamName
+            if let picture = UIImage(data: pitTeam.picture) {
+                teamPicView.image = picture
+            }
         }
         else {
             teamNameLbl.text = "No Pit Scouting Name"

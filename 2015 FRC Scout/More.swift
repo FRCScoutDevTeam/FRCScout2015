@@ -905,6 +905,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         default:
             return
         }
+    }
 
     @IBAction func deleteMatchesPressed(sender: AnyObject) {
         let alertController = UIAlertController(title: "All Match Data will be lost", message: "Are you Sure?", preferredStyle: .Alert)
