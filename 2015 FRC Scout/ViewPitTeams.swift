@@ -66,6 +66,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
         
         let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        tapDismiss.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapDismiss)
         
     }

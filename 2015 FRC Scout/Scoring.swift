@@ -2034,7 +2034,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
     // *********** Multipeer Connectivity *********** //
     // ********************************************** //
 
-    let serviceType = "FRCScout"
+    let serviceType = "FRCScoutInsta"
 
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!

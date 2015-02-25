@@ -8,6 +8,8 @@
 
 import UIKit
 
+let AUTOCOLOR = UIColor(red: 227.0/255.0, green: 110.0/255.0, blue: 25.0/255.0, alpha: 1.0)
+
 let SWIPECONFIRMKEY = "SwipeConfrimed"
 let WEEKSELECTEDKEY = "WeekSelected"
 let REGIONALSELECTEDKEY = "RegionalSelected"

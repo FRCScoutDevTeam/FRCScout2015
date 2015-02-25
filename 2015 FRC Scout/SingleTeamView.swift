@@ -33,6 +33,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         autoBackGround.layer.cornerRadius = 5
+        autoBackGround.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).CGColor
         tableView.layer.borderWidth = 2
         tableView.layer.cornerRadius = 5
         tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
@@ -128,7 +129,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         var trY: CGFloat = 230
         tableView.userInteractionEnabled = false
         var grayOutColor = UIColor(white: 0.5, alpha: 0.5)
-        var autoColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 0.3)
+        var autoColor = AUTOCOLOR
         var teleColor = UIColor(red: 0.55, green: 0.4, blue: 0.25, alpha: 0.3)
         
         //gray out back ground
@@ -229,7 +230,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
                 var score = UILabel(frame: CGRect(x: cX + 3 + (x * detailViewWidth * 0.42) , y: trY + lblHeight * y, width: scoreWidth , height: scoreHeight))
                 score.text = teleData[count]
                 score.textAlignment = NSTextAlignment.Left
-                score.font = UIFont(name: "System", size: 15)
+                score.font = UIFont(name: "System Bold", size: 15)
                 detailView.addSubview(score)
                 
                 

@@ -64,6 +64,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
 
         let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        tapDismiss.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapDismiss)
         
     }
@@ -74,8 +75,9 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     }
     
     
+    
     override func viewDidAppear(animated: Bool) {
-
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
