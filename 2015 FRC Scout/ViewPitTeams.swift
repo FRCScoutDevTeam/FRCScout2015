@@ -66,6 +66,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
         
         let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        tapDismiss.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapDismiss)
         
     }
@@ -73,10 +74,6 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     //Hides keyboard if the screen is tapped
     func screenTapped(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
     }
 
     
@@ -98,7 +95,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         var detailViewWidth: CGFloat = screenW*0.75
         var detailViewHeight: CGFloat = screenH*0.55
         var detailViewX: CGFloat = (screenW/2) - (detailViewWidth/2)
-        var detailViewY: CGFloat = (screenH/2) - (detailViewHeight/2)
+        var detailViewY: CGFloat = (screenH/2) - (detailViewHeight/2) - 50
         
         var closeBtnWidth: CGFloat = (detailViewWidth * 0.15)
         var closeBtnHeight: CGFloat = 35
@@ -131,15 +128,20 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         closeBtn.titleLabel?.textAlignment = NSTextAlignment.Center
         detailView.addSubview(closeBtn)
         
+        let teamPicView = UIImageView(frame: CGRect(x: 130, y: 30, width: 120, height: 120))
+        teamPicView.image = UIImage(data: selectedData.picture)
+        teamPicView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+        detailView.addSubview(teamPicView)
+        
         //Team Number
-        var teamNumberLbl = UILabel(frame: CGRect(x: detailViewWidth*0.75 - 50, y: detailViewHeight*0.1, width: 100, height: 40))
+        var teamNumberLbl = UILabel(frame: CGRect(x: detailViewWidth*0.5 + 50, y: detailViewHeight*0.1, width: 100, height: 40))
         teamNumberLbl.text = "\(selectedData.teamNumber)"
         teamNumberLbl.font = UIFont(name: "Futura-CondensedExtraBold", size: 35)
         teamNumberLbl.textAlignment = NSTextAlignment.Center
         detailView.addSubview(teamNumberLbl)
         
         //Team Name
-        var teamNameLbl = UILabel(frame: CGRect(x: detailViewWidth*0.75-80, y: detailViewHeight*0.1 + 43, width: 160, height: 25))
+        var teamNameLbl = UILabel(frame: CGRect(x: teamNumberLbl.center.x - 80, y: detailViewHeight*0.1 + 43, width: 160, height: 25))
         teamNameLbl.text = selectedData.teamName
         teamNameLbl.font = UIFont(name: "Heiti SC", size: 15)
         teamNameLbl.textAlignment = NSTextAlignment.Center
@@ -162,7 +164,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
                 infoLbl.adjustsFontSizeToFitWidth = true
                 infoLbl.textAlignment = NSTextAlignment.Center
                 infoLbl.layer.cornerRadius = 5
-                infoLbl.backgroundColor = UIColor.lightGrayColor()
+                infoLbl.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
                 infoLbl.font = UIFont(name: "Heiti SC", size: 15)
                 infoLbl.clipsToBounds = true
                 detailView.addSubview(infoLbl)
@@ -191,7 +193,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
             infoLbl.adjustsFontSizeToFitWidth = true
             infoLbl.textAlignment = NSTextAlignment.Center
             infoLbl.layer.cornerRadius = 5
-            infoLbl.backgroundColor = UIColor.lightGrayColor()
+            infoLbl.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
             infoLbl.font = UIFont(name: "Heiti SC", size: 15)
             infoLbl.clipsToBounds = true
             detailView.addSubview(infoLbl)
