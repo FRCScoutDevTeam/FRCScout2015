@@ -2,7 +2,7 @@
 //  Team.swift
 //  FRC Scout
 //
-//  Created by David Swed on 2/16/15.
+//  Created by Louie Bertoncin on 2/21/15.
 //  Copyright (c) 2015 David Swed. All rights reserved.
 //
 
@@ -14,14 +14,14 @@ class Team: NSManagedObject {
 
     @NSManaged var autoStrength: NSNumber
     @NSManaged var containerAvg: NSNumber
+    @NSManaged var coopStackAvg: NSNumber
+    @NSManaged var noodlesInContainerAvg: NSNumber
+    @NSManaged var noodlesInLandFillAvg: NSNumber
+    @NSManaged var penaltyAvg: NSNumber
+    @NSManaged var stacksKnockedOverAvg: NSNumber
     @NSManaged var teamNumber: NSNumber
     @NSManaged var teleAvg: NSNumber
     @NSManaged var toteAvg: NSNumber
-    @NSManaged var noodlesInContainerAvg: NSNumber
-    @NSManaged var noodlesInLandFillAvg: NSNumber
-    @NSManaged var coopStackAvg: NSNumber
-    @NSManaged var penaltyAvg: NSNumber
-    @NSManaged var stacksKnockedOverAvg: NSNumber
     @NSManaged var uniqueID: NSNumber
     @NSManaged var masterTeam: MasterTeam
     @NSManaged var matches: NSSet

@@ -27,7 +27,13 @@ extension MasterTeam {
             newMasterTeam = NSEntityDescription.insertNewObjectForEntityForName("MasterTeam", inManagedObjectContext: context) as? MasterTeam
             newMasterTeam?.teamNumber = teamNumber
             newMasterTeam?.uniqueID = Int(NSDate().timeIntervalSince1970)
-            println("Master Team Created")
+            
+            var error: NSError? = nil
+            if !context.save(&error) {
+                println("Saving error \(error), \(error?.userInfo)")
+            } else {
+                println("Saved a MasterTeam with number: \(newMasterTeam!.teamNumber)")
+            }
         }
         
         return newMasterTeam!

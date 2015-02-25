@@ -27,13 +27,14 @@ extension Match {
         stacks.removeObject(value)
     }
     
-    class func createMatch(matchDict:[String:AnyObject], team: Team, context: NSManagedObjectContext) -> Match {
+    class func createMatch(matchDict:[String:AnyObject], m_team: Team, context: NSManagedObjectContext) -> Match {
         var match : Match?
+        var team = m_team
         var requestMatch = NSFetchRequest(entityName: "Match")
         requestMatch.predicate = NSPredicate(format: "(team.teamNumber = %@) AND (matchNum = %@) AND (team.regional.name = %@)", team.teamNumber,matchDict["matchNum"] as String,team.regional.name)
         var matchResults = context.executeFetchRequest(requestMatch, error: nil) as [Match]!
-        if(matchResults?.count > 0){
-            match = matchResults?.first
+        if(matchResults.count > 0){
+            match = matchResults.first
             println("pre existing match found")
         } else {
             match = NSEntityDescription.insertNewObjectForEntityForName("Match", inManagedObjectContext: context) as? Match
@@ -53,13 +54,19 @@ extension Match {
             match?.uniqueID = matchDict["uniqueID"] as NSNumber
             match?.scoutInitials = matchDict["scoutInitials"] as String
             match?.scoutPosition = matchDict["scoutPosition"] as NSNumber
-            println("match created")
+            match?.notes = matchDict["notes"] as String
+            match?.team = team
+            team.addMatch(match!)
+            team = dataCalc.calculateAverages(team)
+            
+            var error: NSError? = nil
+            if !context.save(&error) {
+                println("Saving error \(error), \(error?.userInfo)")
+            } else {
+                println("Saved a Match with number: \(match!.matchNum)")
+            }
+            
         }
-        
-        
-        
-        match?.team = team
-        team.addMatch(match!)
         
         return match!
     }
