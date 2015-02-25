@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
 		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
-		28B704FA1A9928A200E61417 /* Regional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B704F91A9928A200E61417 /* Regional.swift */; };
-		28B704FC1A9928A300E61417 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B704FB1A9928A300E61417 /* Match.swift */; };
-		28B704FE1A9928A300E61417 /* MasterTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B704FD1A9928A300E61417 /* MasterTeam.swift */; };
-		28B705001A9928A300E61417 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B704FF1A9928A300E61417 /* Team.swift */; };
-		28B705021A9928A300E61417 /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B705011A9928A300E61417 /* CoopStack.swift */; };
-		28B705041A9928A300E61417 /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B705031A9928A300E61417 /* PitTeam.swift */; };
-		28B705061A9928A300E61417 /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B705051A9928A300E61417 /* ToteStack.swift */; };
+		E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */; };
+		E10B8B821A9AF0B80045D0CB /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B811A9AF0B80045D0CB /* ToteStack.swift */; };
+		E10B8B841A9AF0B80045D0CB /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B831A9AF0B80045D0CB /* CoopStack.swift */; };
+		E10B8B861A9AF0B80045D0CB /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B851A9AF0B80045D0CB /* Team.swift */; };
+		E10B8B881A9AF0B80045D0CB /* MasterTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B871A9AF0B80045D0CB /* MasterTeam.swift */; };
+		E10B8B8A1A9AF0B80045D0CB /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B891A9AF0B80045D0CB /* Match.swift */; };
+		E10B8B8C1A9AF0B80045D0CB /* Regional.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B8B1A9AF0B80045D0CB /* Regional.swift */; };
 		E12F4B541A94503C00AAE0C6 /* PitTeamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F4B531A94503C00AAE0C6 /* PitTeamExtension.swift */; };
 		E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */; };
 		E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */; };
@@ -54,13 +54,13 @@
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
-		28B704F91A9928A200E61417 /* Regional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regional.swift; sourceTree = "<group>"; };
-		28B704FB1A9928A300E61417 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
-		28B704FD1A9928A300E61417 /* MasterTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTeam.swift; sourceTree = "<group>"; };
-		28B704FF1A9928A300E61417 /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
-		28B705011A9928A300E61417 /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoopStack.swift; sourceTree = "<group>"; };
-		28B705031A9928A300E61417 /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeam.swift; sourceTree = "<group>"; };
-		28B705051A9928A300E61417 /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToteStack.swift; sourceTree = "<group>"; };
+		E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitTeam.swift; path = ../PitTeam.swift; sourceTree = "<group>"; };
+		E10B8B811A9AF0B80045D0CB /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToteStack.swift; path = ../ToteStack.swift; sourceTree = "<group>"; };
+		E10B8B831A9AF0B80045D0CB /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoopStack.swift; path = ../CoopStack.swift; sourceTree = "<group>"; };
+		E10B8B851A9AF0B80045D0CB /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Team.swift; path = ../Team.swift; sourceTree = "<group>"; };
+		E10B8B871A9AF0B80045D0CB /* MasterTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MasterTeam.swift; path = ../MasterTeam.swift; sourceTree = "<group>"; };
+		E10B8B891A9AF0B80045D0CB /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Match.swift; path = ../Match.swift; sourceTree = "<group>"; };
+		E10B8B8B1A9AF0B80045D0CB /* Regional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Regional.swift; path = ../Regional.swift; sourceTree = "<group>"; };
 		E12F4B531A94503C00AAE0C6 /* PitTeamExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitTeamExtension.swift; sourceTree = "<group>"; };
 		E16EBB891A898A1B007D6E29 /* PitScoutingNav.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitScoutingNav.swift; sourceTree = "<group>"; };
 		E16EBB8B1A89BACE007D6E29 /* ViewPitTeams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPitTeams.swift; sourceTree = "<group>"; };
@@ -162,13 +162,13 @@
 		E1B5154D1A8714E000C48D6F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				28B705051A9928A300E61417 /* ToteStack.swift */,
-				28B705031A9928A300E61417 /* PitTeam.swift */,
-				28B705011A9928A300E61417 /* CoopStack.swift */,
-				28B704FF1A9928A300E61417 /* Team.swift */,
-				28B704FD1A9928A300E61417 /* MasterTeam.swift */,
-				28B704FB1A9928A300E61417 /* Match.swift */,
-				28B704F91A9928A200E61417 /* Regional.swift */,
+				E10B8B8B1A9AF0B80045D0CB /* Regional.swift */,
+				E10B8B891A9AF0B80045D0CB /* Match.swift */,
+				E10B8B871A9AF0B80045D0CB /* MasterTeam.swift */,
+				E10B8B851A9AF0B80045D0CB /* Team.swift */,
+				E10B8B831A9AF0B80045D0CB /* CoopStack.swift */,
+				E10B8B811A9AF0B80045D0CB /* ToteStack.swift */,
+				E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */,
 				E14582301A929C5800594658 /* Extensions */,
 			);
 			name = ManagedObjects;
@@ -285,7 +285,7 @@
 				TargetAttributes = {
 					E1F4BED01A608DF10091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 44423KM89M;
+						DevelopmentTeam = 3JKUTS9N3N;
 					};
 					E1F4BEE71A608DF20091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -338,33 +338,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1A4D7091A8C4FBC00FCF562 /* MasterTeamExtension.swift in Sources */,
+				E10B8B841A9AF0B80045D0CB /* CoopStack.swift in Sources */,
 				E1F4BEFE1A6090090091EA2E /* More.swift in Sources */,
 				E1F9F8D51A8C6E4400709C9D /* DataCalculator.swift in Sources */,
 				E1F4BEFC1A608FE90091EA2E /* Data.swift in Sources */,
 				E1F9F8DD1A8D147B00709C9D /* MatchCell.swift in Sources */,
+				E10B8B881A9AF0B80045D0CB /* MasterTeam.swift in Sources */,
 				E16EBB8E1A89BED0007D6E29 /* PitTeamCell.swift in Sources */,
 				E1A4D7071A8C4A2600FCF562 /* TeamExtension.swift in Sources */,
-				28B704FC1A9928A300E61417 /* Match.swift in Sources */,
 				E1F4BF001A6090630091EA2E /* (null) in Sources */,
-				28B704FA1A9928A200E61417 /* Regional.swift in Sources */,
 				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
+				E10B8B8A1A9AF0B80045D0CB /* Match.swift in Sources */,
 				E1A4D6FB1A8C333900FCF562 /* TeamListCell.swift in Sources */,
 				E1F9F8DB1A8CFC1200709C9D /* SingleTeamView.swift in Sources */,
-				28B705001A9928A300E61417 /* Team.swift in Sources */,
-				28B705041A9928A300E61417 /* PitTeam.swift in Sources */,
 				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
-				28B704FE1A9928A300E61417 /* MasterTeam.swift in Sources */,
+				E10B8B861A9AF0B80045D0CB /* Team.swift in Sources */,
 				E1A4D7031A8C449500FCF562 /* RegionalExtension.swift in Sources */,
 				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
-				28B705061A9928A300E61417 /* ToteStack.swift in Sources */,
 				E1A4D6F91A8C300300FCF562 /* TeamList.swift in Sources */,
+				E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */,
 				28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */,
+				E10B8B8C1A9AF0B80045D0CB /* Regional.swift in Sources */,
 				E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */,
 				E12F4B541A94503C00AAE0C6 /* PitTeamExtension.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
+				E10B8B821A9AF0B80045D0CB /* ToteStack.swift in Sources */,
 				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,
-				28B705021A9928A300E61417 /* CoopStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -75,8 +75,9 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     }
     
     
+    
     override func viewDidAppear(animated: Bool) {
-
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
