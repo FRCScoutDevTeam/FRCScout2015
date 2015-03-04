@@ -109,7 +109,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         let shareLbl = UILabel(frame: CGRect(x: shareFrame.width/2 - 100, y: 15, width: 200, height: 30))
         shareLbl.font = UIFont.boldSystemFontOfSize(23)
         shareLbl.textAlignment = .Center
-        shareLbl.text = "Share Matches"
+        shareLbl.text = "Share Data"
         shareView.addSubview(shareLbl)
 
         let nameLbl = UILabel(frame: CGRect(x: xC1 - labelWidth/2, y: yStart, width: labelWidth, height: labelHeight))
@@ -905,6 +905,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         default:
             return
         }
+    }
 
     @IBAction func deleteMatchesPressed(sender: AnyObject) {
         let alertController = UIAlertController(title: "All Match Data will be lost", message: "Are you Sure?", preferredStyle: .Alert)

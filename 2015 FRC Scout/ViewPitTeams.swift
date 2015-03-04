@@ -246,6 +246,7 @@ class ViewPitTeams: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     
     func configureCell(cell: PitTeamCell, indexPath: NSIndexPath) {
         let team = self.fetchedResultsController.objectAtIndexPath(indexPath) as PitTeam
+        cell.robotPic.image = UIImage(data: team.picture)
         cell.teamNumberLbl.text = "\(team.teamNumber)"
         cell.teamNameLbl.text = team.teamName
     }

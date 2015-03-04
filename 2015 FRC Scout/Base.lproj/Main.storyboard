@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Scoring-->
@@ -1857,6 +1857,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="QO2-pD-IRp">
+                                <rect key="frame" x="92" y="116" width="190" height="190"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1867,6 +1872,7 @@
                         <outlet property="containerScoreLbl" destination="810-Fi-ZMi" id="VPJ-o3-gLz"/>
                         <outlet property="tableView" destination="1sY-zu-Hlm" id="F0F-ub-Bie"/>
                         <outlet property="teamNameLbl" destination="qgL-qT-9Qc" id="a2j-XZ-xvV"/>
+                        <outlet property="teamPicView" destination="QO2-pD-IRp" id="GZR-P4-2yB"/>
                         <outlet property="teleScoreLbl" destination="qyQ-ib-Wg3" id="jcV-Xo-eWY"/>
                         <outlet property="titleBar" destination="XRx-uu-MKB" id="oer-o8-wjH"/>
                         <outlet property="toteScoreLbl" destination="vpR-ox-DHx" id="wvf-gs-FDm"/>
@@ -1876,7 +1882,7 @@
             </objects>
             <point key="canvasLocation" x="3055" y="2992"/>
         </scene>
-        <!--View Pit Teams-->
+        <!--Pit Scouted Teams-->
         <scene sceneID="uig-gj-KH1">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="2ca-wP-ZKX" customClass="ViewPitTeams" customModule="FRC_Scout" customModuleProvider="target" sceneMemberID="viewController">
@@ -1903,28 +1909,28 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MFo-xI-N7P" id="UAC-a5-yf0">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jlu-vL-xee">
-                                                    <rect key="frame" x="181" y="37" width="79" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="Jlu-vL-xee">
+                                                    <rect key="frame" x="101" y="38" width="79" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Futura-CondensedExtraBold" family="Futura" pointSize="22"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ho0-NQ-mE7">
-                                                    <rect key="frame" x="311" y="37" width="272" height="22"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="Ho0-NQ-mE7">
+                                                    <rect key="frame" x="203" y="39" width="525" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="21"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="F3A-tD-tkc" userLabel="RobotPic">
-                                                    <rect key="frame" x="0.0" y="0.0" width="5236" height="759"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnknownBot" id="zr4-8t-hgd" userLabel="RobotImageView">
+                                                    <rect key="frame" x="17" y="14" width="70" height="70"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="robotPic" destination="F3A-tD-tkc" id="zoM-pm-6F1"/>
+                                            <outlet property="robotPic" destination="zr4-8t-hgd" id="MfG-He-Dw9"/>
                                             <outlet property="teamNameLbl" destination="Ho0-NQ-mE7" id="6md-5h-YbK"/>
                                             <outlet property="teamNumberLbl" destination="Jlu-vL-xee" id="9h8-kI-qEv"/>
                                         </connections>
@@ -1938,7 +1944,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="XqN-1w-dGl"/>
+                    <navigationItem key="navigationItem" title="Pit Scouted Teams" id="XqN-1w-dGl"/>
                     <connections>
                         <outlet property="searchBar" destination="x6P-JU-Wrf" id="OIK-G8-sDm"/>
                         <outlet property="tableView" destination="Tus-JB-uLY" id="Imq-PY-4uh"/>
@@ -1946,7 +1952,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4es-YF-bzf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2776" y="1730"/>
+            <point key="canvasLocation" x="3067" y="1664"/>
         </scene>
         <!--More-->
         <scene sceneID="myI-RE-BFC">
@@ -1987,7 +1993,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.14526967530000001" green="0.5852209652" blue="0.83163855819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <state key="normal" title="Share Matches">
+                                <state key="normal" title="Share Data">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2090,6 +2096,7 @@
         <image name="ToteStackOutline" width="121" height="199"/>
         <image name="ToteYellowArrow" width="64" height="47"/>
         <image name="ToteYellowOutline" width="121" height="66"/>
+        <image name="UnknownBot" width="160" height="160"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

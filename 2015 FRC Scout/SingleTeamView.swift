@@ -18,6 +18,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var titleBar: UINavigationItem!
     @IBOutlet weak var teamNameLbl: UILabel!
+    @IBOutlet weak var teamPicView: UIImageView!
     @IBOutlet weak var autoStrengthScoreLbl: UILabel!
     @IBOutlet weak var teleScoreLbl: UILabel!
     @IBOutlet weak var toteScoreLbl: UILabel!
@@ -73,6 +74,9 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         if(pitTeamResults.count > 0){
             var pitTeam = pitTeamResults[0] as PitTeam
             teamNameLbl.text = pitTeam.teamName
+            if let picture = UIImage(data: pitTeam.picture) {
+                teamPicView.image = picture
+            }
         }
         else {
             teamNameLbl.text = "No Pit Scouting Name"
@@ -144,10 +148,11 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         grayOutView.addSubview(detailView)
         
         //MatchNumber
-        var matchNumberLbl = UILabel(frame: CGRect(x: detailViewWidth*0.5 - 50, y: 5, width: 100, height: 40))
+        var matchNumberLbl = UILabel(frame: CGRect(x: detailViewWidth/2 - 150, y: 5, width: 300, height: 40))
         matchNumberLbl.text = "Match " + match.matchNum
         matchNumberLbl.font = UIFont(name: "Futura-CondensedExtraBold", size: 35)
         matchNumberLbl.textAlignment = NSTextAlignment.Center
+        matchNumberLbl.adjustsFontSizeToFitWidth = true
         detailView.addSubview(matchNumberLbl)
         
         //auto Stat box
@@ -239,8 +244,8 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         
-        var closeBtn = UIButton(frame: CGRect(x: detailViewWidth - closeBtnWidth - 5, y: 5, width: closeBtnWidth, height:closeBtnHeight))
-        //var closeBtn = UIButton(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
+        var closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.frame = CGRect(x: detailViewWidth - closeBtnWidth - 5, y: 5, width: closeBtnWidth, height:closeBtnHeight)
         closeBtn.addTarget(nil, action: Selector("closeDetailView"), forControlEvents: UIControlEvents.TouchUpInside)
         closeBtn.setTitle("Close X", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
@@ -248,14 +253,14 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         closeBtn.titleLabel?.textAlignment = NSTextAlignment.Center
         detailView.addSubview(closeBtn)
         
-        var notesLbl = UILabel(frame: CGRect(x: detailViewWidth * 0.05 + 75 , y: detailViewHeight - 130, width: 100 , height: 25))
+        var notesLbl = UILabel(frame: CGRect(x: detailViewWidth/2 - 50 , y: detailViewHeight - 130, width: 100 , height: 25))
         notesLbl.text = "Notes"
         notesLbl.textAlignment = NSTextAlignment.Center
         notesLbl.font = UIFont(name: "System", size: 15)
         detailView.addSubview(notesLbl)
         
-        var notesView = UITextView(frame: CGRect(x: detailViewWidth * 0.05, y: detailViewHeight - 105, width: 250, height: 90))
-        notesView.text = ""
+        var notesView = UITextView(frame: CGRect(x: detailViewWidth/2 - 125, y: detailViewHeight - 105, width: 250, height: 90))
+        notesView.text = match.notes
         notesView.textAlignment = NSTextAlignment.Center
         notesView.layer.borderColor = UIColor.lightGrayColor().CGColor
         notesView.layer.borderWidth = 1
