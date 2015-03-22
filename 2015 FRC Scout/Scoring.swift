@@ -1933,6 +1933,11 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             coopStackData.append(newCoopStack)
         }
         var matchUniqueID =  Int(NSDate().timeIntervalSince1970)
+        if postMatchNotesTextView.textColor == UIColor.blackColor() {
+            tempNotes = postMatchNotesTextView.text
+        } else {
+            tempNotes = nil
+        }
         var matchDict = [
             "autoContainers": numAutoContainers,
             "autoTotes": numAutoTotes,
@@ -1954,59 +1959,113 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         
         var match = Match.createMatch(matchDict, m_team: teamData, context: context)
         
-        //teamData = dataCalc.calculateAverages(teamData)
         
-        
+        if match.uniqueID.integerValue != matchUniqueID {
+            let duplicateAlert = UIAlertController(title: "Duplicate Match!", message: "You are attempting to save a duplicate match!\nWould you like to overwrite it?", preferredStyle: .Alert)
+            let noAction = UIAlertAction(title: "Keep the old match", style: .Default, handler: { (action) -> Void in
+                self.sendToConnectedScouts(match)
+                
+                var saveErr : NSError?
+                if !context.save(&saveErr) {
+                    println(saveErr!.localizedDescription)
+                } else {
+                    var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+                
+                self.dismissPostMatchNotes(true)
+            })
+            duplicateAlert.addAction(noAction)
+            let yesAction = UIAlertAction(title: "Overwrite old match", style: .Default, handler: { (action) -> Void in
+                context.deleteObject(match)
+                match = Match.createMatch(matchDict, m_team: teamData, context: context)
+                
+                self.sendToConnectedScouts(match)
+                
+                var saveErr : NSError?
+                if !context.save(&saveErr) {
+                    println(saveErr!.localizedDescription)
+                } else {
+                    var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+                
+                self.dismissPostMatchNotes(true)
+            })
+            duplicateAlert.addAction(yesAction)
+            self.presentViewController(duplicateAlert, animated: true, completion: nil)
+        } else {
+            self.sendToConnectedScouts(match)
+            
+            var saveErr : NSError?
+            if !context.save(&saveErr) {
+                println(saveErr!.localizedDescription)
+            } else {
+                var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            
+            dismissPostMatchNotes(true)
+        }
+    }
+    
+    func sendToConnectedScouts(match: Match) {
         if mcSession.connectedPeers.count > 0 {
             var sendToteStacks = Array<Array<Int>>()
-            for var i = 0; i < toteStacks.count; ++i {
-                let stack = toteStacks[i]
-                let numTotes = stack.totes.count
+            let toteStackArray = match.toteStacks.allObjects as [ToteStack]
+            for var i = 0; i < toteStackArray.count; ++i {
+                let stack = toteStackArray[i]
                 var toteStack = [Int](count: 7, repeatedValue: 0)
-                if(numTotes >= 1) {toteStack[0] = (stack.totes[0]) ? 2:1} else {toteStack[0] = 0}
-                if(numTotes >= 2) {toteStack[1] = (stack.totes[1]) ? 2:1} else {toteStack[1] = 0}
-                if(numTotes >= 3) {toteStack[2] = (stack.totes[2]) ? 2:1} else {toteStack[2] = 0}
-                if(numTotes >= 4) {toteStack[3] = (stack.totes[3]) ? 2:1} else {toteStack[3] = 0}
-                if(numTotes >= 5) {toteStack[4] = (stack.totes[4]) ? 2:1} else {toteStack[4] = 0}
-                if(numTotes >= 6) {toteStack[5] = (stack.totes[5]) ? 2:1} else {toteStack[5] = 0}
-                toteStack[6] = stack.containerLvl
+                toteStack[0] = stack.tote1 as Int
+                toteStack[1] = stack.tote2 as Int
+                toteStack[2] = stack.tote3 as Int
+                toteStack[3] = stack.tote4 as Int
+                toteStack[4] = stack.tote5 as Int
+                toteStack[5] = stack.tote6 as Int
+                toteStack[6] = stack.containerLvl as Int
                 sendToteStacks.append(toteStack)
             }
             
             var sendCoopStacks = Array<Array<Int>>()
-            for var i = 0; i < coopStacks.count; ++i {
-                let stack = coopStacks[i]
-                let numTotes = stack.totes.count
+            let coopStackArray = match.coopStacks.allObjects as [CoopStack]
+            for var i = 0; i < coopStackArray.count; ++i {
+                let stack = coopStackArray[i]
                 var coopStack = [Int](count: 4, repeatedValue: 0)
-                if(numTotes >= 1) {coopStack[0] = (stack.totes[0]) ? 2:1} else {coopStack[0] = 0}
-                if(numTotes >= 2) {coopStack[1] = (stack.totes[1]) ? 2:1} else {coopStack[1] = 0}
-                if(numTotes >= 3) {coopStack[2] = (stack.totes[2]) ? 2:1} else {coopStack[2] = 0}
-                if(numTotes >= 4) {coopStack[3] = (stack.totes[3]) ? 2:1} else {coopStack[3] = 0}
+                coopStack[0] = stack.tote1 as Int
+                coopStack[1] = stack.tote2 as Int
+                coopStack[2] = stack.tote3 as Int
+                coopStack[3] = stack.tote4 as Int
                 sendCoopStacks.append(coopStack)
             }
             
             var sendMatchDict = [
-                "autoContainers": numAutoContainers,
-                "autoTotes": numAutoTotes,
-                "numCoopStacks": numCoopStacks,
-                "numStacks": numStacks,
-                "noodlesInContainer": numNoodlesInContainer,
-                "penalty": numPenalties,
-                "stacksKnockedOver": numStacksKnockedOver,
-                "noodlesInLandFill": numNoodlesPushedInLandfill,
-                "autoDrive": autoDrive,
-                "autoStack": autoStack,
+                "autoContainers": match.autoContainers,
+                "autoTotes": match.autoTotes,
+                "numCoopStacks": match.numCoopStacks,
+                "numStacks": match.numStacks,
+                "noodlesInContainer": match.noodlesInContainer,
+                "penalty": match.penalty,
+                "stacksKnockedOver": match.stacksKnockedOver,
+                "noodlesInLandFill": match.noodlesInLandfill,
+                "autoDrive": match.autoDrive,
+                "autoStack": match.autoStack,
                 "toteStacks": sendToteStacks,
                 "coopStacks": sendCoopStacks,
-                "uniqueID": matchUniqueID,
-                "matchNum": matchNum,
-                "scoutInitials": scoutInitials,
-                "scoutPosition": scoutPosition,
-                "notes": tempNotes ?? ""]
+                "uniqueID": match.uniqueID,
+                "matchNum": match.matchNum,
+                "scoutInitials": match.scoutInitials,
+                "scoutPosition": match.scoutPosition,
+                "notes": match.notes]
             
             var instaShareDict = [
-                "regionalName": regionalName,
-                "masterTeamNum": teamNum,
+                "regionalName": match.team.regional.name,
+                "masterTeamNum": match.team.masterTeam.teamNumber,
                 "matchDict" : sendMatchDict
             ]
             
@@ -2015,18 +2074,6 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             var sendErr : NSError?
             mcSession.sendData(instaShareData, toPeers: mcSession.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &sendErr)
         }
-        
-        var saveErr : NSError?
-        if !context.save(&saveErr) {
-            println(saveErr!.localizedDescription)
-        } else {
-            var alertController = UIAlertController(title: "Save Success!", message: nil, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "Sweet", style: .Cancel, handler: nil)
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-        
-        dismissPostMatchNotes(true)
     }
     
 
@@ -2293,7 +2340,11 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             
             var match = Match.createMatch(matchDict, m_team: teamData, context: context)
             
-            //teamData = dataCalc.calculateAverages(teamData)
+            if match.uniqueID.integerValue != matchDataDict["uniqueID"] as Int {
+                context.deleteObject(match)
+                match = Match.createMatch(matchDict, m_team: teamData, context: context)
+            }
+            
             
             var saveErr : NSError?
             if !context.save(&saveErr) {

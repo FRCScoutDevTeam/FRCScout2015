@@ -12,10 +12,36 @@ import CoreData
 class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate {
     //Items
     @IBOutlet weak var segmentController: UISegmentedControl!
+    @IBOutlet weak var changeSortBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    
+    let CACHENAME = "TeamList"
     
     //Control Variables
     var viewingRegional = false //false for regional list, true for all list
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.layer.borderWidth = 2
+        tableView.layer.cornerRadius = 5
+        tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
+        
+        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
+        tapDismiss.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapDismiss)
+    }
+    
+    //Hides keyboard if the screen is tapped
+    func screenTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.fetchedResultsController.performFetch(nil)
+        self.tableView.reloadData()
+    }
+    
     
     /* `NSFetchedResultsController`
     lazily initialized
@@ -40,7 +66,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         
         /* NSFetchedResultsController initialization
         a `nil` `sectionNameKeyPath` generates a single section */
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: CACHENAME)
         aFetchedResultsController.delegate = self
         self._fetchedResultsController = aFetchedResultsController
         
@@ -55,35 +81,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     }
     var _fetchedResultsController: NSFetchedResultsController?
     
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.layer.borderWidth = 2
-        tableView.layer.cornerRadius = 5
-        tableView.layer.borderColor = UIColor(white: 0.75, alpha: 0.7).CGColor
-
-        let tapDismiss = UITapGestureRecognizer(target: self, action: Selector("screenTapped:"))
-        tapDismiss.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tapDismiss)
-        
-    }
-    
-    //Hides keyboard if the screen is tapped
-    func screenTapped(sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
-    
-    
-    
-    override func viewDidAppear(animated: Bool) {
-        tableView.reloadData()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "OpenSingleTeamView"){
@@ -177,17 +174,91 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
         if(searchText == ""){
-            _fetchedResultsController?.fetchRequest.predicate = NSPredicate(value: true)
+            self.fetchedResultsController.fetchRequest.predicate = nil
         } else if((searchText.toInt()) != nil) {
-            _fetchedResultsController?.fetchRequest.predicate = NSPredicate(format: "teamNumber contains %@", searchText)
+            self.fetchedResultsController.fetchRequest.predicate = NSPredicate(format: "teamNumber contains %@", searchText)
         } 
         
-        _fetchedResultsController?.performFetch(nil)
+        self.fetchedResultsController.performFetch(nil)
         tableView.reloadData()
     }
     
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
         return true
     }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.view.endEditing(true)
+    }
+    
+    
+    @IBAction func changeSortBtnPressed(sender: AnyObject) {
+        let sortController = UIAlertController(title: nil, message: "Change the sorting of the teams", preferredStyle: .ActionSheet)
+        
+        let teleAvgOption = UIAlertAction(title: "Teleop Average", style: .Default) { (action) -> Void in
+            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+            self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "teleAvg", ascending: false)]
+            self.fetchedResultsController.performFetch(nil)
+            self.tableView.reloadData()
+            self.changeSortBtn.setTitle("Tele Avg", forState: .Normal)
+        }
+        if changeSortBtn.titleForState(.Normal) != "Tele Avg" {
+            sortController.addAction(teleAvgOption)
+        }
+        
+        let autoStrengthOption = UIAlertAction(title: "Auto Strength", style: .Default) { (action) -> Void in
+            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+            self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "autoStrength", ascending: false)]
+            self.fetchedResultsController.performFetch(nil)
+            self.tableView.reloadData()
+            self.changeSortBtn.setTitle("Auto Strength", forState: .Normal)
+        }
+        if changeSortBtn.titleForState(.Normal) != "Auto Strength" {
+            sortController.addAction(autoStrengthOption)
+        }
+        
+        let containerOption = UIAlertAction(title: "Container Average", style: .Default) { (action) -> Void in
+            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+            self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "containerAvg", ascending: false)]
+            self.fetchedResultsController.performFetch(nil)
+            self.tableView.reloadData()
+            self.changeSortBtn.setTitle("Container Avg", forState: .Normal)
+        }
+        if changeSortBtn.titleForState(.Normal) != "Container Avg" {
+            sortController.addAction(containerOption)
+        }
+        
+        let toteOption = UIAlertAction(title: "Tote Average", style: .Default) { (action) -> Void in
+            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+            self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "toteAvg", ascending: false)]
+            self.fetchedResultsController.performFetch(nil)
+            self.tableView.reloadData()
+            self.changeSortBtn.setTitle("Tote Avg", forState: .Normal)
+        }
+        if changeSortBtn.titleForState(.Normal) != "Tote Avg" {
+            sortController.addAction(toteOption)
+        }
+        
+        let teamNumOption = UIAlertAction(title: "Team Number", style: .Default) { (action) -> Void in
+            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+            self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "teamNumber", ascending: true)]
+            self.fetchedResultsController.performFetch(nil)
+            self.tableView.reloadData()
+            self.changeSortBtn.setTitle("Team Number", forState: .Normal)
+        }
+        if changeSortBtn.titleForState(.Normal) != "Team Number" {
+            sortController.addAction(teamNumOption)
+        }
+        
+        if let popoverController = sortController.popoverPresentationController {
+            popoverController.sourceView = changeSortBtn
+            popoverController.sourceRect = changeSortBtn.bounds
+        }
+        self.presentViewController(sortController, animated: true, completion: nil)
+    }
+    
+    
+    
 }

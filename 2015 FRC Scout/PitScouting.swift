@@ -119,6 +119,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
         super.viewDidLoad()
         
         let tapToDismiss = UITapGestureRecognizer(target: self, action: Selector("tappedToDismiss:"))
+        tapToDismiss.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapToDismiss)
         
         captureImageButton.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).CGColor
@@ -586,17 +587,16 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
                 "strategy": strategy,
                 "additionalNotes": additionalNotes,
                 "uniqueID": Int(NSDate().timeIntervalSince1970),
-                "picture": UIImagePNGRepresentation(captureImageButton.backgroundImageForState(.Normal))]
+                "picture": UIImagePNGRepresentation(captureImageButton.backgroundImageForState(.Normal) ?? UIImage(named: "UnknownBot"))]
             
             var newPitTeam = PitTeam.createPitTeam(pitDict, masterTeam: masterTeam, context: context)
             
-            context.save(nil)
             let alertController = UIAlertController(title: "Save Complete!", message: "", preferredStyle: .Alert)
 
             let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
             alertController.addAction(defaultAction)
 
-//            presentViewController(alertController, animated: true, completion: nil)
+            presentViewController(alertController, animated: true, completion: nil)
             resetPitScouting()
         }
 

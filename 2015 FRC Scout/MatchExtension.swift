@@ -56,6 +56,8 @@ extension Match {
             match?.scoutPosition = matchDict["scoutPosition"] as NSNumber
             match?.notes = matchDict["notes"] as String
             match?.team = team
+            team.addMatch(match!)
+            team = dataCalc.calculateAverages(team)
             
             var error: NSError? = nil
             if !context.save(&error) {
@@ -65,12 +67,6 @@ extension Match {
             }
             
         }
-        
-        
-        
-        
-        team.addMatch(match!)
-        team = dataCalc.calculateAverages(team)
         
         return match!
     }

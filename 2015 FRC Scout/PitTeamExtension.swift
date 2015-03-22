@@ -45,10 +45,18 @@ extension PitTeam {
             pitTeam!.uniqueID = pitDict["uniqueID"] as NSNumber
             pitTeam!.picture = pitDict["picture"] as NSData
             println("created pit team")
+            
+            pitTeam?.masterTeam = masterTeam
+            masterTeam.pitTeam = pitTeam!
+            
+            var error: NSError? = nil
+            if !context.save(&error) {
+                println("Saving error \(error), \(error?.userInfo)")
+            } else {
+                println("Saved a PitTeam with name: \(pitTeam!.teamNumber)")
+            }
         }
         
-        pitTeam?.masterTeam = masterTeam
-        masterTeam.pitTeam = pitTeam!
         return pitTeam!
     }
     

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
 		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
+		28A5CD611A9DC99D00831073 /* SingleTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5CD601A9DC99D00831073 /* SingleTeamView.swift */; };
 		E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */; };
 		E10B8B821A9AF0B80045D0CB /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B811A9AF0B80045D0CB /* ToteStack.swift */; };
 		E10B8B841A9AF0B80045D0CB /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B831A9AF0B80045D0CB /* CoopStack.swift */; };
@@ -37,7 +38,6 @@
 		E1F4BF001A6090630091EA2E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4BF011A60907A0091EA2E /* PitScouting.swift */; };
 		E1F9F8D51A8C6E4400709C9D /* DataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */; };
-		E1F9F8DB1A8CFC1200709C9D /* SingleTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */; };
 		E1F9F8DD1A8D147B00709C9D /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +54,7 @@
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		28A5CD601A9DC99D00831073 /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
 		E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitTeam.swift; path = ../PitTeam.swift; sourceTree = "<group>"; };
 		E10B8B811A9AF0B80045D0CB /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToteStack.swift; path = ../ToteStack.swift; sourceTree = "<group>"; };
 		E10B8B831A9AF0B80045D0CB /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoopStack.swift; path = ../CoopStack.swift; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		E1F4BEFD1A6090090091EA2E /* More.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = More.swift; sourceTree = "<group>"; };
 		E1F4BF011A60907A0091EA2E /* PitScouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PitScouting.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCalculator.swift; sourceTree = "<group>"; };
-		E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
 		E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,7 +153,7 @@
 				E1A4D6F81A8C300300FCF562 /* TeamList.swift */,
 				E1A4D6FA1A8C333900FCF562 /* TeamListCell.swift */,
 				E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */,
-				E1F9F8DA1A8CFC1200709C9D /* SingleTeamView.swift */,
+				28A5CD601A9DC99D00831073 /* SingleTeamView.swift */,
 				E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */,
 			);
 			name = Data;
@@ -285,7 +285,7 @@
 				TargetAttributes = {
 					E1F4BED01A608DF10091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 3JKUTS9N3N;
+						DevelopmentTeam = 44423KM89M;
 					};
 					E1F4BEE71A608DF20091EA2E = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -350,13 +350,13 @@
 				E1F4BED71A608DF20091EA2E /* AppDelegate.swift in Sources */,
 				E10B8B8A1A9AF0B80045D0CB /* Match.swift in Sources */,
 				E1A4D6FB1A8C333900FCF562 /* TeamListCell.swift in Sources */,
-				E1F9F8DB1A8CFC1200709C9D /* SingleTeamView.swift in Sources */,
 				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
 				E10B8B861A9AF0B80045D0CB /* Team.swift in Sources */,
 				E1A4D7031A8C449500FCF562 /* RegionalExtension.swift in Sources */,
 				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
 				E1A4D6F91A8C300300FCF562 /* TeamList.swift in Sources */,
+				28A5CD611A9DC99D00831073 /* SingleTeamView.swift in Sources */,
 				E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */,
 				28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */,
 				E10B8B8C1A9AF0B80045D0CB /* Regional.swift in Sources */,
@@ -440,7 +440,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -477,7 +477,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -491,6 +491,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "FRC Scout";
 			};
@@ -502,6 +503,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "FRC Scout";
 			};
