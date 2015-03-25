@@ -312,7 +312,7 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         
         for var i: CGFloat = 0; i < CGFloat(imageCodes.count); ++i {
             var image = UIImage(named: imageCodes[Int(i)])
-            var imageView = UIImageView(frame: CGRect(x: 30 + 40 * i, y: cell.bounds.height * 0.4, width: 21, height: 60))
+            var imageView = UIImageView(frame: CGRect(x: 30 + 35 * i, y: cell.bounds.height * 0.4, width: 16, height: 60))
             imageView.image = image
             cell.addSubview(imageView)
         }
