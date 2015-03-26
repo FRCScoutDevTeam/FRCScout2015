@@ -66,7 +66,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         
         /* NSFetchedResultsController initialization
         a `nil` `sectionNameKeyPath` generates a single section */
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: CACHENAME)
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         self._fetchedResultsController = aFetchedResultsController
         
@@ -174,7 +174,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+//        NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
         if(searchText == ""){
             self.fetchedResultsController.fetchRequest.predicate = nil
         } else if((searchText.toInt()) != nil) {
@@ -198,7 +198,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         let sortController = UIAlertController(title: nil, message: "Change the sorting of the teams", preferredStyle: .ActionSheet)
         
         let teleAvgOption = UIAlertAction(title: "Teleop Average", style: .Default) { (action) -> Void in
-            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "teleAvg", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -209,7 +209,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let autoStrengthOption = UIAlertAction(title: "Auto Strength", style: .Default) { (action) -> Void in
-            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "autoStrength", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -220,7 +220,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let containerOption = UIAlertAction(title: "Container Average", style: .Default) { (action) -> Void in
-            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "containerAvg", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -231,7 +231,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let toteOption = UIAlertAction(title: "Tote Average", style: .Default) { (action) -> Void in
-            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "toteAvg", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -242,7 +242,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let teamNumOption = UIAlertAction(title: "Team Number", style: .Default) { (action) -> Void in
-            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
+//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "teamNumber", ascending: true)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()

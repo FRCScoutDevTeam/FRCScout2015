@@ -1999,6 +1999,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             duplicateAlert.addAction(yesAction)
             self.presentViewController(duplicateAlert, animated: true, completion: nil)
         } else {
+            println("Sending to Connected Scouts")
             self.sendToConnectedScouts(match)
             
             var saveErr : NSError?
@@ -2073,6 +2074,10 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
             
             var sendErr : NSError?
             mcSession.sendData(instaShareData, toPeers: mcSession.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &sendErr)
+            
+            if sendErr != nil {
+                println("Send Error: \(sendErr)")
+            }
         }
     }
     
