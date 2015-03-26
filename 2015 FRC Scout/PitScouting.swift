@@ -259,8 +259,7 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
     }
 
     func checkForTeam() {
-        var appDel: AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
-        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        let context = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
         var request = NSFetchRequest(entityName: "PitTeam")
         request.predicate = NSPredicate(format: "teamNumber = %@", teamNumber)
         var results:NSArray = context.executeFetchRequest(request, error: nil)!
@@ -497,7 +496,6 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 noodlesNoneBtn.backgroundColor = UIColor.lightGrayColor()
-                autoNone = false
                 intoContainer = true
             } else {
                 intoContainer = false
@@ -517,7 +515,6 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
             if(sender.backgroundColor == UIColor.lightGrayColor()){
                 sender.backgroundColor = UIColor(red: 0.25 , green: 0.75 , blue: 1.0 , alpha: 1)
                 noodlesNoneBtn.backgroundColor = UIColor.lightGrayColor()
-                autoNone = false
                 intoLandfill = true
             } else {
                 intoLandfill = false
@@ -565,6 +562,8 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
             
             var masterTeam = MasterTeam.createMasterTeam(teamNumber.toInt()!, context: context)
             
+            let uniqueID = Int(NSDate().timeIntervalSince1970)
+            
             var pitDict: [String:AnyObject] = [
                 "teamNumber": teamNumber.toInt()!,
                 "teamName": teamName,
@@ -586,10 +585,16 @@ class PitScouting: UIViewController, UITextFieldDelegate, UITextViewDelegate, UI
                 "noodles": noodles,
                 "strategy": strategy,
                 "additionalNotes": additionalNotes,
-                "uniqueID": Int(NSDate().timeIntervalSince1970),
+                "uniqueID": uniqueID,
                 "picture": UIImagePNGRepresentation(captureImageButton.backgroundImageForState(.Normal) ?? UIImage(named: "UnknownBot"))]
             
             var newPitTeam = PitTeam.createPitTeam(pitDict, masterTeam: masterTeam, context: context)
+            
+            if newPitTeam.uniqueID.integerValue != uniqueID {
+                println("Deleting old pit team and replacing")
+                context.deleteObject(newPitTeam)
+                newPitTeam = PitTeam.createPitTeam(pitDict, masterTeam: masterTeam, context: context)
+            }
             
             let alertController = UIAlertController(title: "Save Complete!", message: "", preferredStyle: .Alert)
 

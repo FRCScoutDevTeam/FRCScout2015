@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2855A3091A874663004260DE /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855A3081A874663004260DE /* Scoring.swift */; };
+		28A0F20E1AC487330082C21C /* NextMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A0F20D1AC487330082C21C /* NextMatchView.swift */; };
 		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
 		28A5CD611A9DC99D00831073 /* SingleTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5CD601A9DC99D00831073 /* SingleTeamView.swift */; };
 		E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		2855A3081A874663004260DE /* Scoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
+		28A0F20D1AC487330082C21C /* NextMatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextMatchView.swift; sourceTree = "<group>"; };
 		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		28A5CD601A9DC99D00831073 /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
 		E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitTeam.swift; path = ../PitTeam.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */,
 				28A5CD601A9DC99D00831073 /* SingleTeamView.swift */,
 				E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */,
+				28A0F20D1AC487330082C21C /* NextMatchView.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				E1A4D7031A8C449500FCF562 /* RegionalExtension.swift in Sources */,
 				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
+				28A0F20E1AC487330082C21C /* NextMatchView.swift in Sources */,
 				E1A4D6F91A8C300300FCF562 /* TeamList.swift in Sources */,
 				28A5CD611A9DC99D00831073 /* SingleTeamView.swift in Sources */,
 				E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */,

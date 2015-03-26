@@ -80,8 +80,47 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func shareBtnPress(sender: AnyObject) {
+    // ********************************************** //
+    // *********** Multipeer Connectivity *********** //
+    // ********************************************** //
 
+    let serviceType = "FRCScoutLong"
+
+    var browser : MCBrowserViewController!
+    var assistant : MCAdvertiserAssistant!
+    var mcSession : MCSession!
+    var peerID : MCPeerID!
+    
+    var kProgressCancelledKeyPath = "cancelled"
+    var kProgressCompletedUnitCountKeyPath = "completedUnitCount"
+    
+    var sendingIndex = 0
+    var sendingURL : NSURL!
+    var sending = false
+
+    var isBrowsing = false
+
+    func setUpMultipeer(){
+        peerID = MCPeerID(displayName: "\(scoutFirstName!) - \(scoutTeamNum!)")
+        mcSession = MCSession(peer: peerID)
+        mcSession.delegate = self
+
+        browser = MCBrowserViewController(serviceType: serviceType, session: mcSession)
+        browser.delegate = self
+    }
+
+    func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        isBrowsing = false
+    }
+    func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        isBrowsing = false
+    }
+    
+    
+    @IBAction func shareBtnPress(sender: AnyObject) {
+        
         var shareFrame = CGRect(x: 159, y: 230, width: 450, height: 400)
         var xC1: CGFloat = shareFrame.width * 0.3   //center x of the first column of items
         var xC2: CGFloat = shareFrame.width * 0.7   //center x of the second column of items
@@ -93,32 +132,32 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         var txtHeight: CGFloat = 30
         var switchWidth: CGFloat = 51
         var switchHeight: CGFloat = 31
-
+        
         self.view.addSubview(grayOutView)
         shareView = UIView(frame: shareFrame)
         shareView.backgroundColor = .whiteColor()
         shareView.layer.cornerRadius = 10
-
+        
         var closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         closeBtn.frame = CGRect(x: shareView.layer.frame.width - 60, y: 5, width: 50, height:20)
         closeBtn.addTarget(nil, action: Selector("closeShareView"), forControlEvents: .TouchUpInside)
         closeBtn.setTitle("Close X", forState: UIControlState.Normal)
         closeBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
         shareView.addSubview(closeBtn)
-
+        
         let shareLbl = UILabel(frame: CGRect(x: shareFrame.width/2 - 100, y: 15, width: 200, height: 30))
         shareLbl.font = UIFont.boldSystemFontOfSize(23)
         shareLbl.textAlignment = .Center
         shareLbl.text = "Share Data"
         shareView.addSubview(shareLbl)
-
+        
         let nameLbl = UILabel(frame: CGRect(x: xC1 - labelWidth/2, y: yStart, width: labelWidth, height: labelHeight))
         nameLbl.font = UIFont.boldSystemFontOfSize(15)
         nameLbl.textAlignment = .Center
         nameLbl.text = "First Name"
         nameLbl.adjustsFontSizeToFitWidth = true
         shareView.addSubview(nameLbl)
-
+        
         nameTxt = UITextField(frame: CGRect(x: xC1 - txtWidth/2, y: yStart + ySpacing - 5, width: txtWidth, height: txtHeight))
         nameTxt.font = UIFont.systemFontOfSize(15)
         nameTxt.textAlignment = .Center
@@ -130,14 +169,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         if scoutFirstName != nil {
             nameTxt.text = scoutFirstName
         }
-
+        
         let numberLbl = UILabel(frame: CGRect(x: xC2 - labelWidth/2, y: yStart, width: labelWidth, height: labelHeight))
         numberLbl.font = UIFont.boldSystemFontOfSize(15)
         numberLbl.textAlignment = .Center
         numberLbl.text = "Team Number"
         numberLbl.adjustsFontSizeToFitWidth = true
         shareView.addSubview(numberLbl)
-
+        
         numberTxt = UITextField(frame: CGRect(x: xC2 - txtWidth/2, y: yStart + ySpacing - 5, width: txtWidth, height: txtHeight))
         numberTxt.font = UIFont.systemFontOfSize(15)
         numberTxt.textAlignment = .Center
@@ -149,7 +188,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         if scoutTeamNum != nil {
             numberTxt.text = scoutTeamNum
         }
-
+        
         inviteBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         inviteBtn.frame = CGRect(x: xC1 - 65, y: yStart + ySpacing*3, width: 130, height: 35)
         inviteBtn.setTitle("Invite To Party", forState: UIControlState.Normal)
@@ -161,7 +200,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         inviteBtn.alpha = 0.5
         inviteBtn.enabled = false
         shareView.addSubview(inviteBtn)
-
+        
         visibleLbl = UILabel(frame: CGRect(x: xC2 - labelWidth/2, y: yStart + ySpacing*2 + 13 , width: labelWidth, height: labelHeight))
         visibleLbl.font = UIFont.systemFontOfSize(15)
         visibleLbl.textAlignment = .Center
@@ -169,14 +208,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         visibleLbl.alpha = 0.5
         visibleLbl.adjustsFontSizeToFitWidth = true
         shareView.addSubview(visibleLbl)
-
+        
         visibleSwitch = UISwitch( frame: CGRect(x: xC2 - switchWidth/2, y: yStart + ySpacing * 3 + 8, width: switchWidth, height: switchHeight))
         visibleSwitch.on = false
         visibleSwitch.enabled = false
         visibleSwitch.alpha = 0.5
         visibleSwitch.addTarget(self, action: Selector("visibleSwitched:"), forControlEvents: .ValueChanged)
         shareView.addSubview(visibleSwitch!)
-
+        
         picsLbl = UILabel(frame: CGRect(x: xC1 - labelWidth/2, y: yStart + ySpacing*5 - 3, width: labelWidth, height: labelHeight))
         picsLbl.font = UIFont.systemFontOfSize(15)
         picsLbl.textAlignment = .Center
@@ -184,14 +223,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         picsLbl.adjustsFontSizeToFitWidth = true
         picsLbl.alpha = 0.5
         shareView.addSubview(picsLbl)
-
+        
         picsSwitch = UISwitch(frame: CGRect(x: xC1 - switchWidth/2, y: yStart + ySpacing * 6 - 5, width: switchWidth, height: switchHeight))
         picsSwitch.on = false
         picsSwitch.alpha = 0.5
         picsSwitch.enabled = false
         picsSwitch.addTarget(self, action: Selector("picSwitchChanged:"), forControlEvents: .ValueChanged)
         shareView.addSubview(picsSwitch)
-
+        
         justRegionalLbl = UILabel(frame: CGRect(x: xC2 - labelWidth/2, y: yStart + ySpacing*5 - 3, width: labelWidth, height: labelHeight))
         justRegionalLbl.font = UIFont.systemFontOfSize(15)
         justRegionalLbl.textAlignment = .Center
@@ -199,14 +238,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         justRegionalLbl.adjustsFontSizeToFitWidth = true
         justRegionalLbl.alpha = 0.5
         shareView.addSubview(justRegionalLbl)
-
+        
         justRegionalSwitch = UISwitch(frame: CGRect(x: xC2 - switchWidth/2, y: yStart + ySpacing * 6 - 5, width: switchWidth, height: switchHeight))
         justRegionalSwitch.on = false
         justRegionalSwitch.alpha = 0.5
         justRegionalSwitch.enabled = false
         justRegionalSwitch.addTarget(self, action: Selector("justRegionalSwitchChanged:"), forControlEvents: .ValueChanged)
         shareView.addSubview(justRegionalSwitch)
-
+        
         shareBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         shareBtn.frame = CGRect(x: shareFrame.width/2 - 60, y: yStart + ySpacing*8 - 10, width: 120, height: 40)
         shareBtn.setTitle("Share", forState: .Normal)
@@ -222,36 +261,36 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             shareBtn.enabled = true
         }
         shareView.addSubview(shareBtn)
-
+        
         progressIndicator = UIProgressView(progressViewStyle: UIProgressViewStyle.Bar)
         progressIndicator.frame = CGRect(x: shareView.frame.width/2 - 150, y: shareBtn.frame.origin.y + shareBtn.frame.height + 30, width: 300, height: 2)
         progressIndicator.alpha = 0
         shareView.addSubview(progressIndicator)
-
+        
         if countElements(nameTxt.text) > 0 && numberTxt.text.toInt() != nil && numberTxt.text.toInt() > 0 {
             self.enableShareUI(true, isVisibleEnabled: true)
         } else {
             self.enableShareUI(false, isVisibleEnabled: false)
         }
-
+        
         shareView.transform = CGAffineTransformMakeScale(0.01, 0.01)
         self.view.addSubview(shareView)
         self.view.bringSubviewToFront(shareView)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.shareView.transform = CGAffineTransformIdentity
-        }) { (completed) -> Void in
-            if self.isSharingVisible {
-                self.visibleSwitch.setOn(true, animated: true)
-                self.visibleSwitched(self.visibleSwitch)
-            }
+            }) { (completed) -> Void in
+                if self.isSharingVisible {
+                    self.visibleSwitch.setOn(true, animated: true)
+                    self.visibleSwitched(self.visibleSwitch)
+                }
         }
     }
-
+    
     func inviteToParty() {
         self.presentViewController(browser, animated: true, completion: nil)
         isBrowsing = true
     }
-
+    
     func visibleSwitched(sender: UISwitch) {
         self.enableShareUI(sender.on, isVisibleEnabled: true)
         if sender.on {
@@ -277,7 +316,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             isSharingVisible = false
         }
     }
-
+    
     func picSwitchChanged(sender: UISwitch) {
         isSharePics = sender.on
     }
@@ -285,7 +324,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         isJustThisRegional = sender.on
         if NSUserDefaults.standardUserDefaults().objectForKey(REGIONALSELECTEDKEY) == nil {
             justRegionalSwitch.setOn(false, animated: true)
-
+            
             let justRegionalAlertController = UIAlertController(title: "Whoa there!", message: "You never set your regional!\nWould you like to?", preferredStyle: .Alert)
             let affirmativeAction = UIAlertAction(title: "Why yes I do!", style: .Default, handler: { (action) -> Void in
                 self.closeShareView()
@@ -297,21 +336,21 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             self.presentViewController(justRegionalAlertController, animated: true, completion: nil)
         }
     }
-
+    
     func enableShareUI(isEnabled: Bool, isVisibleEnabled: Bool) {
         if isEnabled {
             if visibleSwitch.on {
                 inviteBtn.enabled = true
                 picsSwitch.enabled = true
                 justRegionalSwitch.enabled = true
-
+                
                 justRegionalSwitch.alpha = 1.0
                 justRegionalLbl.alpha = 1.0
                 picsSwitch.alpha = 1.0
                 picsLbl.alpha = 1.0
                 inviteBtn.alpha = 1.0
             }
-
+            
             if isVisibleEnabled {
                 visibleLbl.alpha = 1.0
                 visibleSwitch.alpha = 1.0
@@ -328,7 +367,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             inviteBtn.enabled = false
             picsSwitch.enabled = false
             justRegionalSwitch.enabled = false
-
+            
             if !isVisibleEnabled {
                 visibleLbl.alpha = 0.5
                 visibleSwitch.alpha = 0.5
@@ -340,14 +379,14 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             }
         }
     }
-
+    
     func share() {
         let context : NSManagedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
-
+        
         var dictToSend = NSMutableDictionary()
         var regionalsDict = NSMutableDictionary()
         var pitTeamsDict = NSMutableDictionary()
-
+        
         var regionalRequest = NSFetchRequest(entityName: "Regional")
         if isJustThisRegional {
             regionalRequest.predicate = NSPredicate(format: "name = %@", NSUserDefaults.standardUserDefaults().objectForKey(REGIONALSELECTEDKEY) as String!)
@@ -357,11 +396,11 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         if regionalRequestErr != nil { println(regionalRequestErr!.localizedDescription); return }
         for regional in regionalResults {
             regionalsDict[regional.name] = NSMutableDictionary()
-
+            
             for team in regional.teams.allObjects as [Team] {
                 println("TEAM NUMBER: \(team.teamNumber)")
                 (regionalsDict[regional.name] as NSMutableDictionary)[team.teamNumber] = NSMutableDictionary()
-
+                
                 for match in team.matches.allObjects as [Match] {
                     var toteStacks = Array<Array<NSNumber>>()
                     for totestack in match.toteStacks.allObjects as [ToteStack] {
@@ -375,7 +414,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                         convertedStack[6] = totestack.containerLvl.integerValue
                         toteStacks.append(convertedStack)
                     }
-
+                    
                     var coopStacks = Array<Array<NSNumber>>()
                     for coopstack in match.coopStacks.allObjects as [CoopStack] {
                         var convertedStack = [Int](count: 4, repeatedValue: 0)
@@ -385,7 +424,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                         convertedStack[3] = coopstack.tote4.integerValue
                         coopStacks.append(convertedStack)
                     }
-
+                    
                     var matchDict : NSDictionary = [
                         "autoContainers": match.autoContainers.integerValue,
                         "autoTotes": match.autoTotes.integerValue,
@@ -405,12 +444,12 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                         "scoutPosition": match.scoutPosition,
                         "notes": match.notes ?? ""
                     ]
-
+                    
                     ((regionalsDict[regional.name] as NSMutableDictionary)[team.teamNumber] as NSMutableDictionary)[match.matchNum] = matchDict
                 }
             }
         }
-
+        
         var pitTeamsRequest = NSFetchRequest(entityName: "PitTeam")
         var pitTeamsRequestErr : NSError?
         let pitTeamsResults = context.executeFetchRequest(pitTeamsRequest, error: &pitTeamsRequestErr)
@@ -448,18 +487,18 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             ]
             pitTeamsDict["\(pitTeam.teamNumber)"] = pitTeamDict
         }
-
+        
         dictToSend["Regionals"] = regionalsDict
         dictToSend["PitTeams"] = pitTeamsDict
-
+        
         let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask) as [NSURL]
         let documentsDirectory = paths[0]
         let path = documentsDirectory.URLByAppendingPathComponent("sendData")
-
+        
         if NSFileManager.defaultManager().fileExistsAtPath(path.path!) {
             NSFileManager.defaultManager().removeItemAtURL(path, error: nil)
         }
-
+        
         let sendData = NSKeyedArchiver.archivedDataWithRootObject(dictToSend)
         if sendData.length == 0 {
             println("Send Data is empty")
@@ -467,18 +506,20 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
         } else {
             println(sendData.length)
         }
-
+        
         var writeErr : NSError?
         if !sendData.writeToURL(path, options: nil, error: &writeErr) {
             println(writeErr!.localizedDescription)
             return
         }
-
-        for peer in mcSession.connectedPeers as [MCPeerID] {
-            self.sendDataFromUrl(path, peer: peer)
+        
+        if mcSession.connectedPeers.count > 0 {
+            self.sendDataFromUrl(path, peer: mcSession.connectedPeers.first as MCPeerID)
+            sendingURL = path
+            sending = true
         }
     }
-
+    
     func sendDataFromUrl(url: NSURL, peer: MCPeerID) {
         progressIndicator.alpha = 1.0
         var progress : NSProgress = mcSession!.sendResourceAtURL(url, withName: "sendData", toPeer: peer) { (sendError) -> Void in
@@ -488,7 +529,7 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
                 println("Sent all data to \(peer.displayName)!")
             }
         }
-
+        
         progress.addObserver(self, forKeyPath: kProgressCancelledKeyPath, options: NSKeyValueObservingOptions.New, context: nil)
         progress.addObserver(self, forKeyPath: kProgressCompletedUnitCountKeyPath, options: NSKeyValueObservingOptions.New, context: nil)
         progressIndicator.tintColor = .greenColor()
@@ -505,61 +546,33 @@ class More: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITe
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.progressIndicator.progress = Float(progress.fractionCompleted)
             })
-
+            
             if progress.completedUnitCount == progress.totalUnitCount {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.progressIndicator.alpha = 0
+                    self.progressIndicator.progress = 0
+                    if self.sendingIndex + 1 < self.mcSession.connectedPeers.count && self.sending == true {
+                        ++self.sendingIndex
+                        self.sendDataFromUrl(self.sendingURL, peer: self.mcSession.connectedPeers[self.sendingIndex] as MCPeerID)
+                    } else {
+                        self.progressIndicator.alpha = 0
+                        self.sending = false
+                    }
                 })
             }
         default:
             return
         }
     }
-
+    
     func closeShareView(){
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.shareView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        }) { (completed) -> Void in
-            self.shareView.removeFromSuperview()
-            self.grayOutView.removeFromSuperview()
+            }) { (completed) -> Void in
+                self.shareView.removeFromSuperview()
+                self.grayOutView.removeFromSuperview()
         }
     }
-
-    // ********************************************** //
-    // *********** Multipeer Connectivity *********** //
-    // ********************************************** //
-
-    let serviceType = "FRCScoutLong"
-
-    var browser : MCBrowserViewController!
-    var assistant : MCAdvertiserAssistant!
-    var mcSession : MCSession!
-    var peerID : MCPeerID!
-
-    var kProgressCancelledKeyPath = "cancelled";
-
-    var kProgressCompletedUnitCountKeyPath = "completedUnitCount";
-
-
-    var isBrowsing = false
-
-    func setUpMultipeer(){
-        peerID = MCPeerID(displayName: "\(scoutFirstName!) - \(scoutTeamNum!)")
-        mcSession = MCSession(peer: peerID)
-        mcSession.delegate = self
-
-        browser = MCBrowserViewController(serviceType: serviceType, session: mcSession)
-        browser.delegate = self
-    }
-
-    func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        isBrowsing = false
-    }
-    func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        isBrowsing = false
-    }
+    
 
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         switch state {
