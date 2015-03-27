@@ -460,7 +460,9 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         regionalPicker.layer.cornerRadius = 5
         signInView.addSubview(regionalPicker)
         if let regName = NSUserDefaults.standardUserDefaults().objectForKey(REGIONALSELECTEDKEY) as? String {
-            regionalPicker.selectRow(find(allWeekRegionals[weekSelected], regName)!, inComponent: 0, animated: true)
+            if find(allWeekRegionals[weekSelected], regName)? != nil {
+                regionalPicker.selectRow(find(allWeekRegionals[weekSelected], regName)!, inComponent: 0, animated: true)
+            }
         }
         let regionalPickerLbl = UILabel(frame: CGRect(x: regionalPicker.frame.origin.x, y: regionalPicker.frame.origin.y - 20, width: regionalPicker.frame.width, height: 18))
         regionalPickerLbl.font = UIFont.systemFontOfSize(15)

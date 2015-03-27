@@ -51,14 +51,14 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         if self._fetchedResultsController != nil {
             return self._fetchedResultsController!
         }
-        let appDel:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let managedObjectContext: NSManagedObjectContext? = appDel.managedObjectContext!
+        
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
         
         /* `NSFetchRequest` config
         fetch all `Item`s
         order them alphabetically by name
         at least one sort order _is_ required */
-        let entity = NSEntityDescription.entityForName("Team", inManagedObjectContext: managedObjectContext!)
+        let entity = NSEntityDescription.entityForName("Team", inManagedObjectContext: managedObjectContext)
         let sort = NSSortDescriptor(key: "teamNumber", ascending: true)
         let req = NSFetchRequest()
         req.entity = entity
@@ -66,7 +66,7 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         
         /* NSFetchedResultsController initialization
         a `nil` `sectionNameKeyPath` generates a single section */
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: req, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         self._fetchedResultsController = aFetchedResultsController
         
