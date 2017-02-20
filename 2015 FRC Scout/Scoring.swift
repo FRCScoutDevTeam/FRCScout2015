@@ -200,6 +200,7 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         autoContainerAddBtn.layer.cornerRadius = 5
         autoContainerSubBtn.layer.cornerRadius = 5
         autoStackBtn.layer.cornerRadius = 5
+        autoZoneLbl.layer.cornerRadius = 5
 
         //Teleop UI Items
         containerNoodleAddBtn.layer.cornerRadius = 5
@@ -626,8 +627,12 @@ class Scoring: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPick
         scoutPosLbl.text = scoutPositions[scoutPosition]
         if scoutPosition < 3 {
             scoutPosLbl.backgroundColor = .redColor()
+            autoZoneRobot.image = UIImage(named: "RedRobot")
+            autoZoneLine.backgroundColor = .redColor()
         } else {
             scoutPosLbl.backgroundColor = .blueColor()
+            autoZoneRobot.image = UIImage(named: "BlueRobot")
+            autoZoneLine.backgroundColor = .blueColor()
         }
         
         self.setUpMultipeer()

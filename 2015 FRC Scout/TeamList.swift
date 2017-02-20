@@ -15,10 +15,8 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     @IBOutlet weak var changeSortBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    let CACHENAME = "TeamList"
-    
     //Control Variables
-    var viewingRegional = false //false for regional list, true for all list
+    var viewingRegional = true //false for regional list, true for all list
     
     
     override func viewDidLoad() {
@@ -59,8 +57,13 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         order them alphabetically by name
         at least one sort order _is_ required */
         let entity = NSEntityDescription.entityForName("Team", inManagedObjectContext: managedObjectContext)
-        let sort = NSSortDescriptor(key: "teamNumber", ascending: true)
+        let sort = NSSortDescriptor(key: "teleAvg", ascending: false)
         let req = NSFetchRequest()
+        if viewingRegional {
+            req.predicate = NSPredicate(format: "regional.name = %@", NSUserDefaults.standardUserDefaults().objectForKey(REGIONALSELECTEDKEY) as String!)
+        } else {
+            req.predicate = nil
+        }
         req.entity = entity
         req.sortDescriptors = [sort]
         
@@ -95,10 +98,12 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     //Segment controller press to change list
     @IBAction func changeList(sender: AnyObject) {
         if(segmentController.selectedSegmentIndex == 0){
-            viewingRegional = false
-        } else {
             viewingRegional = true
+        } else {
+            viewingRegional = false
         }
+        fetchedResultsController.performFetch(nil)
+        tableView.reloadData()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -174,7 +179,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
         if(searchText == ""){
             self.fetchedResultsController.fetchRequest.predicate = nil
         } else if((searchText.toInt()) != nil) {
@@ -198,7 +202,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         let sortController = UIAlertController(title: nil, message: "Change the sorting of the teams", preferredStyle: .ActionSheet)
         
         let teleAvgOption = UIAlertAction(title: "Teleop Average", style: .Default) { (action) -> Void in
-//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "teleAvg", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -209,7 +212,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let autoStrengthOption = UIAlertAction(title: "Auto Strength", style: .Default) { (action) -> Void in
-//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "autoStrength", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -220,7 +222,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let containerOption = UIAlertAction(title: "Container Average", style: .Default) { (action) -> Void in
-//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "containerAvg", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -231,7 +232,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let toteOption = UIAlertAction(title: "Tote Average", style: .Default) { (action) -> Void in
-//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "toteAvg", ascending: false)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()
@@ -242,7 +242,6 @@ class TeamList: UIViewController,UITableViewDataSource, UITableViewDelegate, NSF
         }
         
         let teamNumOption = UIAlertAction(title: "Team Number", style: .Default) { (action) -> Void in
-//            NSFetchedResultsController.deleteCacheWithName(self.CACHENAME)
             self.fetchedResultsController.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "teamNumber", ascending: true)]
             self.fetchedResultsController.performFetch(nil)
             self.tableView.reloadData()

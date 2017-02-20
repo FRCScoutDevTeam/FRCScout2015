@@ -44,7 +44,6 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidAppear(animated: Bool) {
         titleBar.title = "Team " + teamNumber
         loadData()
-        //tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,6 +66,9 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
             var newMatch = match as Match
             matches.append(newMatch)
         }
+        matches.sort { (this, that) -> Bool in
+            return this.matchNum.toInt() < that.matchNum.toInt()
+        }
         let pitTeamRequest = NSFetchRequest(entityName: "PitTeam")
         pitTeamRequest.returnsObjectsAsFaults = false
         pitTeamRequest.predicate = NSPredicate(format: "teamNumber = %@ ", teamNumber)
@@ -75,6 +77,10 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
             var pitTeam = pitTeamResults[0] as PitTeam
             teamNameLbl.text = pitTeam.teamName
             if let picture = UIImage(data: pitTeam.picture) {
+                if picture != UIImage(named: "UnknownBot") {
+                    let tapToZoom = UITapGestureRecognizer(target: self, action: Selector("imageTapped:"))
+                    teamPicView.addGestureRecognizer(tapToZoom)
+                }
                 teamPicView.image = picture
             }
         }
@@ -88,8 +94,23 @@ class SingleTeamView: UIViewController, UITableViewDataSource, UITableViewDelega
         teleScoreLbl.text = formatter.stringFromNumber(team.teleAvg)
         toteScoreLbl.text = formatter.stringFromNumber(team.toteAvg)
         containerScoreLbl.text = formatter.stringFromNumber(team.containerAvg)
-        
-        
+    }
+    
+    func imageTapped(sender: UITapGestureRecognizer) {
+        println("Image Tapped")
+        if teamPicView.center == CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2) {
+            println("Image not in center")
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.teamPicView.transform = CGAffineTransformIdentity
+                self.teamPicView.frame.origin = CGPoint(x: 84, y: 115)
+            })
+        } else {
+            println("Should transform")
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.teamPicView.transform = CGAffineTransformMakeScale(3, 3)
+                self.teamPicView.center = CGPoint(x: UIScreen.mainScreen().bounds.width/2, y: UIScreen.mainScreen().bounds.height/2)
+            })
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){

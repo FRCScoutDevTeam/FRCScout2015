@@ -11,6 +11,10 @@
 		28A0F20E1AC487330082C21C /* NextMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A0F20D1AC487330082C21C /* NextMatchView.swift */; };
 		28A3F23D1A8D5EDD001009C8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3F23C1A8D5EDD001009C8 /* Globals.swift */; };
 		28A5CD611A9DC99D00831073 /* SingleTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5CD601A9DC99D00831073 /* SingleTeamView.swift */; };
+		28BF738E1ACB48920011FE7C /* AllianceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BF738D1ACB48920011FE7C /* AllianceSelectionView.swift */; };
+		28BF73901ACB4F720011FE7C /* FirstPickListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BF738F1ACB4F720011FE7C /* FirstPickListController.swift */; };
+		28BF73921ACB4F840011FE7C /* SecondPickListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BF73911ACB4F840011FE7C /* SecondPickListController.swift */; };
+		28BF73971ACB54250011FE7C /* RegionalPoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BF73961ACB54250011FE7C /* RegionalPoolController.swift */; };
 		E10B8B801A9AF0B70045D0CB /* PitTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */; };
 		E10B8B821A9AF0B80045D0CB /* ToteStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B811A9AF0B80045D0CB /* ToteStack.swift */; };
 		E10B8B841A9AF0B80045D0CB /* CoopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B8B831A9AF0B80045D0CB /* CoopStack.swift */; };
@@ -57,6 +61,11 @@
 		28A0F20D1AC487330082C21C /* NextMatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextMatchView.swift; sourceTree = "<group>"; };
 		28A3F23C1A8D5EDD001009C8 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		28A5CD601A9DC99D00831073 /* SingleTeamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTeamView.swift; sourceTree = "<group>"; };
+		28BF738D1ACB48920011FE7C /* AllianceSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllianceSelectionView.swift; sourceTree = "<group>"; };
+		28BF738F1ACB4F720011FE7C /* FirstPickListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPickListController.swift; sourceTree = "<group>"; };
+		28BF73911ACB4F840011FE7C /* SecondPickListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondPickListController.swift; sourceTree = "<group>"; };
+		28BF73961ACB54250011FE7C /* RegionalPoolController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalPoolController.swift; sourceTree = "<group>"; };
+		28BF73981ACB7DA70011FE7C /* Model 1.0.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 1.0.1.xcdatamodel"; sourceTree = "<group>"; };
 		E10B8B7F1A9AF0B70045D0CB /* PitTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitTeam.swift; path = ../PitTeam.swift; sourceTree = "<group>"; };
 		E10B8B811A9AF0B80045D0CB /* ToteStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToteStack.swift; path = ../ToteStack.swift; sourceTree = "<group>"; };
 		E10B8B831A9AF0B80045D0CB /* CoopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoopStack.swift; path = ../CoopStack.swift; sourceTree = "<group>"; };
@@ -109,6 +118,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28BF73931ACB4F8B0011FE7C /* Alliance Selection */ = {
+			isa = PBXGroup;
+			children = (
+				28BF738D1ACB48920011FE7C /* AllianceSelectionView.swift */,
+				28BF73961ACB54250011FE7C /* RegionalPoolController.swift */,
+				28BF738F1ACB4F720011FE7C /* FirstPickListController.swift */,
+				28BF73911ACB4F840011FE7C /* SecondPickListController.swift */,
+			);
+			name = "Alliance Selection";
+			sourceTree = "<group>";
+		};
+		28BF73941ACB4F9A0011FE7C /* Team List */ = {
+			isa = PBXGroup;
+			children = (
+				E1A4D6F81A8C300300FCF562 /* TeamList.swift */,
+				E1A4D6FA1A8C333900FCF562 /* TeamListCell.swift */,
+				E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */,
+				28A5CD601A9DC99D00831073 /* SingleTeamView.swift */,
+				E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */,
+			);
+			name = "Team List";
+			sourceTree = "<group>";
+		};
+		28BF73951ACB4FA30011FE7C /* Next Match */ = {
+			isa = PBXGroup;
+			children = (
+				28A0F20D1AC487330082C21C /* NextMatchView.swift */,
+			);
+			name = "Next Match";
+			sourceTree = "<group>";
+		};
 		28C540E61A900B0000BFCC69 /* More */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,12 +192,9 @@
 			isa = PBXGroup;
 			children = (
 				E1F4BEFB1A608FE90091EA2E /* Data.swift */,
-				E1A4D6F81A8C300300FCF562 /* TeamList.swift */,
-				E1A4D6FA1A8C333900FCF562 /* TeamListCell.swift */,
-				E1F9F8D41A8C6E4400709C9D /* DataCalculator.swift */,
-				28A5CD601A9DC99D00831073 /* SingleTeamView.swift */,
-				E1F9F8DC1A8D147B00709C9D /* MatchCell.swift */,
-				28A0F20D1AC487330082C21C /* NextMatchView.swift */,
+				28BF73941ACB4F9A0011FE7C /* Team List */,
+				28BF73951ACB4FA30011FE7C /* Next Match */,
+				28BF73931ACB4F8B0011FE7C /* Alliance Selection */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -356,8 +393,11 @@
 				E1F4BF021A60907A0091EA2E /* PitScouting.swift in Sources */,
 				E10B8B861A9AF0B80045D0CB /* Team.swift in Sources */,
 				E1A4D7031A8C449500FCF562 /* RegionalExtension.swift in Sources */,
+				28BF73901ACB4F720011FE7C /* FirstPickListController.swift in Sources */,
 				E16EBB8A1A898A1B007D6E29 /* PitScoutingNav.swift in Sources */,
 				2855A3091A874663004260DE /* Scoring.swift in Sources */,
+				28BF73971ACB54250011FE7C /* RegionalPoolController.swift in Sources */,
+				28BF738E1ACB48920011FE7C /* AllianceSelectionView.swift in Sources */,
 				28A0F20E1AC487330082C21C /* NextMatchView.swift in Sources */,
 				E1A4D6F91A8C300300FCF562 /* TeamList.swift in Sources */,
 				28A5CD611A9DC99D00831073 /* SingleTeamView.swift in Sources */,
@@ -366,6 +406,7 @@
 				E10B8B8C1A9AF0B80045D0CB /* Regional.swift in Sources */,
 				E16EBB8C1A89BACE007D6E29 /* ViewPitTeams.swift in Sources */,
 				E12F4B541A94503C00AAE0C6 /* PitTeamExtension.swift in Sources */,
+				28BF73921ACB4F840011FE7C /* SecondPickListController.swift in Sources */,
 				E1F4BEFA1A608E7F0091EA2E /* Model.xcdatamodeld in Sources */,
 				E10B8B821A9AF0B80045D0CB /* ToteStack.swift in Sources */,
 				E1B515511A8732EC00C48D6F /* MatchExtension.swift in Sources */,
@@ -494,10 +535,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "FRC Scout";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -506,10 +549,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "2015 FRC Scout/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "FRC Scout";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -581,9 +626,10 @@
 		E1F4BEF81A608E7F0091EA2E /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				28BF73981ACB7DA70011FE7C /* Model 1.0.1.xcdatamodel */,
 				E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */,
 			);
-			currentVersion = E1F4BEF91A608E7F0091EA2E /* Model.xcdatamodel */;
+			currentVersion = 28BF73981ACB7DA70011FE7C /* Model 1.0.1.xcdatamodel */;
 			name = Model.xcdatamodeld;
 			path = ../Model.xcdatamodeld;
 			sourceTree = "<group>";
